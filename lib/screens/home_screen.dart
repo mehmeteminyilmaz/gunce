@@ -26,6 +26,15 @@ class _HomeScreenState extends State<HomeScreen> {
     _currentQuote = Quotes.getRandomQuote();
   }
 
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 6) return 'İyi Geceler';
+    if (hour < 12) return 'Günaydın';
+    if (hour < 18) return 'Keyifli Günler';
+    if (hour < 22) return 'İyi Akşamlar';
+    return 'Huzurlu Geceler';
+  }
+
   Entry? _entryForDay(Box<Entry> box, DateTime day) {
     try {
       return box.values.firstWhere((e) =>
@@ -93,11 +102,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: const Icon(Icons.sort_rounded, color: Color(0xFF2D3142), size: 20),
                           ),
                         ),
-                        Text('GÜNCE',
+                        Text(_getGreeting().toUpperCase(),
                           style: GoogleFonts.outfit(
                             fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 4,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 2,
                             color: const Color(0xFF7D9B76), // Adaçayı
                           )),
                         Container(width: 44), // Sağ boşluk

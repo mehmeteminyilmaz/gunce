@@ -20,7 +20,7 @@ class _AddScreenState extends State<AddScreen> {
   String? _selectedMood;
   bool _saving = false;
 
-  final List<String> _moods = ['Harika', 'Sakin', 'Yorgun', 'Stresli', 'Mutlu'];
+  final List<String> _moods = ['Harika 🤩', 'Mutlu ✨', 'Sakin 🌿', 'Yorgun ☕', 'Stresli 🤯'];
 
   Future<void> _pickImageSource() async {
     showModalBottomSheet(
