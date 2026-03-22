@@ -261,7 +261,7 @@ class StatsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 36),
           SizedBox(
-            height: 160,
+            height: 200,
             child: TweenAnimationBuilder<double>(
               tween: Tween(begin: 0.0, end: 1.0),
               duration: const Duration(milliseconds: 1600),
