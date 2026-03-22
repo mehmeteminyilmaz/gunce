@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../models/entry.dart';
+import '../utils/mood_colors.dart';
 import '../utils/streak_calculator.dart';
 
 class StatsScreen extends StatelessWidget {
@@ -274,14 +275,9 @@ class StatsScreen extends StatelessWidget {
                     final percentage = maxCount == 0 ? 0.0 : e.value / maxCount;
                     final barHeight = 90.0 * percentage * value;
                     final moodText = e.key;
-
-                    String emoji = '✨';
-                    String textPart = moodText;
-                    final lastSpaceIndex = moodText.lastIndexOf(' ');
-                    if (lastSpaceIndex != -1) {
-                      textPart = moodText.substring(0, lastSpaceIndex);
-                      emoji = moodText.substring(lastSpaceIndex + 1);
-                    }
+                    
+                    String textPart = moodText.split(' ').first;
+                    final Color moodColor = MoodColors.getColor(moodText);
 
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -293,16 +289,19 @@ class StatsScreen extends StatelessWidget {
                           height: barHeight > 0 ? barHeight : 4,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF7D9B76), Color(0xFFA5C29F)],
+                            gradient: LinearGradient(
+                              colors: [moodColor, moodColor.withOpacity(0.6)],
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter,
                             ),
                           ),
                         ),
                         const SizedBox(height: 12),
-                        Text(emoji, style: const TextStyle(fontSize: 22)),
-                        const SizedBox(height: 4),
+                        Container(
+                          width: 12, height: 12,
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: moodColor),
+                        ),
+                        const SizedBox(height: 8),
                         Text(textPart, style: GoogleFonts.outfit(fontSize: 10, color: const Color(0xFF2D3142), fontWeight: FontWeight.w500)),
                       ],
                     );

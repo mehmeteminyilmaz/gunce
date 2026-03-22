@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../models/entry.dart';
+import '../utils/mood_colors.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
@@ -20,7 +21,10 @@ class _AddScreenState extends State<AddScreen> {
   String? _selectedMood;
   bool _saving = false;
 
-  final List<String> _moods = ['Harika 🤩', 'Mutlu ✨', 'Sakin 🌿', 'Yorgun ☕', 'Stresli 🤯'];
+  final List<String> _moods = [
+    'Harika', 'Mutlu', 'Huzurlu', 'Sakin', 'Odaklanmış', 
+    'Düşünceli', 'Heyecanlı', 'Stresli', 'Yorgun', 'Hüzünlü'
+  ];
 
   Future<void> _pickImageSource() async {
     showModalBottomSheet(
@@ -199,26 +203,41 @@ class _AddScreenState extends State<AddScreen> {
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
                       margin: const EdgeInsets.only(right: 12),
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                       decoration: BoxDecoration(
-                        color: isSelected ? const Color(0xFF7D9B76) : Colors.white,
-                        borderRadius: BorderRadius.circular(30),
+                        color: isSelected ? MoodColors.getColor(mood) : Colors.white,
+                        borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: isSelected ? const Color(0xFF7D9B76) : const Color(0xFFE8E4D9),
+                          color: isSelected ? MoodColors.getColor(mood) : const Color(0xFFE8E4D9),
+                          width: 1.5,
                         ),
-                        boxShadow: isSelected ? [
-                          BoxShadow(
-                            color: const Color(0xFF7D9B76).withOpacity(0.3),
-                            blurRadius: 8, offset: const Offset(0, 4),
-                          )
-                        ] : [],
+                        boxShadow: [
+                          if (isSelected)
+                            BoxShadow(
+                              color: MoodColors.getColor(mood).withOpacity(0.3),
+                              blurRadius: 10, offset: const Offset(0, 4)
+                            )
+                        ]
                       ),
-                      child: Text(mood,
-                        style: GoogleFonts.outfit(
-                          fontSize: 14,
-                          fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
-                          color: isSelected ? Colors.white : const Color(0xFF4F5D75),
-                        )),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (!isSelected) ...[
+                            Container(
+                              width: 10, height: 10,
+                              decoration: BoxDecoration(shape: BoxShape.circle, color: MoodColors.getColor(mood)),
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                          Text(mood,
+                            style: GoogleFonts.outfit(
+                              fontSize: 14,
+                              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                              color: isSelected ? Colors.white : const Color(0xFF4F5D75),
+                            )
+                          ),
+                        ],
+                      )
                     ),
                   );
                 }).toList(),

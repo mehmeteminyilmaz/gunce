@@ -7,6 +7,7 @@ import '../models/entry.dart';
 import '../widgets/side_menu.dart';
 import '../utils/quotes.dart';
 import '../utils/streak_calculator.dart';
+import '../utils/mood_colors.dart';
 import 'add_screen.dart';
 import 'detail_screen.dart';
 
@@ -380,18 +381,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Row(
                                   children: [
                                     if (entry.mood != null) ...[
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFFDFBF7),
-                                          borderRadius: BorderRadius.circular(12),
-                                          border: Border.all(color: const Color(0xFFE8E4D9))
-                                        ),
-                                        child: Text(entry.mood!.toUpperCase(),
-                                          style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, color: const Color(0xFF7D9B76), fontWeight: FontWeight.w600)),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: MoodColors.getColor(entry.mood).withOpacity(0.15),
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(color: MoodColors.getColor(entry.mood).withOpacity(0.3))
                                       ),
-                                      const SizedBox(width: 8),
-                                    ],
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 6, height: 6,
+                                            decoration: BoxDecoration(shape: BoxShape.circle, color: MoodColors.getColor(entry.mood)),
+                                          ),
+                                          const SizedBox(width: 6),
+                                          Text(entry.mood!.split(' ').first.toUpperCase(),
+                                            style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, color: MoodColors.getColor(entry.mood), fontWeight: FontWeight.w600)),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                  ],
                                     if (entry.locationName != null && entry.locationName!.isNotEmpty) ...[
                                       const Icon(Icons.location_on_rounded, size: 12, color: Color(0xFFFFB38E)),
                                       const SizedBox(width: 4),
