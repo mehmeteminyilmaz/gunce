@@ -62,6 +62,20 @@ Bu uygulamanın ardında, kullanıcı deneyimini maksimuma çıkaran ve stabilit
 
 <br>
 
+## 🌱 Gelişim Yolculuğu (Devam Ediyor...)
+
+Günce, tıpkı hayatın kendisi gibi sürekli gelişen, büyüyen ve güzelleşen bir proje. Bu depo **henüz tamamlanmış nihai bir ürün değil; aksine her gün üzerine yeni fikirlerin, duyguların ve kod satırlarının eklendiği yaşayan bir atölyedir.** 
+
+Önümüzdeki güncellemelerde Günce'ye eklenecek bazı büyüleyici yenilikler:
+- ☁️ **Bulut Senkronizasyonu:** Anılarınızı cihazlar arası güvenle aktarabilme.
+- 🔔 **Akıllı Hatırlatıcılar:** Günün yoğunluğunda kendinize vakit ayırmanızı fısıldayan tatlı bildirimler.
+- 🎨 **Genişletilmiş Temalar:** Ruh halinize göre değişebilen yeni zen renk paletleri.
+- 🏷️ **Etiket & Kategori Sistemi:** Anılarınızı duygu durumunuza veya konularına göre filtreleyebilme.
+
+*Siz de bu yolculuğun bir parçası olabilir, projeyi yıldızlayarak (⭐) veya katkı sağlayarak Günce'nin büyümesine destek olabilirsiniz!*
+
+<br>
+
 <div align="center">
   <i>Bugünün anılarını kaydet, yarının tebessümü olsun.</i>
 </div>
