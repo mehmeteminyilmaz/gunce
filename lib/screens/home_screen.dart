@@ -413,6 +413,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w400,
                                 height: 1.5,
                               )),
+                            const SizedBox(height: 2), // 1 Piksel taşmayı tolere etmek için boşluk
                           ],
                         ),
                       ),
