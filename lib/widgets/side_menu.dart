@@ -13,7 +13,7 @@ class SideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color(0xFFF7FAFC), // Krem arkaplan
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
         child: ValueListenableBuilder(
           valueListenable: Hive.box('profile').listenable(),

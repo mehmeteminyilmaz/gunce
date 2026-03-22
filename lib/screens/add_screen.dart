@@ -119,7 +119,7 @@ class _AddScreenState extends State<AddScreen> {
   Widget build(BuildContext context) {
     final today = DateFormat('d MMMM yyyy', 'tr').format(DateTime.now());
     return Scaffold(
-      backgroundColor: const Color(0xFFF7FAFC), // Light Tema Krem
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

@@ -11,7 +11,7 @@ class StatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7FAFC), // Krem Zemin
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor, // Krem Zemin
       appBar: AppBar(
         title: Text('Analiz',
           style: GoogleFonts.outfit(

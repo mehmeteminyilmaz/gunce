@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: const Color(0xFFF7FAFC), // Krem zemin
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       drawer: const SideMenu(),
       body: ValueListenableBuilder(
         valueListenable: Hive.box<Entry>('entries').listenable(),
@@ -104,9 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.surface,
                               shape: BoxShape.circle,
-                              border: Border.all(color: const Color(0xFFE2E8F0)),
+                              border: Border.all(color: Theme.of(context).dividerColor),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.03),
@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )
                               ]
                             ),
-                            child: const Icon(Icons.sort_rounded, color: Color(0xFF1A202C), size: 20),
+                            child: Icon(Icons.sort_rounded, color: Theme.of(context).colorScheme.onSurface, size: 20),
                           ),
                         ),
                         ShaderMask(
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.italic,
-                        color: const Color(0xFF8E8E93),
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                         height: 1.5,
                       )),
                   ),
@@ -172,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.darken),
                                   )
                                 : null,
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(24),
                             boxShadow: [
                                 BoxShadow(
@@ -237,6 +237,46 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+
+                // Gelişmiş Arama Çubuğu
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF5A67D8).withOpacity(0.04),
+                            blurRadius: 15, offset: const Offset(0, 5),
+                          )
+                        ]
+                      ),
+                      child: TextField(
+                        controller: _searchController,
+                        onChanged: (val) => setState(() => _searchQuery = val),
+                        style: GoogleFonts.outfit(color: const Color(0xFF1A202C), fontSize: 16),
+                        decoration: InputDecoration(
+                          hintText: 'Anılarda ara... (Örn: kahve, istanbul)',
+                          hintStyle: GoogleFonts.outfit(color: const Color(0xFF8E8E93), fontSize: 14),
+                          prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFF7F9CF5), size: 22),
+                          suffixIcon: _searchQuery.isNotEmpty ? IconButton(
+                            icon: const Icon(Icons.close_rounded, color: Color(0xFF8E8E93), size: 18),
+                            onPressed: () {
+                              _searchController.clear();
+                              setState(() => _searchQuery = '');
+                              FocusScope.of(context).unfocus();
+                            }
+                          ) : null,
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
 
                 // Timeline Başlığı
                 SliverToBoxAdapter(
@@ -344,7 +384,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 2,
                         margin: const EdgeInsets.only(top: 4, bottom: 4),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE2E8F0),
+                          color: Theme.of(context).dividerColor,
                           borderRadius: BorderRadius.circular(2)
                         ),
                       ),
@@ -359,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(

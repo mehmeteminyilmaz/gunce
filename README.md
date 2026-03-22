@@ -28,6 +28,7 @@
 | **Dinamik Duygu Analizi Grafiği** 📊 | 10 farklı elit "Renk-Kodlu (Color-coded)" duygu etiketi seçeneği ve dış kütüphane kullanılmadan tasarlanmış, giriş animasyonlu özel "Bar Grafiği" eklentisi. |
 | **Zaman Farkındalığı** ⏳ | Uygulamanızın ana ekranı, günün saatine duyarlı olarak ("Keyifli Günler", "Huzurlu Geceler") sizi dinamik başlıklarla karşılar. |
 | **Gelişmiş Anı Keşfi (Arama)** 🔍 | Yıllar önceki anılarınıza, mekan isimlerine veya hissettiğiniz duygulara anında ulaşmanızı sağlayan arama motoru. |
+| **Oto-Zaman Modları** 🌗 | Gece 21:00–06:00 aralığında **Gece Mavisi Premium Koyu Mod**, gündüz ise **Açık Krem** temaya saniyeler içinde otomatik geçiş. |
 
 <br>
 
@@ -72,7 +73,6 @@ Günce, tıpkı hayatın kendisi gibi sürekli gelişen, büyüyen ve güzelleş
 - 🎙️ **Sesli Anı Kaydı (Voice Memos):** Klavye kullanmak istemediğiniz yorgun gecelerde, duygularınızı sadece fısıldayarak kaydedebilme.
 - 🧠 **AI Destekli Akıllı Hatırlatıcılar:** Sadece boş bir bildirim değil, bulunduğunuz ruh haline uygun motivasyonel içerikler sunan asistan.
 - 🎭 **Gelişmiş Karakteristik Analiz (AI):** Anılarınızdaki kelimeleri okuyarak genel yaşam kalitenizi artırmaya yönelik sanal bir terapist profillemesi.
-- 🌗 **Oto-Zaman Modları:** Gündüzleri aydınlık ve ferah, geceleri ise mevcut lüks "Gece Mavisi" (Dark/Zen) temasına otomatik geçiş özelliği.
 
 *Siz de bu yolculuğun bir parçası olabilir, projeyi yıldızlayarak (⭐) veya katkı sağlayarak Günce'nin büyümesine destek olabilirsiniz!*
 

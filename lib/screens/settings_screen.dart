@@ -84,7 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7FAFC),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text('Ayarlar', style: GoogleFonts.outfit(fontWeight: FontWeight.w500)),
         leading: IconButton(
