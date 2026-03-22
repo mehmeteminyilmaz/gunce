@@ -66,11 +66,12 @@ Bu uygulamanın ardında, kullanıcı deneyimini maksimuma çıkaran ve stabilit
 
 Günce, tıpkı hayatın kendisi gibi sürekli gelişen, büyüyen ve güzelleşen bir proje. Bu depo **henüz tamamlanmış nihai bir ürün değil; aksine her gün üzerine yeni fikirlerin, duyguların ve kod satırlarının eklendiği yaşayan bir atölyedir.** 
 
-Önümüzdeki güncellemelerde Günce'ye eklenecek bazı büyüleyici yenilikler:
-- ☁️ **Bulut Senkronizasyonu:** Anılarınızı cihazlar arası güvenle aktarabilme.
-- 🔔 **Akıllı Hatırlatıcılar:** Günün yoğunluğunda kendinize vakit ayırmanızı fısıldayan tatlı bildirimler.
-- 🎨 **Genişletilmiş Temalar:** Ruh halinize göre değişebilen yeni zen renk paletleri.
-- 🏷️ **Etiket & Kategori Sistemi:** Anılarınızı duygu durumunuza veya konularına göre filtreleyebilme.
+Önümüzdeki güncellemelerde Günce'nin dünyasına eklenecek bazı büyüleyici yenilikler:
+- ☁️ **Bulut Senkronizasyonu (Firebase):** Cihazınız değişse bile anılarınızın güvenli bir şekilde sizinle gelmesi.
+- 🎙️ **Sesli Anı Kaydı (Voice Memos):** Klavye kullanmak istemediğiniz yorgun gecelerde, duygularınızı sadece fısıldayarak kaydedebilme.
+- 🧠 **AI Destekli Akıllı Hatırlatıcılar:** Sadece boş bir bildirim değil, bulunduğunuz ruh haline uygun motivasyonel içerikler sunan asistan.
+- 🔍 **Gelişmiş Anı Keşfi & Arama:** Yıllar önceki spesifik bir anınıza (içindeki kelimelere veya lokasyona göre) saniyeler içinde ulaşabilme.
+- 🌗 **Oto-Zaman Modları:** Gündüzleri aydınlık ve ferah, geceleri ise mevcut lüks "Gece Mavisi" (Dark/Zen) temasına otomatik geçiş özelliği.
 
 *Siz de bu yolculuğun bir parçası olabilir, projeyi yıldızlayarak (⭐) veya katkı sağlayarak Günce'nin büyümesine destek olabilirsiniz!*
 
