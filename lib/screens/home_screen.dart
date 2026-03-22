@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../models/entry.dart';
 import '../widgets/side_menu.dart';
 import '../utils/quotes.dart';
+import '../utils/streak_calculator.dart';
 import 'add_screen.dart';
 import 'detail_screen.dart';
 
@@ -72,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           final entries = box.values.toList()..sort((a, b) => b.date.compareTo(a.date));
           final lastYear = _lastYearEntry(box);
           final todayEntry = _entryForDay(box, DateTime.now());
+          final currentStreak = StreakCalculator.calculate(entries);
 
           return SafeArea(
             bottom: false,
@@ -102,14 +104,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: const Icon(Icons.sort_rounded, color: Color(0xFF2D3142), size: 20),
                           ),
                         ),
-                        Text(_getGreeting().toUpperCase(),
-                          style: GoogleFonts.outfit(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 2,
-                            color: const Color(0xFF7D9B76), // Adaçayı
-                          )),
-                        Container(width: 44), // Sağ boşluk
+                        ShaderMask(
+                          shaderCallback: (bounds) => const LinearGradient(
+                            colors: [Color(0xFF7D9B76), Color(0xFF4F5D75)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ).createShader(bounds),
+                          child: Text(_getGreeting().toUpperCase(),
+                            style: GoogleFonts.outfit(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 2,
+                              color: Colors.white,
+                            )),
+                        ),
+                        _buildStreakBadge(currentStreak),
                       ],
                     ),
                   ),
@@ -257,107 +266,162 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildStreakBadge(int currentStreak) {
+    if (currentStreak == 0) return const SizedBox(width: 44);
+    
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFFFFB38E), Color(0xFFFF8552)],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFFFB38E).withOpacity(0.4),
+            blurRadius: 10, offset: const Offset(0, 4)
+          )
+        ]
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('🔥', style: TextStyle(fontSize: 14)),
+          const SizedBox(width: 4),
+          Text('$currentStreak', style: GoogleFonts.outfit(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
+        ],
+      ),
+    );
+  }
+
   Widget _buildTimelineItem(BuildContext context, Entry entry) {
     return GestureDetector(
       onTap: () => Navigator.push(context, _createRoute(DetailScreen(entry: entry))),
       child: Container(
         margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Sol Tarih Kısmı (Light Theme)
-            SizedBox(
-              width: 50,
-              child: Column(
-                children: [
-                  Text('${entry.date.day}',
-                    style: GoogleFonts.playfairDisplay(fontSize: 28, fontWeight: FontWeight.w600, color: const Color(0xFF2D3142))),
-                  Text(DateFormat('MMM', 'tr').format(entry.date).toUpperCase(),
-                    style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, fontWeight: FontWeight.w500, color: const Color(0xFF7D9B76))),
-                ],
-              ),
-            ),
-            
-            const SizedBox(width: 16),
-            
-            // Beyaz Ferah Kart
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.04),
-                      blurRadius: 15, offset: const Offset(0, 8),
-                    )
-                  ]
-                ),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Sol Tarih ve Yaşam Çizgisi Kısmı
+              SizedBox(
+                width: 54,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (entry.imagePath != null)
-                      ClipRRect(
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                        child: Image.file(
-                          File(entry.imagePath!),
-                          width: double.infinity,
-                          height: 160,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (entry.mood != null || entry.locationName != null)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 12.0),
-                              child: Row(
-                                children: [
-                                  if (entry.mood != null) ...[
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFFFDFBF7),
-                                        borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(color: const Color(0xFFE8E4D9))
-                                      ),
-                                      child: Text(entry.mood!.toUpperCase(),
-                                        style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, color: const Color(0xFF7D9B76), fontWeight: FontWeight.w500)),
-                                    ),
-                                    const SizedBox(width: 8),
-                                  ],
-                                  if (entry.locationName != null && entry.locationName!.isNotEmpty) ...[
-                                    Icon(Icons.location_on_rounded, size: 12, color: const Color(0xFFFFB38E)),
-                                    const SizedBox(width: 4),
-                                    Expanded(
-                                      child: Text(entry.locationName!,
-                                        maxLines: 1, overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.outfit(fontSize: 10, color: const Color(0xFF8E8E93))),
-                                    ),
-                                  ]
-                                ],
-                              ),
-                            ),
-                          Text(entry.text,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.outfit(
-                              fontSize: 15,
-                              color: const Color(0xFF4F5D75),
-                              fontWeight: FontWeight.w400,
-                              height: 1.5,
-                            )),
-                        ],
+                    Text('${entry.date.day}',
+                      style: GoogleFonts.playfairDisplay(fontSize: 28, fontWeight: FontWeight.w700, color: const Color(0xFF2D3142))),
+                    Text(DateFormat('MMM', 'tr').format(entry.date).toUpperCase(),
+                      style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, fontWeight: FontWeight.w600, color: const Color(0xFF7D9B76))),
+                    const SizedBox(height: 12),
+                    Container(
+                      width: 12, height: 12,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: const Color(0xFFFFB38E), width: 3),
+                        boxShadow: [
+                          BoxShadow(color: const Color(0xFFFFB38E).withOpacity(0.4), blurRadius: 6)
+                        ]
                       ),
                     ),
+                    Expanded(
+                      child: Container(
+                        width: 2,
+                        margin: const EdgeInsets.only(top: 4, bottom: 4),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE8E4D9),
+                          borderRadius: BorderRadius.circular(2)
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
-            ),
-          ],
+              
+              const SizedBox(width: 16),
+              
+              // Sağ Glow Kart
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF7D9B76).withOpacity(0.12),
+                        blurRadius: 20, offset: const Offset(0, 10),
+                      )
+                    ]
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (entry.imagePath != null)
+                        Hero(
+                          tag: 'image_${entry.id}',
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+                            child: Image.file(
+                              File(entry.imagePath!),
+                              width: double.infinity,
+                              height: 180,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (entry.mood != null || entry.locationName != null)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 12.0),
+                                child: Row(
+                                  children: [
+                                    if (entry.mood != null) ...[
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFFDFBF7),
+                                          borderRadius: BorderRadius.circular(12),
+                                          border: Border.all(color: const Color(0xFFE8E4D9))
+                                        ),
+                                        child: Text(entry.mood!.toUpperCase(),
+                                          style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, color: const Color(0xFF7D9B76), fontWeight: FontWeight.w600)),
+                                      ),
+                                      const SizedBox(width: 8),
+                                    ],
+                                    if (entry.locationName != null && entry.locationName!.isNotEmpty) ...[
+                                      const Icon(Icons.location_on_rounded, size: 12, color: Color(0xFFFFB38E)),
+                                      const SizedBox(width: 4),
+                                      Expanded(
+                                        child: Text(entry.locationName!,
+                                          maxLines: 1, overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.outfit(fontSize: 10, color: const Color(0xFF8E8E93))),
+                                      ),
+                                    ]
+                                  ],
+                                ),
+                              ),
+                            Text(entry.text,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.outfit(
+                                fontSize: 15,
+                                color: const Color(0xFF4F5D75),
+                                fontWeight: FontWeight.w400,
+                                height: 1.5,
+                              )),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

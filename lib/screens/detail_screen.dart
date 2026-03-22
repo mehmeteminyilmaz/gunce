@@ -41,9 +41,12 @@ class DetailScreen extends StatelessWidget {
             ),
             flexibleSpace: FlexibleSpaceBar(
               background: entry.imagePath != null
-                ? Image.file(
-                    File(entry.imagePath!),
-                    fit: BoxFit.cover,
+                ? Hero(
+                    tag: 'image_${entry.id}',
+                    child: Image.file(
+                      File(entry.imagePath!),
+                      fit: BoxFit.cover,
+                    ),
                   )
                 : const SizedBox(),
             ),
