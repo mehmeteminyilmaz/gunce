@@ -40,7 +40,7 @@ class SideMenu extends StatelessWidget {
                           width: 64, height: 64,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             border: Border.all(color: const Color(0xFF5A67D8), width: 1.5),
                             boxShadow: [
                               BoxShadow(
@@ -59,7 +59,7 @@ class SideMenu extends StatelessWidget {
                       Text('Merhaba,',
                         style: GoogleFonts.outfit(
                           fontSize: 14,
-                          color: const Color(0xFF8E8E93),
+                          color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                         )),
                       
                       // İsim ve Streak Rozeti
@@ -73,7 +73,7 @@ class SideMenu extends StatelessWidget {
                                 style: GoogleFonts.playfairDisplay(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF1A202C),
+                                  color: Theme.of(context).colorScheme.onSurface,
                                   letterSpacing: -0.5,
                                 )),
                               if (streak > 0) ...[
@@ -102,7 +102,7 @@ class SideMenu extends StatelessWidget {
                   ),
                 ),
                 
-                const Divider(color: Color(0xFFE2E8F0), height: 1, indent: 32, endIndent: 32),
+                const Divider(color: Theme.of(context).dividerColor, height: 1, indent: 32, endIndent: 32),
                 const SizedBox(height: 24),
                 
                 _buildMenuItem(
@@ -174,7 +174,7 @@ class SideMenu extends StatelessWidget {
               style: GoogleFonts.outfit(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: const Color(0xFF1A202C),
+                color: Theme.of(context).colorScheme.onSurface,
               )),
           ],
         ),

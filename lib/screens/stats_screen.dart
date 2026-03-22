@@ -15,9 +15,9 @@ class StatsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Analiz',
           style: GoogleFonts.outfit(
-            fontSize: 18, color: const Color(0xFF1A202C), fontWeight: FontWeight.w500)),
+            fontSize: 18, color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w500)),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF1A202C), size: 18),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Theme.of(context).colorScheme.onSurface, size: 18),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -50,13 +50,13 @@ class StatsScreen extends StatelessWidget {
                   style: GoogleFonts.playfairDisplay(
                     fontSize: 28,
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xFF1A202C),
+                    color: Theme.of(context).colorScheme.onSurface,
                   )),
                 const SizedBox(height: 8),
                 Text('Bugüne dek tuttuğun tüm kayıtlar.',
                   style: GoogleFonts.outfit(
                     fontSize: 14,
-                    color: const Color(0xFF8E8E93),
+                    color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                   )),
                 const SizedBox(height: 32),
                 
@@ -64,10 +64,10 @@ class StatsScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF1A202C),
+                    color: Theme.of(context).colorScheme.onSurface,
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
-                      BoxShadow(color: const Color(0xFF1A202C).withOpacity(0.2), blurRadius: 15, offset: const Offset(0, 8))
+                      BoxShadow(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2), blurRadius: 15, offset: const Offset(0, 8))
                     ]
                   ),
                   child: Row(
@@ -91,7 +91,7 @@ class StatsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(currentStreak.toString(),
-                                style: GoogleFonts.playfairDisplay(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white, height: 1)),
+                                style: GoogleFonts.playfairDisplay(fontSize: 36, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.surface, height: 1)),
                               const SizedBox(width: 6),
                               Text('gün',
                                 style: GoogleFonts.outfit(fontSize: 16, color: Colors.white.withOpacity(0.8), fontWeight: FontWeight.w500)),
@@ -137,9 +137,9 @@ class StatsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Theme.of(context).dividerColor),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
         ]
@@ -147,20 +147,20 @@ class StatsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: const Color(0xFF8E8E93), size: 24),
+          Icon(icon, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5), size: 24),
           const SizedBox(height: 24),
           Text(value,
             style: GoogleFonts.outfit(
               fontSize: 36,
               fontWeight: FontWeight.w400,
-              color: const Color(0xFF1A202C),
+              color: Theme.of(context).colorScheme.onSurface,
               height: 1,
             )),
           const SizedBox(height: 8),
           Text(title,
             style: GoogleFonts.outfit(
               fontSize: 12,
-              color: const Color(0xFF8E8E93),
+              color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               height: 1.3,
             )),
         ],
@@ -172,9 +172,9 @@ class StatsScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Theme.of(context).dividerColor),
         boxShadow: [
             BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
         ]
@@ -186,7 +186,7 @@ class StatsScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(color: const Color(0xFFF7FAFC), shape: BoxShape.circle, border: Border.all(color: const Color(0xFFE2E8F0))),
+                decoration: BoxDecoration(color: const Color(0xFFF7FAFC), shape: BoxShape.circle, border: Border.all(color: const Theme.of(context).dividerColor)),
                 child: Icon(icon, color: iconColor, size: 20)
               ),
               const SizedBox(width: 16),
@@ -194,7 +194,7 @@ class StatsScreen extends StatelessWidget {
                 style: GoogleFonts.outfit(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: const Color(0xFF8E8E93),
+                  color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                   height: 1.2,
                 )),
             ],
@@ -203,7 +203,7 @@ class StatsScreen extends StatelessWidget {
             style: GoogleFonts.outfit(
               fontSize: 32,
               fontWeight: FontWeight.w400,
-              color: const Color(0xFF1A202C),
+              color: Theme.of(context).colorScheme.onSurface,
             )),
         ],
       ),
@@ -216,15 +216,15 @@ class StatsScreen extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(32),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: const Theme.of(context).dividerColor),
         ),
         child: Column(
           children: [
-            const Icon(Icons.auto_graph_rounded, color: Color(0xFFE2E8F0), size: 40),
+            const Icon(Icons.auto_graph_rounded, color: Theme.of(context).dividerColor, size: 40),
             const SizedBox(height: 16),
-            Text('Henüz yeterli veri yok', style: GoogleFonts.outfit(color: const Color(0xFF8E8E93))),
+            Text('Henüz yeterli veri yok', style: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
           ],
         ),
       );
@@ -238,12 +238,12 @@ class StatsScreen extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
         ],
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: const Theme.of(context).dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,12 +252,12 @@ class StatsScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(color: const Color(0xFFF7FAFC), shape: BoxShape.circle, border: Border.all(color: const Color(0xFFE2E8F0))),
+                decoration: BoxDecoration(color: const Color(0xFFF7FAFC), shape: BoxShape.circle, border: Border.all(color: const Theme.of(context).dividerColor)),
                 child: const Icon(Icons.bar_chart_rounded, color: Color(0xFF5A67D8), size: 20)
               ),
               const SizedBox(width: 12),
               Text('Duygu Analizi',
-                style: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.w600, color: const Color(0xFF1A202C))),
+                style: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
             ],
           ),
           const SizedBox(height: 36),
@@ -282,7 +282,7 @@ class StatsScreen extends StatelessWidget {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('${e.value}', style: GoogleFonts.outfit(fontSize: 12, color: const Color(0xFF8E8E93), fontWeight: FontWeight.w500)),
+                        Text('${e.value}', style: GoogleFonts.outfit(fontSize: 12, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontWeight: FontWeight.w500)),
                         const SizedBox(height: 8),
                         Container(
                           width: 32,
@@ -302,7 +302,7 @@ class StatsScreen extends StatelessWidget {
                           decoration: BoxDecoration(shape: BoxShape.circle, color: moodColor),
                         ),
                         const SizedBox(height: 8),
-                        Text(textPart, style: GoogleFonts.outfit(fontSize: 10, color: const Color(0xFF1A202C), fontWeight: FontWeight.w500)),
+                        Text(textPart, style: GoogleFonts.outfit(fontSize: 10, color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w500)),
                       ],
                     );
                   }).toList(),

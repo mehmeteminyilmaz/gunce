@@ -28,14 +28,14 @@ class DetailScreen extends StatelessWidget {
                 icon: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5))
                     ]
                   ),
                   child: const Icon(Icons.arrow_back_ios_new_rounded,
-                    color: Color(0xFF1A202C), size: 16),
+                    color: Theme.of(context).colorScheme.onSurface, size: 16),
                 ),
                 onPressed: () => Navigator.pop(context),
               ),
@@ -67,14 +67,14 @@ class DetailScreen extends StatelessWidget {
                     children: [
                       Text(dateStr,
                         style: GoogleFonts.outfit(
-                          fontSize: 14, letterSpacing: 2, color: const Color(0xFF8E8E93))),
+                          fontSize: 14, letterSpacing: 2, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
                       if (entry.mood != null)
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                           decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xFFE2E8F0)),
+                            border: Border.all(color: const Theme.of(context).dividerColor),
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                           ),
                           child: Text(entry.mood!.toUpperCase(),
                             style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, color: const Color(0xFF5A67D8), fontWeight: FontWeight.w600)),
@@ -89,7 +89,7 @@ class DetailScreen extends StatelessWidget {
                         const Icon(Icons.location_on_outlined, color: Color(0xFF9F7AEA), size: 16),
                         const SizedBox(width: 8),
                         Text(entry.locationName!,
-                          style: GoogleFonts.outfit(fontSize: 14, color: const Color(0xFF8E8E93), fontWeight: FontWeight.w400)),
+                          style: GoogleFonts.outfit(fontSize: 14, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontWeight: FontWeight.w400)),
                       ],
                     ),
                   ],
@@ -99,7 +99,7 @@ class DetailScreen extends StatelessWidget {
                   Text('"${entry.text}"',
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 24,
-                      color: const Color(0xFF1A202C),
+                      color: Theme.of(context).colorScheme.onSurface,
                       fontWeight: FontWeight.w500,
                       height: 1.8,
                     )),

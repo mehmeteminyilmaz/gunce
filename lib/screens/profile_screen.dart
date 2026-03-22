@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Container(
                     width: 120, height: 120,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
@@ -66,9 +66,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     decoration: BoxDecoration(
                       color: const Color(0xFF5A67D8),
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 3),
+                      border: Border.all(color: Theme.of(context).colorScheme.surface, width: 3),
                     ),
-                    child: const Icon(Icons.edit_rounded, color: Colors.white, size: 16),
+                    child: const Icon(Icons.edit_rounded, color: Theme.of(context).colorScheme.surface, size: 16),
                   ),
                 ],
               ),
@@ -81,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Expanded(
                       child: TextField(
                         controller: _nameController,
-                        style: GoogleFonts.outfit(fontSize: 24, color: const Color(0xFF1A202C)),
+                        style: GoogleFonts.outfit(fontSize: 24, color: Theme.of(context).colorScheme.onSurface),
                         decoration: InputDecoration(
                           hintText: 'Adınız',
                           border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300)),
@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(_nameController.text,
-                      style: GoogleFonts.playfairDisplay(fontSize: 28, fontWeight: FontWeight.w600, color: const Color(0xFF1A202C))),
+                      style: GoogleFonts.playfairDisplay(fontSize: 28, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
                     const SizedBox(width: 8),
                     GestureDetector(
                       onTap: () => setState(() => _isEditing = true),
@@ -110,26 +110,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
             
             const SizedBox(height: 8),
             Text('Günce ile yeni anılar biriktiriyor',
-              style: GoogleFonts.outfit(fontSize: 14, color: const Color(0xFF8E8E93))),
+              style: GoogleFonts.outfit(fontSize: 14, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
               
             const SizedBox(height: 48),
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 20, offset: const Offset(0, 10))
                 ],
-                border: Border.all(color: const Color(0xFFF4F1EA)),
+                border: Border.all(color: const Theme.of(context).dividerColor),
               ),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Katılım Tarihi', style: GoogleFonts.outfit(color: const Color(0xFF8E8E93))),
-                      Text('Bugün', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Color(0xFF1A202C))),
+                      Text('Katılım Tarihi', style: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                      Text('Bugün', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface)),
                     ],
                   ),
                 ],

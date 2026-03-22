@@ -59,7 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Cihazınızda biyometrik güvenlik (FaceID/Parmak İzi) aktif değil.',
             style: GoogleFonts.outfit(color: Colors.white)),
-          backgroundColor: const Color(0xFF1A202C),
+          backgroundColor: Theme.of(context).colorScheme.onSurface,
         ));
         return;
       }
@@ -99,12 +99,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 20, offset: const Offset(0, 10))
                 ],
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                border: Border.all(color: const Theme.of(context).dividerColor),
               ),
               child: Column(
                 children: [
@@ -113,9 +113,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.fingerprint_rounded, color: Color(0xFF1A202C), size: 24),
+                          const Icon(Icons.fingerprint_rounded, color: Theme.of(context).colorScheme.onSurface, size: 24),
                           const SizedBox(width: 12),
-                          Text('Biyometrik Kilit', style: GoogleFonts.outfit(color: const Color(0xFF1A202C), fontWeight: FontWeight.w500)),
+                          Text('Biyometrik Kilit', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w500)),
                         ],
                       ),
                       Switch(
@@ -125,18 +125,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ],
                   ),
-                  const Divider(height: 32, color: Color(0xFFE2E8F0)),
+                  const Divider(height: 32, color: Theme.of(context).dividerColor),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.notifications_active_rounded, color: Color(0xFF1A202C), size: 24),
+                          const Icon(Icons.notifications_active_rounded, color: Theme.of(context).colorScheme.onSurface, size: 24),
                           const SizedBox(width: 12),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Günlük Hatırlatma', style: GoogleFonts.outfit(color: const Color(0xFF1A202C), fontWeight: FontWeight.w500)),
+                              Text('Günlük Hatırlatma', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w500)),
                               if (_isReminderEnabled)
                                 GestureDetector(
                                   onTap: () async {
@@ -162,20 +162,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ],
                   ),
-                  const Divider(height: 32, color: Color(0xFFE2E8F0)),
+                  const Divider(height: 32, color: Theme.of(context).dividerColor),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Veri Yedekleme', style: GoogleFonts.outfit(color: const Color(0xFF4A5568))),
+                      Text('Veri Yedekleme', style: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
                       Text('Sadece Cihazda', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Color(0xFF5A67D8))),
                     ],
                   ),
-                  const Divider(height: 32, color: Color(0xFFE2E8F0)),
+                  const Divider(height: 32, color: Theme.of(context).dividerColor),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Versiyon', style: GoogleFonts.outfit(color: const Color(0xFF4A5568))),
-                      Text('v3.0.0 (Zen)', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Color(0xFF8E8E93))),
+                      Text('Versiyon', style: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
+                      Text('v3.0.0 (Zen)', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
                     ],
                   ),
                 ],
