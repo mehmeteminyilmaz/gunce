@@ -27,6 +27,7 @@
 | **Premium Zen Tasarımı** 🌌 | Özel AI (Yapay Zeka) logoları, pürüzsüz "Hero" uçuş animasyonları, parlak Glow gölgeleri ve sol taraftan akan kesintisiz "Yaşam Çizgisi (Timeline)" arayüzü ile lüks hissiyat. |
 | **Dinamik Duygu Analizi Grafiği** 📊 | 10 farklı elit "Renk-Kodlu (Color-coded)" duygu etiketi seçeneği ve dış kütüphane kullanılmadan tasarlanmış, giriş animasyonlu özel "Bar Grafiği" eklentisi. |
 | **Zaman Farkındalığı** ⏳ | Uygulamanızın ana ekranı, günün saatine duyarlı olarak ("Keyifli Günler", "Huzurlu Geceler") sizi dinamik başlıklarla karşılar. |
+| **Gelişmiş Anı Keşfi (Arama)** 🔍 | Yıllar önceki anılarınıza, mekan isimlerine veya hissettiğiniz duygulara anında ulaşmanızı sağlayan arama motoru. |
 
 <br>
 
@@ -70,7 +71,7 @@ Günce, tıpkı hayatın kendisi gibi sürekli gelişen, büyüyen ve güzelleş
 - ☁️ **Bulut Senkronizasyonu (Firebase):** Cihazınız değişse bile anılarınızın güvenli bir şekilde sizinle gelmesi.
 - 🎙️ **Sesli Anı Kaydı (Voice Memos):** Klavye kullanmak istemediğiniz yorgun gecelerde, duygularınızı sadece fısıldayarak kaydedebilme.
 - 🧠 **AI Destekli Akıllı Hatırlatıcılar:** Sadece boş bir bildirim değil, bulunduğunuz ruh haline uygun motivasyonel içerikler sunan asistan.
-- 🔍 **Gelişmiş Anı Keşfi & Arama:** Yıllar önceki spesifik bir anınıza (içindeki kelimelere veya lokasyona göre) saniyeler içinde ulaşabilme.
+- 🎭 **Gelişmiş Karakteristik Analiz (AI):** Anılarınızdaki kelimeleri okuyarak genel yaşam kalitenizi artırmaya yönelik sanal bir terapist profillemesi.
 - 🌗 **Oto-Zaman Modları:** Gündüzleri aydınlık ve ferah, geceleri ise mevcut lüks "Gece Mavisi" (Dark/Zen) temasına otomatik geçiş özelliği.
 
 *Siz de bu yolculuğun bir parçası olabilir, projeyi yıldızlayarak (⭐) veya katkı sağlayarak Günce'nin büyümesine destek olabilirsiniz!*

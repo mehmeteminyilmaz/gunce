@@ -22,6 +22,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late String _currentQuote;
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
 
   @override
   void initState() {
@@ -72,10 +74,19 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ValueListenableBuilder(
         valueListenable: Hive.box<Entry>('entries').listenable(),
         builder: (context, Box<Entry> box, _) {
-          final entries = box.values.toList()..sort((a, b) => b.date.compareTo(a.date));
+          final allEntries = box.values.toList()..sort((a, b) => b.date.compareTo(a.date));
+          final currentStreak = StreakCalculator.calculate(allEntries);
           final lastYear = _lastYearEntry(box);
           final todayEntry = _entryForDay(box, DateTime.now());
-          final currentStreak = StreakCalculator.calculate(entries);
+          
+          final entries = allEntries.where((entry) {
+            if (_searchQuery.isEmpty) return true;
+            final query = _searchQuery.toLowerCase();
+            final textMatch = entry.text.toLowerCase().contains(query);
+            final locMatch = entry.locationName?.toLowerCase().contains(query) ?? false;
+            final moodMatch = entry.mood?.toLowerCase().contains(query) ?? false;
+            return textMatch || locMatch || moodMatch;
+          }).toList();
 
           return SafeArea(
             bottom: false,
