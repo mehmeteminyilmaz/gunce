@@ -1,65 +1,67 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/mehmeteminyilmaz/gunce/main/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="120" alt="Günce Logo">
-  <h1>Günce (Zamanın Dinginliği) 🌿</h1>
-  <p><strong>Ruhunuzu dinlendiren, kişisel ve güvenli bir dijital günlük uygulaması.</strong></p>
+  <h1>Günce</h1>
+  <p><strong><em>"Hafızanın Saklı Bahçesi"</em></strong></p>
+  <p>Ruhunuzu dinlendiren, kişisel ve tamamen size ait bir dijital sığınak.</p>
+  <br>
   
-  [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)](https://flutter.dev/)
-  [![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart)](https://dart.dev/)
-  [![Hive](https://img.shields.io/badge/Database-Hive-orange?logo=database)](https://pub.dev/packages/hive)
+  <p>
+    <img src="https://img.shields.io/badge/Platform-Android_|_iOS_|_Web-3DDC84.svg?style=for-the-badge&logo=android" alt="Platformlar" />
+    <img src="https://img.shields.io/badge/Status-Aktif_Geliştirme-FFB38E.svg?style=for-the-badge" alt="Durum" />
+    <img src="https://img.shields.io/badge/Database-Local_Offline-7D9B76.svg?style=for-the-badge&logo=sqlite" alt="Veritabanı" />
+  </p>
 </div>
 
 <br>
 
-**Günce**, günlük hayattaki sıradan veya özel anılarınızı not alabileceğiniz, şık ve sade tasarımıyla göz yormayan, güvenli bir Flutter uygulamasıdır. "Krem ve Adaçayı" konseptiyle tasarlanmış arayüzü sayesinde yazarken zihninizi boşaltmanıza yardımcı olur.
+**Günce**, hayattaki sıradan veya özel tüm anılarınızı not alabileceğiniz, şık tasarımıyla ruhunuzu yormayan, güvenilir ve modern bir mobil uygulamadır. Göz yormayan **"Krem ve Adaçayı"** renk konsepti sayesinde, yazarken tüm dış dünyadan soyutlanabilir ve yalnızca kendinize odaklanabilirsiniz. ☕🌿
 
 ---
 
-## ✨ Özellikler
+## 🌟 Öne Çıkan Özellikler
 
-- 📸 **Anılarına Görsel Kat:** İster cihazının kamerasından o anın fotoğrafını çek, ister galerinden en güzel kareyi seç.
-- 🔥 **Günlük Yazma Serisi (Streak):** Motive kal! Zinciri kırmadan kaç gün üst üste günlük tuttuğunu Yan Menü ve İstatistik sayfasından takip et.
-- 🔒 **Biyometrik Kilit (FaceID / TouchID):** Anıların sadece sana özel. Uygulamayı parmak izi veya yüz tanıma ile kilitleyerek meraklı gözlerden koru.
-- 🎨 **Dingin Tasarım Arayüzü:** Krem (Soft Light), Adaçayı yeşili ve Pastel şeftali tonlarıyla tamamen dikkat dağıtmayan, "zen" bir yazma deneyimi.
-- 📅 **Zengin İstatistikler:** Hangi modda ne kadar yazdığını, ne kadar süredir Günce kullandığını analiz et.
-- 💬 **Günlük Motivasyon Sözleri:** Her girdiğinde seni farklı ve ilham verici bir söz karşılar.
-- 🗄️ **Çevrimdışı & Hızlı (Hive):** İnternet gerektirmez! Anıların sadece senin cihazında (Hive lokal veritabanı) güvende tutulur.
+| ✨ Özellik | 📝 Açıklama |
+| :--- | :--- |
+| **Görsel Hafıza** | Anılarınıza sadece kelimelerle değil, cihaza entegre **Kamera** veya **Galeri** çekimleriyle görsellik katın. |
+| **Ateşleyici Seriler (Streak)** 🔥 | Motivasyonunuzu yüksek tutun! Günlüğünüzü art arda kullandıkça büyüyen günlük "Streak" serileri oluşturun. |
+| **Sarsılmaz Güvenlik** 🔒 | Tamamen yerel (offline) veritabanı altyapısına ek olarak; entegre edilen **Biyometrik Kilit** (Yüz Tanıma & Parmak İzi) ile anılarınızı herkesden koruyun. |
+| **Zen Tasarımı** 🎨 | Dikkat dağıtmayan arayüz, akıcı animasyonlar (Soft Light) ve sizi saran pastel şeftali tonlu detaylar. |
+| **Kişisel İstatistikler** 📊 | Hangi duygularda ne kadar yazıyorsunuz? Uygulama performansınız nedir? Özel ekranda dilediğinizce analiz edin. |
+| **Motivasyon Sözleri** 💬 | Her adımınızda farklı, içinizi ısıtan güzel bir söz ekranında sizi karşılar.
 
 <br>
 
-## 🚀 Kurulum
+## 🚀 Hızlı Kurulum
 
-Projeyi kendi bilgisayarınızda çalıştırmak için aşağıdaki adımları izleyebilirsiniz.
+Kendi cihazınızda test edebilmeniz veya geliştirmeye katkı sağlayabilmeniz için:
 
-1. **Depoyu Klonlayın:**
+1. **Projeyi indirin:**
 ```bash
 git clone https://github.com/mehmeteminyilmaz/gunce.git
 cd gunce
 ```
 
-2. **Bağımlılıkları Yükleyin:**
+2. **Gerekli alt yapıları çekin:**
 ```bash
 flutter pub get
 ```
 
-3. **Uygulamayı Çalıştırın:**
+3. **Uygulamayı dilediğiniz platformda başlatın:**
 ```bash
 flutter run
 ```
 
 <br>
 
-## 🛠️ Kullanılan Teknolojiler & Paketler
+## 🛠️ Teknolojik Altyapı
+Bu uygulamanın ardında, kullanıcı deneyimini maksimuma çıkaran ve stabiliteyi sağlayan modern paketler kullanıldı:
 
-Güçlü ve modern bir yapı için projede aşağıdaki araçlar kullanılmıştır:
-
-* **[Hive](https://pub.dev/packages/hive) / [Hive_Flutter](https://pub.dev/packages/hive_flutter):** Çok hızlı lokal NoSQL veritabanı. Modeller `TypeAdapter` ile kaydedilir.
-* **[Local Auth](https://pub.dev/packages/local_auth):** Biyometrik (Touch/Face) güvenlik kilidi.
-* **[Image Picker](https://pub.dev/packages/image_picker):** Kamera kullanımı ve galeri resim seçimi.
-* **[Google Fonts](https://pub.dev/packages/google_fonts):** Tipografi detayları (Outfit, Playfair Display).
-* **[Intl](https://pub.dev/packages/intl):** Tarih/Zaman ve Türkçeleştirme (Yerelleştirme) formatları.
+> 🟩 **Görsel Deneyim:** Özel tipografiler için **`google_fonts`**, estetik görseller için cihaz donanımını kontrol eden **`image_picker`**.  
+> 🟧 **Gelişmiş Güvenlik:** Sektör standartlarında parmak izi/FaceID denetimleri için **`local_auth`**.  
+> 🟨 **Hızlı Veritabanı:** Mobil cihazlarda şimşek hızında çalışan lokal saklama çözümü: **`hive`** ve **`hive_flutter`**.  
+> 🟦 **Lokasyon ve Zaman:** Küresel dil ve takvim senkronizasyonu için gelişmiş **`intl`** kütüphanesi.
 
 <br>
 
 <div align="center">
-  <i>"Günlük tutmak, kendinle yaptığın en samimi sohbettir."</i>
+  <i>Bugünün anılarını kaydet, yarının tebessümü olsun.</i>
 </div>
