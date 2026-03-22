@@ -5,6 +5,7 @@ import '../models/entry.dart';
 import '../utils/streak_calculator.dart';
 import '../screens/stats_screen.dart';
 import '../screens/profile_screen.dart';
+import '../screens/settings_screen.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
@@ -134,7 +135,7 @@ class SideMenu extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const ProfileScreen(),
+                      pageBuilder: (_, __, ___) => const SettingsScreen(),
                       transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
                     ));
                   },

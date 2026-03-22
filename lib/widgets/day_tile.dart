@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import '../models/entry.dart';
 
@@ -43,7 +44,9 @@ class DayTile extends StatelessWidget {
             : null,
           image: entry?.imagePath != null
             ? DecorationImage(
-                image: FileImage(File(entry!.imagePath!)),
+                image: kIsWeb 
+                    ? NetworkImage(entry!.imagePath!) as ImageProvider 
+                    : FileImage(File(entry!.imagePath!)),
                 fit: BoxFit.cover,
               )
             : null,

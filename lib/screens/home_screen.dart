@@ -154,7 +154,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             image: lastYear.imagePath != null
                                 ? DecorationImage(
-                                    image: FileImage(File(lastYear.imagePath!)),
+                                    image: kIsWeb
+                                        ? NetworkImage(lastYear.imagePath!) as ImageProvider
+                                        : FileImage(File(lastYear.imagePath!)),
                                     fit: BoxFit.cover,
                                     colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.darken),
                                   )
