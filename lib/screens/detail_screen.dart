@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -43,10 +44,9 @@ class DetailScreen extends StatelessWidget {
               background: entry.imagePath != null
                 ? Hero(
                     tag: 'image_${entry.id}',
-                    child: Image.file(
-                      File(entry.imagePath!),
-                      fit: BoxFit.cover,
-                    ),
+                    child: kIsWeb
+                        ? Image.network(entry.imagePath!, fit: BoxFit.cover)
+                        : Image.file(File(entry.imagePath!), fit: BoxFit.cover),
                   )
                 : const SizedBox(),
             ),

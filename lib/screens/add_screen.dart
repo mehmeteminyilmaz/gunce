@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -261,7 +262,9 @@ class _AddScreenState extends State<AddScreen> {
                   ],
                   image: _imagePath != null
                     ? DecorationImage(
-                        image: FileImage(File(_imagePath!)),
+                        image: kIsWeb 
+                            ? NetworkImage(_imagePath!) as ImageProvider 
+                            : FileImage(File(_imagePath!)),
                         fit: BoxFit.cover)
                     : null,
                 ),

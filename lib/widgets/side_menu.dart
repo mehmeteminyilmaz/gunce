@@ -132,7 +132,11 @@ class SideMenu extends StatelessWidget {
                   icon: Icons.settings_outlined,
                   title: 'Ayarlar',
                   onTap: () {
-                    // Şimdilik boş
+                    Navigator.pop(context);
+                    Navigator.push(context, PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => const ProfileScreen(),
+                      transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
+                    ));
                   },
                 ),
                 

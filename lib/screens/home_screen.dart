@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -362,12 +363,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           tag: 'image_${entry.id}',
                           child: ClipRRect(
                             borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                            child: Image.file(
-                              File(entry.imagePath!),
-                              width: double.infinity,
-                              height: 180,
-                              fit: BoxFit.cover,
-                            ),
+                            child: kIsWeb
+                                ? Image.network(
+                                    entry.imagePath!,
+                                    width: double.infinity,
+                                    height: 180,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.file(
+                                    File(entry.imagePath!),
+                                    width: double.infinity,
+                                    height: 180,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                         ),
                       Padding(
