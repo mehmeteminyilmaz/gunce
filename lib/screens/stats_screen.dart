@@ -117,29 +117,7 @@ class StatsScreen extends StatelessWidget {
                 _buildHorizontalStatCard('Gezilen\nKonumlar', locationsCount.toString(), Icons.location_on_rounded, const Color(0xFFFFB38E)),
                 
                 const SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(32),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
-                    ],
-                    border: Border.all(color: const Color(0xFFE8E4D9)),
-                  ),
-                  child: Column(
-                    children: [
-                      const Icon(Icons.mood_rounded, color: Color(0xFF7D9B76), size: 40),
-                      const SizedBox(height: 20),
-                      Text('Genel Ruh Hali',
-                        style: GoogleFonts.outfit(fontSize: 12, color: const Color(0xFF8E8E93))),
-                      const SizedBox(height: 8),
-                      Text(topMood.toUpperCase(),
-                        style: GoogleFonts.outfit(fontSize: 24, fontWeight: FontWeight.w600, color: const Color(0xFF2D3142))),
-                    ],
-                  ),
-                ),
+                _buildMoodChart(moodCounts),
                 
                 const SizedBox(height: 60),
                 Center(
@@ -226,6 +204,113 @@ class StatsScreen extends StatelessWidget {
               fontWeight: FontWeight.w400,
               color: const Color(0xFF2D3142),
             )),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMoodChart(Map<String, int> moodCounts) {
+    if (moodCounts.isEmpty) {
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(32),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: const Color(0xFFE8E4D9)),
+        ),
+        child: Column(
+          children: [
+            const Icon(Icons.auto_graph_rounded, color: Color(0xFFE8E4D9), size: 40),
+            const SizedBox(height: 16),
+            Text('Henüz yeterli veri yok', style: GoogleFonts.outfit(color: const Color(0xFF8E8E93))),
+          ],
+        ),
+      );
+    }
+
+    int maxCount = moodCounts.values.reduce((a, b) => a > b ? a : b);
+    final sortedMoods = moodCounts.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+    final displayMoods = sortedMoods.take(5).toList();
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
+        ],
+        border: Border.all(color: const Color(0xFFE8E4D9)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(color: const Color(0xFFFDFBF7), shape: BoxShape.circle, border: Border.all(color: const Color(0xFFE8E4D9))),
+                child: const Icon(Icons.bar_chart_rounded, color: Color(0xFF7D9B76), size: 20)
+              ),
+              const SizedBox(width: 12),
+              Text('Duygu Analizi',
+                style: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.w600, color: const Color(0xFF2D3142))),
+            ],
+          ),
+          const SizedBox(height: 36),
+          SizedBox(
+            height: 160,
+            child: TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0.0, end: 1.0),
+              duration: const Duration(milliseconds: 1600),
+              curve: Curves.elasticOut,
+              builder: (context, value, _) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: displayMoods.map((e) {
+                    final percentage = maxCount == 0 ? 0.0 : e.value / maxCount;
+                    final barHeight = 90.0 * percentage * value;
+                    final moodText = e.key;
+
+                    String emoji = '✨';
+                    String textPart = moodText;
+                    final lastSpaceIndex = moodText.lastIndexOf(' ');
+                    if (lastSpaceIndex != -1) {
+                      textPart = moodText.substring(0, lastSpaceIndex);
+                      emoji = moodText.substring(lastSpaceIndex + 1);
+                    }
+
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text('${e.value}', style: GoogleFonts.outfit(fontSize: 12, color: const Color(0xFF8E8E93), fontWeight: FontWeight.w500)),
+                        const SizedBox(height: 8),
+                        Container(
+                          width: 32,
+                          height: barHeight > 0 ? barHeight : 4,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFF7D9B76), Color(0xFFA5C29F)],
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(emoji, style: const TextStyle(fontSize: 22)),
+                        const SizedBox(height: 4),
+                        Text(textPart, style: GoogleFonts.outfit(fontSize: 10, color: const Color(0xFF2D3142), fontWeight: FontWeight.w500)),
+                      ],
+                    );
+                  }).toList(),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
