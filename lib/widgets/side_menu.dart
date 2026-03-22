@@ -59,7 +59,7 @@ class SideMenu extends StatelessWidget {
                       Text('Merhaba,',
                         style: GoogleFonts.outfit(
                           fontSize: 14,
-                          color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                         )),
                       
                       // İsim ve Streak Rozeti
@@ -102,10 +102,11 @@ class SideMenu extends StatelessWidget {
                   ),
                 ),
                 
-                const Divider(color: Theme.of(context).dividerColor, height: 1, indent: 32, endIndent: 32),
+                Divider(color: Theme.of(context).dividerColor, height: 1, indent: 32, endIndent: 32),
                 const SizedBox(height: 24),
                 
                 _buildMenuItem(
+                  context: context,
                   icon: Icons.person_rounded,
                   title: 'Profilim',
                   onTap: () {
@@ -118,6 +119,7 @@ class SideMenu extends StatelessWidget {
                 ),
                 
                 _buildMenuItem(
+                  context: context,
                   icon: Icons.auto_awesome_rounded,
                   title: 'İstatistikler & Analiz',
                   onTap: () {
@@ -130,6 +132,7 @@ class SideMenu extends StatelessWidget {
                 ),
                 
                 _buildMenuItem(
+                  context: context,
                   icon: Icons.settings_outlined,
                   title: 'Ayarlar',
                   onTap: () {
@@ -159,7 +162,7 @@ class SideMenu extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItem({required IconData icon, required String title, required VoidCallback onTap}) {
+  Widget _buildMenuItem({required BuildContext context, required IconData icon, required String title, required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
       splashColor: const Color(0xFF5A67D8).withOpacity(0.1),

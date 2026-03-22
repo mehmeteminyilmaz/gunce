@@ -118,8 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         ShaderMask(
-                          shaderCallback: (bounds) => const LinearGradient(
-                            colors: [Color(0xFF5A67D8), Theme.of(context).colorScheme.onSurface.withOpacity(0.7)],
+                          shaderCallback: (bounds) => LinearGradient(
+                            colors: [const Color(0xFF5A67D8), const Color(0xFF4A5568)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ).createShader(bounds),
@@ -186,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Row(
                                 children: [
-                                  const Icon(Icons.history_edu_rounded, color: Theme.of(context).colorScheme.surface, size: 20),
+                                  Icon(Icons.history_edu_rounded, color: Theme.of(context).colorScheme.surface, size: 20),
                                   const SizedBox(width: 8),
                                   Text('GEÇEN YIL BUGÜN',
                                     style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 2, color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.w600)),
@@ -246,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: const Theme.of(context).dividerColor),
+                        border: Border.all(color: Theme.of(context).dividerColor),
                         boxShadow: [
                           BoxShadow(
                             color: const Color(0xFF5A67D8).withOpacity(0.04),
@@ -260,10 +260,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface, fontSize: 16),
                         decoration: InputDecoration(
                           hintText: 'Anılarda ara... (Örn: kahve, istanbul)',
-                          hintStyle: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 14),
+                          hintStyle: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 14),
                           prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFF7F9CF5), size: 22),
                           suffixIcon: _searchQuery.isNotEmpty ? IconButton(
-                            icon: const Icon(Icons.close_rounded, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), size: 18),
+                            icon: Icon(Icons.close_rounded, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), size: 18),
                             onPressed: () {
                               _searchController.clear();
                               setState(() => _searchQuery = '');
@@ -298,7 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(40.0),
                           child: Text('İlk sayfayı aralamalısın...',
-                            style: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 16)),
+                            style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 16)),
                         ),
                       ),
                     )
@@ -469,7 +469,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Expanded(
                                         child: Text(entry.locationName!,
                                           maxLines: 1, overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.outfit(fontSize: 10, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                                          style: GoogleFonts.outfit(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
                                       ),
                                     ]
                                   ],
@@ -480,7 +480,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.outfit(
                                 fontSize: 15,
-                                color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                                 fontWeight: FontWeight.w400,
                                 height: 1.5,
                               )),

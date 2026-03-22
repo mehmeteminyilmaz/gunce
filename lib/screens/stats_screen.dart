@@ -17,7 +17,7 @@ class StatsScreen extends StatelessWidget {
           style: GoogleFonts.outfit(
             fontSize: 18, color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w500)),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Theme.of(context).colorScheme.onSurface, size: 18),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: Theme.of(context).colorScheme.onSurface, size: 18),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -56,7 +56,7 @@ class StatsScreen extends StatelessWidget {
                 Text('Bugüne dek tuttuğun tüm kayıtlar.',
                   style: GoogleFonts.outfit(
                     fontSize: 14,
-                    color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                   )),
                 const SizedBox(height: 32),
                 
@@ -64,10 +64,10 @@ class StatsScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: const Color(0xFF5A67D8),
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
-                      BoxShadow(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2), blurRadius: 15, offset: const Offset(0, 8))
+                      BoxShadow(color: const Color(0xFF5A67D8).withOpacity(0.4), blurRadius: 15, offset: const Offset(0, 8))
                     ]
                   ),
                   child: Row(
@@ -91,7 +91,7 @@ class StatsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(currentStreak.toString(),
-                                style: GoogleFonts.playfairDisplay(fontSize: 36, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.surface, height: 1)),
+                                style: GoogleFonts.playfairDisplay(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white, height: 1)),
                               const SizedBox(width: 6),
                               Text('gün',
                                 style: GoogleFonts.outfit(fontSize: 16, color: Colors.white.withOpacity(0.8), fontWeight: FontWeight.w500)),
@@ -107,18 +107,18 @@ class StatsScreen extends StatelessWidget {
                 // Stat Cards (Ferah)
                 Row(
                   children: [
-                    Expanded(child: _buildStatCard('Toplam\nKayıt', totalEntries.toString(), Icons.book_rounded)),
+                    Expanded(child: _buildStatCard(context, 'Toplam\nKayıt', totalEntries.toString(), Icons.book_rounded)),
                     const SizedBox(width: 16),
-                    Expanded(child: _buildStatCard('Fotoğraflı\nAnı', photosCount.toString(), Icons.photo_camera_rounded)),
+                    Expanded(child: _buildStatCard(context, 'Fotoğraflı\nAnı', photosCount.toString(), Icons.photo_camera_rounded)),
                   ],
                 ),
                 const SizedBox(height: 16),
                 
                 // Konum Kartı
-                _buildHorizontalStatCard('Gezilen\nKonumlar', locationsCount.toString(), Icons.location_on_rounded, const Color(0xFF9F7AEA)),
+                _buildHorizontalStatCard(context, 'Gezilen\nKonumlar', locationsCount.toString(), Icons.location_on_rounded, const Color(0xFF9F7AEA)),
                 
                 const SizedBox(height: 16),
-                _buildMoodChart(moodCounts),
+                _buildMoodChart(context, moodCounts),
                 
                 const SizedBox(height: 60),
                 Center(
@@ -133,13 +133,13 @@ class StatsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard(String title, String value, IconData icon) {
+  Widget _buildStatCard(BuildContext context, String title, String value, IconData icon) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Theme.of(context).dividerColor),
+        border: Border.all(color: Theme.of(context).dividerColor),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
         ]
@@ -147,7 +147,7 @@ class StatsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5), size: 24),
+          Icon(icon, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), size: 24),
           const SizedBox(height: 24),
           Text(value,
             style: GoogleFonts.outfit(
@@ -160,7 +160,7 @@ class StatsScreen extends StatelessWidget {
           Text(title,
             style: GoogleFonts.outfit(
               fontSize: 12,
-              color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               height: 1.3,
             )),
         ],
@@ -168,13 +168,13 @@ class StatsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHorizontalStatCard(String title, String value, IconData icon, Color iconColor) {
+  Widget _buildHorizontalStatCard(BuildContext context, String title, String value, IconData icon, Color iconColor) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Theme.of(context).dividerColor),
+        border: Border.all(color: Theme.of(context).dividerColor),
         boxShadow: [
             BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
         ]
@@ -186,7 +186,7 @@ class StatsScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(color: const Color(0xFFF7FAFC), shape: BoxShape.circle, border: Border.all(color: const Theme.of(context).dividerColor)),
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerHighest, shape: BoxShape.circle, border: Border.all(color: Theme.of(context).dividerColor)),
                 child: Icon(icon, color: iconColor, size: 20)
               ),
               const SizedBox(width: 16),
@@ -194,7 +194,7 @@ class StatsScreen extends StatelessWidget {
                 style: GoogleFonts.outfit(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                   height: 1.2,
                 )),
             ],
@@ -210,7 +210,7 @@ class StatsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMoodChart(Map<String, int> moodCounts) {
+  Widget _buildMoodChart(BuildContext context, Map<String, int> moodCounts) {
     if (moodCounts.isEmpty) {
       return Container(
         width: double.infinity,
@@ -218,13 +218,13 @@ class StatsScreen extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: const Theme.of(context).dividerColor),
+          border: Border.all(color: Theme.of(context).dividerColor),
         ),
         child: Column(
           children: [
-            const Icon(Icons.auto_graph_rounded, color: Theme.of(context).dividerColor, size: 40),
+            Icon(Icons.auto_graph_rounded, color: Theme.of(context).dividerColor, size: 40),
             const SizedBox(height: 16),
-            Text('Henüz yeterli veri yok', style: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+            Text('Henüz yeterli veri yok', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
           ],
         ),
       );
@@ -243,7 +243,7 @@ class StatsScreen extends StatelessWidget {
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
         ],
-        border: Border.all(color: const Theme.of(context).dividerColor),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,7 +252,7 @@ class StatsScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(color: const Color(0xFFF7FAFC), shape: BoxShape.circle, border: Border.all(color: const Theme.of(context).dividerColor)),
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerHighest, shape: BoxShape.circle, border: Border.all(color: Theme.of(context).dividerColor)),
                 child: const Icon(Icons.bar_chart_rounded, color: Color(0xFF5A67D8), size: 20)
               ),
               const SizedBox(width: 12),
@@ -282,7 +282,7 @@ class StatsScreen extends StatelessWidget {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('${e.value}', style: GoogleFonts.outfit(fontSize: 12, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontWeight: FontWeight.w500)),
+                        Text('${e.value}', style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontWeight: FontWeight.w500)),
                         const SizedBox(height: 8),
                         Container(
                           width: 32,

@@ -104,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 boxShadow: [
                   BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 20, offset: const Offset(0, 10))
                 ],
-                border: Border.all(color: const Theme.of(context).dividerColor),
+                border: Border.all(color: Theme.of(context).dividerColor),
               ),
               child: Column(
                 children: [
@@ -113,7 +113,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.fingerprint_rounded, color: Theme.of(context).colorScheme.onSurface, size: 24),
+                          Icon(Icons.fingerprint_rounded, color: Theme.of(context).colorScheme.onSurface, size: 24),
                           const SizedBox(width: 12),
                           Text('Biyometrik Kilit', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w500)),
                         ],
@@ -125,13 +125,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ],
                   ),
-                  const Divider(height: 32, color: Theme.of(context).dividerColor),
+                  Divider(height: 32, color: Theme.of(context).dividerColor),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.notifications_active_rounded, color: Theme.of(context).colorScheme.onSurface, size: 24),
+                          Icon(Icons.notifications_active_rounded, color: Theme.of(context).colorScheme.onSurface, size: 24),
                           const SizedBox(width: 12),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,20 +162,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ],
                   ),
-                  const Divider(height: 32, color: Theme.of(context).dividerColor),
+                  Divider(height: 32, color: Theme.of(context).dividerColor),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Veri Yedekleme', style: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
+                      Text('Veri Yedekleme', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
                       Text('Sadece Cihazda', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Color(0xFF5A67D8))),
                     ],
                   ),
-                  const Divider(height: 32, color: Theme.of(context).dividerColor),
+                  Divider(height: 32, color: Theme.of(context).dividerColor),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Versiyon', style: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
-                      Text('v3.0.0 (Zen)', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                      Text('Versiyon', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
+                      Text('v3.0.0 (Zen)', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
                     ],
                   ),
                 ],

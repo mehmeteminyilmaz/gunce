@@ -33,9 +33,9 @@ class _AddScreenState extends State<AddScreen> {
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         padding: const EdgeInsets.all(24),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -69,12 +69,12 @@ class _AddScreenState extends State<AddScreen> {
             decoration: BoxDecoration(
               color: const Color(0xFFF7FAFC),
               shape: BoxShape.circle,
-              border: Border.all(color: const Theme.of(context).dividerColor)
+              border: Border.all(color: Theme.of(context).dividerColor)
             ),
             child: Icon(icon, color: const Color(0xFF5A67D8), size: 32),
           ),
           const SizedBox(height: 12),
-          Text(label, style: GoogleFonts.outfit(fontSize: 14, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+          Text(label, style: GoogleFonts.outfit(fontSize: 14, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
         ],
       ),
     );
@@ -126,13 +126,13 @@ class _AddScreenState extends State<AddScreen> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: IconButton(
-            icon: const Icon(Icons.close_rounded, color: Theme.of(context).colorScheme.onSurface, size: 28),
+            icon: Icon(Icons.close_rounded, color: Theme.of(context).colorScheme.onSurface, size: 28),
             onPressed: () => Navigator.pop(context),
           ),
         ),
         title: Text(today,
           style: GoogleFonts.outfit(
-            fontSize: 16, letterSpacing: 1, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontWeight: FontWeight.w400)),
+            fontSize: 16, letterSpacing: 1, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontWeight: FontWeight.w400)),
         centerTitle: true,
         actions: [
           Padding(
@@ -153,14 +153,14 @@ class _AddScreenState extends State<AddScreen> {
             
             // Konum Alanı (Yeni Özellik)
             Text('Neredesin?',
-              style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+              style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Theme.of(context).dividerColor),
+                border: Border.all(color: Theme.of(context).dividerColor),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.02),
@@ -191,7 +191,7 @@ class _AddScreenState extends State<AddScreen> {
 
             // Ruh Hali Seçimi
             Text('Nasıl hissediyorsun?',
-              style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+              style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
             const SizedBox(height: 16),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -209,7 +209,7 @@ class _AddScreenState extends State<AddScreen> {
                         color: isSelected ? MoodColors.getColor(mood) : Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: isSelected ? MoodColors.getColor(mood) : const Theme.of(context).dividerColor,
+                          color: isSelected ? MoodColors.getColor(mood) : Theme.of(context).dividerColor,
                           width: 1.5,
                         ),
                         boxShadow: [
@@ -234,7 +234,7 @@ class _AddScreenState extends State<AddScreen> {
                             style: GoogleFonts.outfit(
                               fontSize: 14,
                               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                              color: isSelected ? Colors.white : const Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                              color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                             )
                           ),
                         ],
@@ -256,7 +256,7 @@ class _AddScreenState extends State<AddScreen> {
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: const Theme.of(context).dividerColor),
+                  border: Border.all(color: Theme.of(context).dividerColor),
                   boxShadow: [
                     BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))
                   ],
@@ -277,14 +277,14 @@ class _AddScreenState extends State<AddScreen> {
                           decoration: BoxDecoration(
                             color: const Color(0xFFF7FAFC),
                             shape: BoxShape.circle,
-                            border: Border.all(color: const Theme.of(context).dividerColor),
+                            border: Border.all(color: Theme.of(context).dividerColor),
                           ),
                           child: const Icon(Icons.add_photo_alternate_rounded, color: Color(0xFF5A67D8), size: 32),
                         ),
                         const SizedBox(height: 16),
                         Text('Fotoğraf Ekle',
                           style: GoogleFonts.outfit(
-                            fontSize: 14, letterSpacing: 1, fontWeight: FontWeight.w400, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                            fontSize: 14, letterSpacing: 1, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
                       ])
                   : null,
               ),
@@ -298,7 +298,7 @@ class _AddScreenState extends State<AddScreen> {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: const Theme.of(context).dividerColor),
+                border: Border.all(color: Theme.of(context).dividerColor),
                 boxShadow: [
                   BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))
                 ],
@@ -313,7 +313,7 @@ class _AddScreenState extends State<AddScreen> {
                   hintText: 'Bugünden aklında kalanlar...',
                   hintStyle: GoogleFonts.playfairDisplay(color: const Color(0xFFB0B0B0), fontWeight: FontWeight.w400),
                   border: InputBorder.none,
-                  counterStyle: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 12),
+                  counterStyle: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 12),
                 ),
               ),
             ),

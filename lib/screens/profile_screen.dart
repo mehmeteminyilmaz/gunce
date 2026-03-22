@@ -68,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       shape: BoxShape.circle,
                       border: Border.all(color: Theme.of(context).colorScheme.surface, width: 3),
                     ),
-                    child: const Icon(Icons.edit_rounded, color: Theme.of(context).colorScheme.surface, size: 16),
+                    child: Icon(Icons.edit_rounded, color: Theme.of(context).colorScheme.surface, size: 16),
                   ),
                 ],
               ),
@@ -110,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             
             const SizedBox(height: 8),
             Text('Günce ile yeni anılar biriktiriyor',
-              style: GoogleFonts.outfit(fontSize: 14, color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+              style: GoogleFonts.outfit(fontSize: 14, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
               
             const SizedBox(height: 48),
             Container(
@@ -121,14 +121,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 boxShadow: [
                   BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 20, offset: const Offset(0, 10))
                 ],
-                border: Border.all(color: const Theme.of(context).dividerColor),
+                border: Border.all(color: Theme.of(context).dividerColor),
               ),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Katılım Tarihi', style: GoogleFonts.outfit(color: const Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                      Text('Katılım Tarihi', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
                       Text('Bugün', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface)),
                     ],
                   ),
