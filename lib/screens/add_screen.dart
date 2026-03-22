@@ -39,7 +39,7 @@ class _AddScreenState extends State<AddScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Fotoğraf Seç', style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.w500, color: const Color(0xFF2D3142))),
+            Text('Fotoğraf Seç', style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.w500, color: const Color(0xFF1A202C))),
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -66,11 +66,11 @@ class _AddScreenState extends State<AddScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFFFDFBF7),
+              color: const Color(0xFFF7FAFC),
               shape: BoxShape.circle,
-              border: Border.all(color: const Color(0xFFE8E4D9))
+              border: Border.all(color: const Color(0xFFE2E8F0))
             ),
-            child: Icon(icon, color: const Color(0xFF7D9B76), size: 32),
+            child: Icon(icon, color: const Color(0xFF5A67D8), size: 32),
           ),
           const SizedBox(height: 12),
           Text(label, style: GoogleFonts.outfit(fontSize: 14, color: const Color(0xFF8E8E93))),
@@ -95,7 +95,7 @@ class _AddScreenState extends State<AddScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Bugünü anlatacak bir şeyler yazmalısın.', style: GoogleFonts.outfit(color: Colors.white)),
-          backgroundColor: const Color(0xFF2D3142),
+          backgroundColor: const Color(0xFF1A202C),
           behavior: SnackBarBehavior.floating,
         ));
       return;
@@ -118,14 +118,14 @@ class _AddScreenState extends State<AddScreen> {
   Widget build(BuildContext context) {
     final today = DateFormat('d MMMM yyyy', 'tr').format(DateTime.now());
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFBF7), // Light Tema Krem
+      backgroundColor: const Color(0xFFF7FAFC), // Light Tema Krem
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: IconButton(
-            icon: const Icon(Icons.close_rounded, color: Color(0xFF2D3142), size: 28),
+            icon: const Icon(Icons.close_rounded, color: Color(0xFF1A202C), size: 28),
             onPressed: () => Navigator.pop(context),
           ),
         ),
@@ -139,7 +139,7 @@ class _AddScreenState extends State<AddScreen> {
             child: TextButton(
               onPressed: _saving ? null : _save,
               child: Text(_saving ? '...' : 'Kaydet',
-                style: GoogleFonts.outfit(color: const Color(0xFF7D9B76), fontWeight: FontWeight.w600, fontSize: 16)),
+                style: GoogleFonts.outfit(color: const Color(0xFF5A67D8), fontWeight: FontWeight.w600, fontSize: 16)),
             ),
           ),
         ],
@@ -159,7 +159,7 @@ class _AddScreenState extends State<AddScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFE8E4D9)),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.02),
@@ -169,12 +169,12 @@ class _AddScreenState extends State<AddScreen> {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.location_on_outlined, color: Color(0xFFFFB38E), size: 20),
+                  const Icon(Icons.location_on_outlined, color: Color(0xFF9F7AEA), size: 20),
                   const SizedBox(width: 12),
                   Expanded(
                     child: TextField(
                       controller: _locationController,
-                      style: GoogleFonts.outfit(color: const Color(0xFF2D3142)),
+                      style: GoogleFonts.outfit(color: const Color(0xFF1A202C)),
                       decoration: InputDecoration(
                         hintText: 'Konum ekle (örn: Moda Sahil)',
                         hintStyle: GoogleFonts.outfit(color: const Color(0xFFB0B0B0), fontSize: 14),
@@ -208,7 +208,7 @@ class _AddScreenState extends State<AddScreen> {
                         color: isSelected ? MoodColors.getColor(mood) : Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: isSelected ? MoodColors.getColor(mood) : const Color(0xFFE8E4D9),
+                          color: isSelected ? MoodColors.getColor(mood) : const Color(0xFFE2E8F0),
                           width: 1.5,
                         ),
                         boxShadow: [
@@ -233,7 +233,7 @@ class _AddScreenState extends State<AddScreen> {
                             style: GoogleFonts.outfit(
                               fontSize: 14,
                               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                              color: isSelected ? Colors.white : const Color(0xFF4F5D75),
+                              color: isSelected ? Colors.white : const Color(0xFF4A5568),
                             )
                           ),
                         ],
@@ -255,7 +255,7 @@ class _AddScreenState extends State<AddScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: const Color(0xFFE8E4D9)),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
                   boxShadow: [
                     BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))
                   ],
@@ -272,11 +272,11 @@ class _AddScreenState extends State<AddScreen> {
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFFDFBF7),
+                            color: const Color(0xFFF7FAFC),
                             shape: BoxShape.circle,
-                            border: Border.all(color: const Color(0xFFE8E4D9)),
+                            border: Border.all(color: const Color(0xFFE2E8F0)),
                           ),
-                          child: const Icon(Icons.add_photo_alternate_rounded, color: Color(0xFF7D9B76), size: 32),
+                          child: const Icon(Icons.add_photo_alternate_rounded, color: Color(0xFF5A67D8), size: 32),
                         ),
                         const SizedBox(height: 16),
                         Text('Fotoğraf Ekle',
@@ -295,7 +295,7 @@ class _AddScreenState extends State<AddScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: const Color(0xFFE8E4D9)),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
                 boxShadow: [
                   BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))
                 ],
@@ -305,7 +305,7 @@ class _AddScreenState extends State<AddScreen> {
                 maxLines: 5,
                 maxLength: 250,
                 style: GoogleFonts.playfairDisplay(
-                  fontSize: 18, color: const Color(0xFF2D3142), fontWeight: FontWeight.w500, height: 1.6),
+                  fontSize: 18, color: const Color(0xFF1A202C), fontWeight: FontWeight.w500, height: 1.6),
                 decoration: InputDecoration(
                   hintText: 'Bugünden aklında kalanlar...',
                   hintStyle: GoogleFonts.playfairDisplay(color: const Color(0xFFB0B0B0), fontWeight: FontWeight.w400),

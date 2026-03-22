@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: const Color(0xFFFDFBF7), // Krem zemin
+      backgroundColor: const Color(0xFFF7FAFC), // Krem zemin
       drawer: const SideMenu(),
       body: ValueListenableBuilder(
         valueListenable: Hive.box<Entry>('entries').listenable(),
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
-                              border: Border.all(color: const Color(0xFFE8E4D9)),
+                              border: Border.all(color: const Color(0xFFE2E8F0)),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.03),
@@ -102,12 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )
                               ]
                             ),
-                            child: const Icon(Icons.sort_rounded, color: Color(0xFF2D3142), size: 20),
+                            child: const Icon(Icons.sort_rounded, color: Color(0xFF1A202C), size: 20),
                           ),
                         ),
                         ShaderMask(
                           shaderCallback: (bounds) => const LinearGradient(
-                            colors: [Color(0xFF7D9B76), Color(0xFF4F5D75)],
+                            colors: [Color(0xFF5A67D8), Color(0xFF4A5568)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ).createShader(bounds),
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(24),
                             boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFF7D9B76).withOpacity(0.15),
+                                  color: const Color(0xFF5A67D8).withOpacity(0.15),
                                   blurRadius: 20, offset: const Offset(0, 10),
                                 )
                             ]
@@ -203,11 +203,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF7D9B76), // Ana Renk
+                            color: const Color(0xFF5A67D8), // Ana Renk
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF7D9B76).withOpacity(0.3),
+                                color: const Color(0xFF5A67D8).withOpacity(0.3),
                                 blurRadius: 15, offset: const Offset(0, 8),
                               )
                             ]
@@ -232,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: GoogleFonts.playfairDisplay(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF2D3142),
+                        color: const Color(0xFF1A202C),
                       )),
                   ),
                 ),
@@ -274,12 +274,12 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFFFFB38E), Color(0xFFFF8552)],
+          colors: [Color(0xFF9F7AEA), Color(0xFF805AD5)],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFFFFB38E).withOpacity(0.4),
+            color: const Color(0xFF9F7AEA).withOpacity(0.4),
             blurRadius: 10, offset: const Offset(0, 4)
           )
         ]
@@ -310,18 +310,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     Text('${entry.date.day}',
-                      style: GoogleFonts.playfairDisplay(fontSize: 28, fontWeight: FontWeight.w700, color: const Color(0xFF2D3142))),
+                      style: GoogleFonts.playfairDisplay(fontSize: 28, fontWeight: FontWeight.w700, color: const Color(0xFF1A202C))),
                     Text(DateFormat('MMM', 'tr').format(entry.date).toUpperCase(),
-                      style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, fontWeight: FontWeight.w600, color: const Color(0xFF7D9B76))),
+                      style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, fontWeight: FontWeight.w600, color: const Color(0xFF5A67D8))),
                     const SizedBox(height: 12),
                     Container(
                       width: 12, height: 12,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
-                        border: Border.all(color: const Color(0xFFFFB38E), width: 3),
+                        border: Border.all(color: const Color(0xFF9F7AEA), width: 3),
                         boxShadow: [
-                          BoxShadow(color: const Color(0xFFFFB38E).withOpacity(0.4), blurRadius: 6)
+                          BoxShadow(color: const Color(0xFF9F7AEA).withOpacity(0.4), blurRadius: 6)
                         ]
                       ),
                     ),
@@ -330,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 2,
                         margin: const EdgeInsets.only(top: 4, bottom: 4),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE8E4D9),
+                          color: const Color(0xFFE2E8F0),
                           borderRadius: BorderRadius.circular(2)
                         ),
                       ),
@@ -349,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF7D9B76).withOpacity(0.12),
+                        color: const Color(0xFF5A67D8).withOpacity(0.12),
                         blurRadius: 20, offset: const Offset(0, 10),
                       )
                     ]
@@ -403,7 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const SizedBox(width: 8),
                                   ],
                                     if (entry.locationName != null && entry.locationName!.isNotEmpty) ...[
-                                      const Icon(Icons.location_on_rounded, size: 12, color: Color(0xFFFFB38E)),
+                                      const Icon(Icons.location_on_rounded, size: 12, color: Color(0xFF9F7AEA)),
                                       const SizedBox(width: 4),
                                       Expanded(
                                         child: Text(entry.locationName!,
@@ -419,7 +419,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.outfit(
                                 fontSize: 15,
-                                color: const Color(0xFF4F5D75),
+                                color: const Color(0xFF4A5568),
                                 fontWeight: FontWeight.w400,
                                 height: 1.5,
                               )),

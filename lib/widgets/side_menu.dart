@@ -12,7 +12,7 @@ class SideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color(0xFFFDFBF7), // Krem arkaplan
+      backgroundColor: const Color(0xFFF7FAFC), // Krem arkaplan
       child: SafeArea(
         child: ValueListenableBuilder(
           valueListenable: Hive.box('profile').listenable(),
@@ -40,17 +40,17 @@ class SideMenu extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white,
-                            border: Border.all(color: const Color(0xFF7D9B76), width: 1.5),
+                            border: Border.all(color: const Color(0xFF5A67D8), width: 1.5),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF7D9B76).withOpacity(0.15),
+                                color: const Color(0xFF5A67D8).withOpacity(0.15),
                                 blurRadius: 15, offset: const Offset(0, 5),
                               )
                             ]
                           ),
                           child: const Center(
                             child: Icon(Icons.person_outline_rounded,
-                              color: Color(0xFF7D9B76), size: 32),
+                              color: Color(0xFF5A67D8), size: 32),
                           ),
                         ),
                       ),
@@ -72,7 +72,7 @@ class SideMenu extends StatelessWidget {
                                 style: GoogleFonts.playfairDisplay(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
-                                  color: const Color(0xFF2D3142),
+                                  color: const Color(0xFF1A202C),
                                   letterSpacing: -0.5,
                                 )),
                               if (streak > 0) ...[
@@ -82,7 +82,7 @@ class SideMenu extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     color: const Color(0xFFFFEFE9), // Uçuk turuncu
                                     borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: const Color(0xFFFFB38E))
+                                    border: Border.all(color: const Color(0xFF9F7AEA))
                                   ),
                                   child: Row(
                                     children: [
@@ -101,7 +101,7 @@ class SideMenu extends StatelessWidget {
                   ),
                 ),
                 
-                const Divider(color: Color(0xFFE8E4D9), height: 1, indent: 32, endIndent: 32),
+                const Divider(color: Color(0xFFE2E8F0), height: 1, indent: 32, endIndent: 32),
                 const SizedBox(height: 24),
                 
                 _buildMenuItem(
@@ -157,19 +157,19 @@ class SideMenu extends StatelessWidget {
   Widget _buildMenuItem({required IconData icon, required String title, required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
-      splashColor: const Color(0xFF7D9B76).withOpacity(0.1),
+      splashColor: const Color(0xFF5A67D8).withOpacity(0.1),
       highlightColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         child: Row(
           children: [
-            Icon(icon, color: const Color(0xFF7D9B76), size: 22),
+            Icon(icon, color: const Color(0xFF5A67D8), size: 22),
             const SizedBox(width: 20),
             Text(title,
               style: GoogleFonts.outfit(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: const Color(0xFF2D3142),
+                color: const Color(0xFF1A202C),
               )),
           ],
         ),

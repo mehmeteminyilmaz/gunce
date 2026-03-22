@@ -11,13 +11,13 @@ class StatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFBF7), // Krem Zemin
+      backgroundColor: const Color(0xFFF7FAFC), // Krem Zemin
       appBar: AppBar(
         title: Text('Analiz',
           style: GoogleFonts.outfit(
-            fontSize: 18, color: const Color(0xFF2D3142), fontWeight: FontWeight.w500)),
+            fontSize: 18, color: const Color(0xFF1A202C), fontWeight: FontWeight.w500)),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF2D3142), size: 18),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Color(0xFF1A202C), size: 18),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -50,7 +50,7 @@ class StatsScreen extends StatelessWidget {
                   style: GoogleFonts.playfairDisplay(
                     fontSize: 28,
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xFF2D3142),
+                    color: const Color(0xFF1A202C),
                   )),
                 const SizedBox(height: 8),
                 Text('Bugüne dek tuttuğun tüm kayıtlar.',
@@ -64,10 +64,10 @@ class StatsScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF2D3142),
+                    color: const Color(0xFF1A202C),
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
-                      BoxShadow(color: const Color(0xFF2D3142).withOpacity(0.2), blurRadius: 15, offset: const Offset(0, 8))
+                      BoxShadow(color: const Color(0xFF1A202C).withOpacity(0.2), blurRadius: 15, offset: const Offset(0, 8))
                     ]
                   ),
                   child: Row(
@@ -115,7 +115,7 @@ class StatsScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 
                 // Konum Kartı
-                _buildHorizontalStatCard('Gezilen\nKonumlar', locationsCount.toString(), Icons.location_on_rounded, const Color(0xFFFFB38E)),
+                _buildHorizontalStatCard('Gezilen\nKonumlar', locationsCount.toString(), Icons.location_on_rounded, const Color(0xFF9F7AEA)),
                 
                 const SizedBox(height: 16),
                 _buildMoodChart(moodCounts),
@@ -139,7 +139,7 @@ class StatsScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE8E4D9)),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
         ]
@@ -153,7 +153,7 @@ class StatsScreen extends StatelessWidget {
             style: GoogleFonts.outfit(
               fontSize: 36,
               fontWeight: FontWeight.w400,
-              color: const Color(0xFF2D3142),
+              color: const Color(0xFF1A202C),
               height: 1,
             )),
           const SizedBox(height: 8),
@@ -174,7 +174,7 @@ class StatsScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE8E4D9)),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
         boxShadow: [
             BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
         ]
@@ -186,7 +186,7 @@ class StatsScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(color: const Color(0xFFFDFBF7), shape: BoxShape.circle, border: Border.all(color: const Color(0xFFE8E4D9))),
+                decoration: BoxDecoration(color: const Color(0xFFF7FAFC), shape: BoxShape.circle, border: Border.all(color: const Color(0xFFE2E8F0))),
                 child: Icon(icon, color: iconColor, size: 20)
               ),
               const SizedBox(width: 16),
@@ -203,7 +203,7 @@ class StatsScreen extends StatelessWidget {
             style: GoogleFonts.outfit(
               fontSize: 32,
               fontWeight: FontWeight.w400,
-              color: const Color(0xFF2D3142),
+              color: const Color(0xFF1A202C),
             )),
         ],
       ),
@@ -218,11 +218,11 @@ class StatsScreen extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: const Color(0xFFE8E4D9)),
+          border: Border.all(color: const Color(0xFFE2E8F0)),
         ),
         child: Column(
           children: [
-            const Icon(Icons.auto_graph_rounded, color: Color(0xFFE8E4D9), size: 40),
+            const Icon(Icons.auto_graph_rounded, color: Color(0xFFE2E8F0), size: 40),
             const SizedBox(height: 16),
             Text('Henüz yeterli veri yok', style: GoogleFonts.outfit(color: const Color(0xFF8E8E93))),
           ],
@@ -243,7 +243,7 @@ class StatsScreen extends StatelessWidget {
         boxShadow: [
           BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
         ],
-        border: Border.all(color: const Color(0xFFE8E4D9)),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,12 +252,12 @@ class StatsScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(color: const Color(0xFFFDFBF7), shape: BoxShape.circle, border: Border.all(color: const Color(0xFFE8E4D9))),
-                child: const Icon(Icons.bar_chart_rounded, color: Color(0xFF7D9B76), size: 20)
+                decoration: BoxDecoration(color: const Color(0xFFF7FAFC), shape: BoxShape.circle, border: Border.all(color: const Color(0xFFE2E8F0))),
+                child: const Icon(Icons.bar_chart_rounded, color: Color(0xFF5A67D8), size: 20)
               ),
               const SizedBox(width: 12),
               Text('Duygu Analizi',
-                style: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.w600, color: const Color(0xFF2D3142))),
+                style: GoogleFonts.outfit(fontSize: 16, fontWeight: FontWeight.w600, color: const Color(0xFF1A202C))),
             ],
           ),
           const SizedBox(height: 36),
@@ -302,7 +302,7 @@ class StatsScreen extends StatelessWidget {
                           decoration: BoxDecoration(shape: BoxShape.circle, color: moodColor),
                         ),
                         const SizedBox(height: 8),
-                        Text(textPart, style: GoogleFonts.outfit(fontSize: 10, color: const Color(0xFF2D3142), fontWeight: FontWeight.w500)),
+                        Text(textPart, style: GoogleFonts.outfit(fontSize: 10, color: const Color(0xFF1A202C), fontWeight: FontWeight.w500)),
                       ],
                     );
                   }).toList(),

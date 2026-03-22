@@ -13,11 +13,11 @@ class DetailScreen extends StatelessWidget {
     final dateStr = DateFormat('d MMMM yyyy', 'tr').format(entry.date);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFBF7), // Krem zemin
+      backgroundColor: const Color(0xFFF7FAFC), // Krem zemin
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: const Color(0xFFFDFBF7),
+            backgroundColor: const Color(0xFFF7FAFC),
             elevation: 0,
             expandedHeight: entry.imagePath != null ? 400.0 : 100.0,
             pinned: true,
@@ -34,7 +34,7 @@ class DetailScreen extends StatelessWidget {
                     ]
                   ),
                   child: const Icon(Icons.arrow_back_ios_new_rounded,
-                    color: Color(0xFF2D3142), size: 16),
+                    color: Color(0xFF1A202C), size: 16),
                 ),
                 onPressed: () => Navigator.pop(context),
               ),
@@ -56,7 +56,7 @@ class DetailScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(32),
               decoration: const BoxDecoration(
-                color: Color(0xFFFDFBF7), // Krem zemin üstüne
+                color: Color(0xFFF7FAFC), // Krem zemin üstüne
                 borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
               ),
               child: Column(
@@ -72,12 +72,12 @@ class DetailScreen extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                           decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xFFE8E4D9)),
+                            border: Border.all(color: const Color(0xFFE2E8F0)),
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white,
                           ),
                           child: Text(entry.mood!.toUpperCase(),
-                            style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, color: const Color(0xFF7D9B76), fontWeight: FontWeight.w600)),
+                            style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, color: const Color(0xFF5A67D8), fontWeight: FontWeight.w600)),
                         )
                     ],
                   ),
@@ -86,7 +86,7 @@ class DetailScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        const Icon(Icons.location_on_outlined, color: Color(0xFFFFB38E), size: 16),
+                        const Icon(Icons.location_on_outlined, color: Color(0xFF9F7AEA), size: 16),
                         const SizedBox(width: 8),
                         Text(entry.locationName!,
                           style: GoogleFonts.outfit(fontSize: 14, color: const Color(0xFF8E8E93), fontWeight: FontWeight.w400)),
@@ -99,7 +99,7 @@ class DetailScreen extends StatelessWidget {
                   Text('"${entry.text}"',
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 24,
-                      color: const Color(0xFF2D3142),
+                      color: const Color(0xFF1A202C),
                       fontWeight: FontWeight.w500,
                       height: 1.8,
                     )),

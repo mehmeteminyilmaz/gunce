@@ -30,21 +30,21 @@ class GunceApp extends StatelessWidget {
       title: 'Günce',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
-        scaffoldBackgroundColor: const Color(0xFFFDFBF7), // Krem/Kağıt Beyazı
+        scaffoldBackgroundColor: const Color(0xFFF7FAFC), // Krem/Kağıt Beyazı
         textTheme: GoogleFonts.outfitTextTheme(ThemeData.light().textTheme),
         colorScheme: const ColorScheme.light().copyWith(
-          primary: const Color(0xFF7D9B76), // Adaçayı Yeşili
-          secondary: const Color(0xFFFFB38E), // Pastel Şeftali
+          primary: const Color(0xFF5A67D8), // Adaçayı Yeşili
+          secondary: const Color(0xFF9F7AEA), // Pastel Şeftali
           surface: const Color(0xFFFFFFFF), // Beyaz Yüzeyler
           surfaceContainerHighest: const Color(0xFFF4F1EA), // Gri yerine çok açık bej
-          onSurface: const Color(0xFF2D3142), // Koyu Gri Yazılar
+          onSurface: const Color(0xFF1A202C), // Koyu Gri Yazılar
         ),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-          iconTheme: IconThemeData(color: Color(0xFF2D3142)),
-          titleTextStyle: TextStyle(color: Color(0xFF2D3142), fontSize: 18),
+          iconTheme: IconThemeData(color: Color(0xFF1A202C)),
+          titleTextStyle: TextStyle(color: Color(0xFF1A202C), fontSize: 18),
         ),
       ),
       home: const SplashScreen(),

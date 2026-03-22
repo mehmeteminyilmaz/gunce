@@ -79,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFBF7), // Krem Arka Plan
+      backgroundColor: const Color(0xFFF7FAFC), // Krem Arka Plan
       body: Center(
         child: FadeTransition(
           opacity: _fade,
@@ -98,7 +98,7 @@ class _SplashScreenState extends State<SplashScreen>
                       color: const Color(0xFFFFFFFF),
                       boxShadow: [
                         BoxShadow(
-                          color: _needsAuth ? const Color(0xFFFFB38E).withOpacity(0.3) : const Color(0xFF7D9B76).withOpacity(0.15),
+                          color: _needsAuth ? const Color(0xFF9F7AEA).withOpacity(0.3) : const Color(0xFF5A67D8).withOpacity(0.15),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         )
@@ -106,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen>
                     ),
                     child: Center(
                       child: Icon(_needsAuth ? Icons.fingerprint_rounded : Icons.spa_rounded,
-                          color: _needsAuth ? const Color(0xFFFFB38E) : const Color(0xFF7D9B76), size: 36),
+                          color: _needsAuth ? const Color(0xFF9F7AEA) : const Color(0xFF5A67D8), size: 36),
                     ),
                   ),
                 ),
@@ -115,7 +115,7 @@ class _SplashScreenState extends State<SplashScreen>
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 42,
                       fontWeight: FontWeight.w600,
-                      color: const Color(0xFF2D3142),
+                      color: const Color(0xFF1A202C),
                       letterSpacing: -1,
                     )),
                 const SizedBox(height: 8),
@@ -123,7 +123,7 @@ class _SplashScreenState extends State<SplashScreen>
                     style: GoogleFonts.outfit(
                       fontSize: 14,
                       fontWeight: FontWeight.w300,
-                      color: const Color(0xFF7D9B76),
+                      color: const Color(0xFF5A67D8),
                       letterSpacing: _needsAuth ? 1 : 3,
                     )),
               ],

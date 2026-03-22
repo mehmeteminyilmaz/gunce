@@ -69,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Cihazınızda biyometrik güvenlik (FaceID/Parmak İzi) aktif değil.',
             style: GoogleFonts.outfit(color: Colors.white)),
-          backgroundColor: const Color(0xFF2D3142),
+          backgroundColor: const Color(0xFF1A202C),
         ));
         return;
       }
@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFBF7),
+      backgroundColor: const Color(0xFFF7FAFC),
       appBar: AppBar(
         title: Text('Profilim', style: GoogleFonts.outfit(fontWeight: FontWeight.w500)),
         leading: IconButton(
@@ -128,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF7D9B76),
+                      color: const Color(0xFF5A67D8),
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 3),
                     ),
@@ -145,16 +145,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Expanded(
                       child: TextField(
                         controller: _nameController,
-                        style: GoogleFonts.outfit(fontSize: 24, color: const Color(0xFF2D3142)),
+                        style: GoogleFonts.outfit(fontSize: 24, color: const Color(0xFF1A202C)),
                         decoration: InputDecoration(
                           hintText: 'Adınız',
                           border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey.shade300)),
-                          focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color(0xFF7D9B76))),
+                          focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color(0xFF5A67D8))),
                         ),
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.check_circle_rounded, color: Color(0xFF7D9B76), size: 32),
+                      icon: const Icon(Icons.check_circle_rounded, color: Color(0xFF5A67D8), size: 32),
                       onPressed: _saveName,
                     )
                   ],
@@ -163,7 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(_nameController.text,
-                      style: GoogleFonts.playfairDisplay(fontSize: 28, fontWeight: FontWeight.w600, color: const Color(0xFF2D3142))),
+                      style: GoogleFonts.playfairDisplay(fontSize: 28, fontWeight: FontWeight.w600, color: const Color(0xFF1A202C))),
                     const SizedBox(width: 8),
                     GestureDetector(
                       onTap: () => setState(() => _isEditing = true),
@@ -197,15 +197,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.fingerprint_rounded, color: Color(0xFF2D3142), size: 24),
+                          const Icon(Icons.fingerprint_rounded, color: Color(0xFF1A202C), size: 24),
                           const SizedBox(width: 12),
-                          Text('Biyometrik Kilit', style: GoogleFonts.outfit(color: const Color(0xFF2D3142), fontWeight: FontWeight.w500)),
+                          Text('Biyometrik Kilit', style: GoogleFonts.outfit(color: const Color(0xFF1A202C), fontWeight: FontWeight.w500)),
                         ],
                       ),
                       Switch(
                         value: _isBiometricEnabled,
                         onChanged: _toggleBiometric,
-                        activeColor: const Color(0xFF7D9B76),
+                        activeColor: const Color(0xFF5A67D8),
                       ),
                     ],
                   ),
@@ -216,12 +216,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.notifications_active_rounded, color: Color(0xFF2D3142), size: 24),
+                          const Icon(Icons.notifications_active_rounded, color: Color(0xFF1A202C), size: 24),
                           const SizedBox(width: 12),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Günlük Hatırlatma', style: GoogleFonts.outfit(color: const Color(0xFF2D3142), fontWeight: FontWeight.w500)),
+                              Text('Günlük Hatırlatma', style: GoogleFonts.outfit(color: const Color(0xFF1A202C), fontWeight: FontWeight.w500)),
                               if (_isReminderEnabled)
                                 GestureDetector(
                                   onTap: () async {
@@ -237,7 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     }
                                   },
                                   child: Text('${_reminderTime.hour.toString().padLeft(2, '0')}:${_reminderTime.minute.toString().padLeft(2, '0')}',
-                                    style: GoogleFonts.outfit(color: const Color(0xFF7D9B76), fontWeight: FontWeight.bold)),
+                                    style: GoogleFonts.outfit(color: const Color(0xFF5A67D8), fontWeight: FontWeight.bold)),
                                 ),
                             ],
                           ),
@@ -246,7 +246,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Switch(
                         value: _isReminderEnabled,
                         onChanged: _toggleReminder,
-                        activeColor: const Color(0xFF7D9B76),
+                        activeColor: const Color(0xFF5A67D8),
                       ),
                     ],
                   ),
@@ -255,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Katılım Tarihi', style: GoogleFonts.outfit(color: const Color(0xFF8E8E93))),
-                      Text('Bugün', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Color(0xFF2D3142))),
+                      Text('Bugün', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Color(0xFF1A202C))),
                     ],
                   ),
                   const Divider(height: 32, color: Color(0xFFF4F1EA)),
@@ -263,7 +263,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Veri Yedekleme', style: GoogleFonts.outfit(color: const Color(0xFF8E8E93))),
-                      Text('Cihazda', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Color(0xFF7D9B76))),
+                      Text('Cihazda', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Color(0xFF5A67D8))),
                     ],
                   ),
                 ],
