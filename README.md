@@ -13,7 +13,7 @@
 
 <br>
 
-**Günce**, hayattaki sıradan veya özel tüm anılarınızı not alabileceğiniz, şık tasarımıyla ruhunuzu yormayan, güvenilir ve modern bir mobil uygulamadır. Göz yormayan **"Krem ve Adaçayı"** renk konsepti sayesinde, yazarken tüm dış dünyadan soyutlanabilir ve yalnızca kendinize odaklanabilirsiniz. ☕🌿
+**Günce**, hayattaki sıradan veya özel tüm anılarınızı not alabileceğiniz, şık tasarımıyla ruhunuzu yormayan, güvenilir ve modern bir mobil uygulamadır. Dinlendirici **"Gece Mavisi ve Lavanta (Indigo & Lavender)"** renk konsepti ve Glassmorphism tasarımı sayesinde, yazarken tüm dış dünyadan soyutlanabilir ve yalnızca kendinize odaklanabilirsiniz. 🌌✨
 
 ---
 
@@ -22,11 +22,11 @@
 | ✨ Özellik | 📝 Açıklama |
 | :--- | :--- |
 | **Görsel Hafıza** | Anılarınıza sadece kelimelerle değil, cihaza entegre **Kamera** veya **Galeri** çekimleriyle görsellik katın. |
-| **Ateşleyici Seriler (Streak)** 🔥 | Motivasyonunuzu yüksek tutun! Günlüğünüzü art arda kullandıkça büyüyen günlük "Streak" serileri oluşturun. |
+| **Ateşleyici Seriler (Streak)** 🔥 | Ana ekrandaki rozetle motivasyonunuzu yüksek tutun! Günlüğünüze art arda yazarak kendi kırılmaz "Streak" serinizi oluşturun. |
 | **Sarsılmaz Güvenlik** 🔒 | Tamamen yerel (offline) veritabanı altyapısına ek olarak; entegre edilen **Biyometrik Kilit** (Yüz Tanıma & Parmak İzi) ile anılarınızı herkesden koruyun. |
-| **Zen Tasarımı** 🎨 | Dikkat dağıtmayan arayüz, akıcı animasyonlar (Soft Light) ve sizi saran pastel şeftali tonlu detaylar. |
-| **Kişisel İstatistikler** 📊 | Hangi duygularda ne kadar yazıyorsunuz? Uygulama performansınız nedir? Özel ekranda dilediğinizce analiz edin. |
-| **Motivasyon Sözleri** 💬 | Her adımınızda farklı, içinizi ısıtan güzel bir söz ekranında sizi karşılar.
+| **Premium Zen Tasarımı** 🌌 | Özel AI (Yapay Zeka) logoları, pürüzsüz "Hero" uçuş animasyonları, parlak Glow gölgeleri ve sol taraftan akan kesintisiz "Yaşam Çizgisi (Timeline)" arayüzü ile lüks hissiyat. |
+| **Dinamik Duygu Analizi Grafiği** 📊 | 10 farklı elit "Renk-Kodlu (Color-coded)" duygu etiketi seçeneği ve dış kütüphane kullanılmadan tasarlanmış, giriş animasyonlu özel "Bar Grafiği" eklentisi. |
+| **Zaman Farkındalığı** ⏳ | Uygulamanızın ana ekranı, günün saatine duyarlı olarak ("Keyifli Günler", "Huzurlu Geceler") sizi dinamik başlıklarla karşılar. |
 
 <br>
 
