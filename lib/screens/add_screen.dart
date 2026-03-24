@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:geolocator/geolocator.dart';
 import '../models/entry.dart';
 import '../utils/mood_colors.dart';
 
@@ -20,12 +21,15 @@ class AddScreen extends StatefulWidget {
 
 class _AddScreenState extends State<AddScreen> {
   final _textController = TextEditingController();
-  final _locationController = TextEditingController(); // Anı Haritası Altyapısı
+  final _locationController = TextEditingController(); 
   String? _imagePath;
   String? _selectedMood;
   String? _audioPath;
+  double? _latitude;
+  double? _longitude;
   bool _saving = false;
   bool _isRecording = false;
+  bool _gettingLocation = false;
   late AudioRecorder _audioRecorder;
 
   @override
@@ -83,6 +87,40 @@ class _AddScreenState extends State<AddScreen> {
     } catch (e) {
       debugPrint("Kayıt durdurulamadı Hatası: $e");
       setState(() => _isRecording = false);
+    }
+  }
+
+  Future<void> _getCurrentLocation() async {
+    setState(() => _gettingLocation = true);
+    try {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        throw 'Konum servisleri kapalı.';
+      }
+
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          throw 'Konum izni reddedildi.';
+        }
+      }
+
+      final position = await Geolocator.getCurrentPosition();
+      setState(() {
+        _latitude = position.latitude;
+        _longitude = position.longitude;
+        _gettingLocation = false;
+      });
+      debugPrint("Konum alındı: $_latitude, $_longitude");
+    } catch (e) {
+      debugPrint("Konum hatası: $e");
+      setState(() => _gettingLocation = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Konum alınamadı: $e'), backgroundColor: Colors.redAccent)
+        );
+      }
     }
   }
 
@@ -175,6 +213,8 @@ class _AddScreenState extends State<AddScreen> {
       mood: _selectedMood,
       locationName: _locationController.text.trim().isEmpty ? null : _locationController.text.trim(),
       audioPath: _audioPath,
+      latitude: _latitude,
+      longitude: _longitude,
     );
     await box.add(entry);
     if (mounted) Navigator.pop(context);
@@ -248,9 +288,23 @@ class _AddScreenState extends State<AddScreen> {
                       ),
                     ),
                   ),
+                  IconButton(
+                    icon: _gettingLocation 
+                      ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF9F7AEA)))
+                      : Icon(_latitude != null ? Icons.gps_fixed_rounded : Icons.my_location_rounded, 
+                             color: _latitude != null ? const Color(0xFF5A67D8) : const Color(0xFF9F7AEA)),
+                    onPressed: _getCurrentLocation,
+                    tooltip: 'O anki konumu otomatik al',
+                  )
                 ],
               ),
             ),
+            if (_latitude != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8, left: 20),
+                child: Text('Koordinatlar: ${_latitude!.toStringAsFixed(4)}, ${_longitude!.toStringAsFixed(4)}', 
+                  style: GoogleFonts.outfit(fontSize: 10, color: const Color(0xFF5A67D8).withOpacity(0.7))),
+              ),
             
             const SizedBox(height: 32),
 

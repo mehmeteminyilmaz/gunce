@@ -48,7 +48,9 @@
 		</dict>
 	</dict>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Günce'nize sesli anılar kaydetmeniz için mikrofona ihtiyacımız var.</string>
+	<string>Anılarınıza sesinizi ekleyebilmeniz için mikrofon erişimine ihtiyaç duyuluyor.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Anılarınızın nerede kaydedildiğini harita üzerinde canlandırabilmek için konum erişimine ihtiyaç duyuluyor.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

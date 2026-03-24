@@ -6,6 +6,7 @@ import '../utils/streak_calculator.dart';
 import '../screens/stats_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/settings_screen.dart';
+import '../screens/map_screen.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
@@ -113,6 +114,19 @@ class SideMenu extends StatelessWidget {
                     Navigator.pop(context);
                     Navigator.push(context, PageRouteBuilder(
                       pageBuilder: (_, __, ___) => const ProfileScreen(),
+                      transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
+                    ));
+                  },
+                ),
+                
+                _buildMenuItem(
+                  context: context,
+                  icon: Icons.map_outlined,
+                  title: 'Anı Haritası',
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => const MapScreen(),
                       transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
                     ));
                   },

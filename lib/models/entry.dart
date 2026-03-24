@@ -26,6 +26,12 @@ class Entry extends HiveObject {
   @HiveField(6)
   String? audioPath; // Sesli anı dosya yolu
 
+  @HiveField(7)
+  double? latitude;
+
+  @HiveField(8)
+  double? longitude;
+
   Entry({
     required this.id,
     required this.date,
@@ -34,7 +40,7 @@ class Entry extends HiveObject {
     this.mood,
     this.locationName,
     this.audioPath,
+    this.latitude,
+    this.longitude,
   });
 }
-
-
