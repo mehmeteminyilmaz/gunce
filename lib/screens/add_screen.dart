@@ -206,7 +206,7 @@ class _AddScreenState extends State<AddScreen> {
                       margin: const EdgeInsets.only(right: 12),
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                       decoration: BoxDecoration(
-                        color: isSelected ? MoodColors.getColor(mood) : Colors.white,
+                        color: isSelected ? MoodColors.getColor(mood) : Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: isSelected ? MoodColors.getColor(mood) : Theme.of(context).dividerColor,

@@ -118,8 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         ShaderMask(
-                          shaderCallback: (bounds) => LinearGradient(
-                            colors: [const Color(0xFF5A67D8), const Color(0xFF4A5568)],
+                          shaderCallback: (bounds) => const LinearGradient(
+                            colors: [Color(0xFF9F7AEA), Color(0xFF7F9CF5)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ).createShader(bounds),
@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 2,
-                              color: Theme.of(context).colorScheme.surface,
+                              color: Colors.white,
                             )),
                         ),
                         _buildStreakBadge(currentStreak),
