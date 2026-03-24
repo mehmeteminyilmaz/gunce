@@ -70,7 +70,7 @@ Günce, tıpkı hayatın kendisi gibi sürekli gelişen, büyüyen ve güzelleş
 
 Önümüzdeki güncellemelerde Günce'nin dünyasına eklenecek bazı büyüleyici yenilikler:
 - ☁️ **Bulut Senkronizasyonu (Firebase):** Cihazınız değişse bile anılarınızın güvenli bir şekilde sizinle gelmesi.
-- 🎙️ **Sesli Anı Kaydı (Voice Memos):** Klavye kullanmak istemediğiniz yorgun gecelerde, duygularınızı sadece fısıldayarak kaydedebilme.
+- 🗺️ **Anı Haritası (Memory Map):** Kaydettiğiniz anıları, çekildikleri konumlara göre interaktif bir harita üzerinde keşfetme.
 - 🧠 **AI Destekli Akıllı Hatırlatıcılar:** Sadece boş bir bildirim değil, bulunduğunuz ruh haline uygun motivasyonel içerikler sunan asistan.
 - 🎭 **Gelişmiş Karakteristik Analiz (AI):** Anılarınızdaki kelimeleri okuyarak genel yaşam kalitenizi artırmaya yönelik sanal bir terapist profillemesi.
 

@@ -23,6 +23,9 @@ class Entry extends HiveObject {
   @HiveField(5)
   String? locationName; // Konum bilgisi (örn: Moda Sahil)
 
+  @HiveField(6)
+  String? audioPath; // Sesli anı dosya yolu
+
   Entry({
     required this.id,
     required this.date,
@@ -30,6 +33,7 @@ class Entry extends HiveObject {
     this.imagePath,
     this.mood,
     this.locationName,
+    this.audioPath,
   });
 }
 

@@ -5,6 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:record/record.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
 import '../models/entry.dart';
 import '../utils/mood_colors.dart';
 
@@ -20,7 +23,48 @@ class _AddScreenState extends State<AddScreen> {
   final _locationController = TextEditingController(); // Anı Haritası Altyapısı
   String? _imagePath;
   String? _selectedMood;
+  String? _audioPath;
   bool _saving = false;
+  bool _isRecording = false;
+  late AudioRecorder _audioRecorder;
+
+  @override
+  void initState() {
+    super.initState();
+    _audioRecorder = AudioRecorder();
+  }
+
+  @override
+  void dispose() {
+    _audioRecorder.dispose();
+    super.dispose();
+  }
+
+  Future<void> _startRecording() async {
+    try {
+      if (await _audioRecorder.hasPermission()) {
+        final directory = await getApplicationDocumentsDirectory();
+        final path = p.join(directory.path, 'recording_${DateTime.now().millisecondsSinceEpoch}.m4a');
+        
+        await _audioRecorder.start(const RecordConfig(), path: path);
+        setState(() => _isRecording = true);
+      }
+    } catch (e) {
+      debugPrint("Kayıt başlatılamadı: $e");
+    }
+  }
+
+  Future<void> _stopRecording() async {
+    try {
+      final path = await _audioRecorder.stop();
+      setState(() {
+        _isRecording = false;
+        _audioPath = path;
+      });
+    } catch (e) {
+      debugPrint("Kayıt durdurulamadı: $e");
+    }
+  }
 
   final List<String> _moods = [
     'Harika', 'Mutlu', 'Huzurlu', 'Sakin', 'Odaklanmış', 
@@ -110,6 +154,7 @@ class _AddScreenState extends State<AddScreen> {
       imagePath: _imagePath,
       mood: _selectedMood,
       locationName: _locationController.text.trim().isEmpty ? null : _locationController.text.trim(),
+      audioPath: _audioPath,
     );
     await box.add(entry);
     if (mounted) Navigator.pop(context);
@@ -242,6 +287,71 @@ class _AddScreenState extends State<AddScreen> {
                     ),
                   );
                 }).toList(),
+              ),
+            ),
+
+            const SizedBox(height: 32),
+
+            // Sesli Anı Kaydı
+            Text('Sesli Anı',
+              style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+            const SizedBox(height: 16),
+            GestureDetector(
+              onLongPressStart: (_) => _startRecording(),
+              onLongPressEnd: (_) => _stopRecording(),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: _isRecording ? Colors.red.withOpacity(0.1) : Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    color: _isRecording ? Colors.red : (_audioPath != null ? const Color(0xFF5A67D8) : Theme.of(context).dividerColor),
+                    width: 2,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: _isRecording ? Colors.red : const Color(0xFF5A67D8),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        _isRecording ? Icons.mic_rounded : (_audioPath != null ? Icons.check_rounded : Icons.mic_none_rounded),
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _isRecording ? 'Kayıt Yapılıyor...' : (_audioPath != null ? 'Sesli Anı Kaydedildi' : 'Kayıt için basılı tutun'),
+                            style: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w600,
+                              color: _isRecording ? Colors.red : Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          if (_audioPath == null && !_isRecording)
+                            Text('Düşüncelerini fısılda...', 
+                              style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                          if (_audioPath != null)
+                            Text('Anına sesinle dokundun.', 
+                              style: GoogleFonts.outfit(fontSize: 12, color: const Color(0xFF5A67D8).withOpacity(0.7))),
+                        ],
+                      ),
+                    ),
+                    if (_audioPath != null && !_isRecording)
+                      IconButton(
+                        icon: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent),
+                        onPressed: () => setState(() => _audioPath = null),
+                      ),
+                  ],
+                ),
               ),
             ),
 

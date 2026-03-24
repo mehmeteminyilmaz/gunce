@@ -471,6 +471,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           maxLines: 1, overflow: TextOverflow.ellipsis,
                                           style: GoogleFonts.outfit(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
                                       ),
+                                    ],
+                                    if (entry.audioPath != null) ...[
+                                      const Icon(Icons.mic_rounded, size: 12, color: Color(0xFF5A67D8)),
+                                      const SizedBox(width: 4),
                                     ]
                                   ],
                                 ),
