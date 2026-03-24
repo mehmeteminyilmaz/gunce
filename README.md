@@ -30,6 +30,7 @@
 | **Gelişmiş Anı Keşfi (Arama)** 🔍 | Yıllar önceki anılarınıza, mekan isimlerine veya hissettiğiniz duygulara anında ulaşmanızı sağlayan arama motoru. |
 | **Oto-Zaman Modları** 🌗 | Gece 21:00–06:00 aralığında **Gece Mavisi Premium Koyu Mod**, gündüz ise **Açık Krem** temaya saniyeler içinde otomatik geçiş. |
 | **Sesli Duygular (Voice Memos)** 🎙️ | Yazmak istemediğiniz anlarda, sadece fısıldayarak anılarınıza kendi sesinizi (ve ruh halinizi) ekleyin. |
+| **Anı Haritası (Memory Map)** 🗺️ | Anılarınızı dünya üzerindeki konumlarına göre keşfedin. Otomatik adres bulma ve manuel iğne bırakma desteğiyle anılarınız asla kaybolmaz. |
 
 <br>
 
@@ -70,8 +71,9 @@ Bu uygulamanın ardında, kullanıcı deneyimini maksimuma çıkaran ve stabilit
 Günce, tıpkı hayatın kendisi gibi sürekli gelişen, büyüyen ve güzelleşen bir proje. Bu depo **henüz tamamlanmış nihai bir ürün değil; aksine her gün üzerine yeni fikirlerin, duyguların ve kod satırlarının eklendiği yaşayan bir atölyedir.** 
 
 Önümüzdeki güncellemelerde Günce'nin dünyasına eklenecek bazı büyüleyici yenilikler:
+- 📊 **Duygu Takvimi & Grafiksel Analiz:** Haftalık ve aylık ruh hali dalgalanmalarınızı estetik grafiklerle takip edin.
+- 📖 **Anı Kitabı (Memoir Export):** Tüm anılarınızı veya seçtiklerinizi şık tasarımlı bir PDF kitabına veya dijital albüme saniyeler içinde dönüştürün.
 - ☁️ **Bulut Senkronizasyonu (Firebase):** Cihazınız değişse bile anılarınızın güvenli bir şekilde sizinle gelmesi.
-- 🗺️ **Anı Haritası (Memory Map):** Kaydettiğiniz anıları, çekildikleri konumlara göre interaktif bir harita üzerinde keşfetme.
 - 🧠 **AI Destekli Akıllı Hatırlatıcılar:** Sadece boş bir bildirim değil, bulunduğunuz ruh haline uygun motivasyonel içerikler sunan asistan.
 - 🎭 **Gelişmiş Karakteristik Analiz (AI):** Anılarınızdaki kelimeleri okuyarak genel yaşam kalitenizi artırmaya yönelik sanal bir terapist profillemesi.
 
