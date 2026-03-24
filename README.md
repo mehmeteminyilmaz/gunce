@@ -1,7 +1,7 @@
 <div align="center">
   <h1>Günce</h1>
   <p><strong><em>"Hafızanın Saklı Bahçesi"</em></strong></p>
-  <p>Ruhunuzu dinlendiren, kişisel ve tamamen size ait bir dijital sığınak.</p>
+  <p>Ruhunuzu dinlendiren, kişisel ve tamamen size ait bir dijital sığınak. ✨</p>
   <br>
   
   <p>
@@ -23,33 +23,26 @@
 | :--- | :--- |
 | **Görsel Hafıza** | Anılarınıza sadece kelimelerle değil, cihaza entegre **Kamera** veya **Galeri** çekimleriyle görsellik katın. |
 | **Ateşleyici Seriler (Streak)** 🔥 | Ana ekrandaki rozetle motivasyonunuzu yüksek tutun! Günlüğünüze art arda yazarak kendi kırılmaz "Streak" serinizi oluşturun. |
-| **Sarsılmaz Güvenlik** 🔒 | Tamamen yerel (offline) veritabanı altyapısına ek olarak; entegre edilen **Biyometrik Kilit** (Yüz Tanıma & Parmak İzi) ile anılarınızı herkesden koruyun. |
-| **Premium Zen Tasarımı** 🌌 | Özel AI (Yapay Zeka) logoları, pürüzsüz "Hero" uçuş animasyonları, parlak Glow gölgeleri ve sol taraftan akan kesintisiz "Yaşam Çizgisi (Timeline)" arayüzü ile lüks hissiyat. |
-| **Dinamik Duygu Analizi Grafiği** 📊 | 10 farklı elit "Renk-Kodlu (Color-coded)" duygu etiketi seçeneği ve dış kütüphane kullanılmadan tasarlanmış, giriş animasyonlu özel "Bar Grafiği" eklentisi. |
-| **Zaman Farkındalığı** ⏳ | Uygulamanızın ana ekranı, günün saatine duyarlı olarak ("Keyifli Günler", "Huzurlu Geceler") sizi dinamik başlıklarla karşılar. |
-| **Gelişmiş Anı Keşfi (Arama)** 🔍 | Yıllar önceki anılarınıza, mekan isimlerine veya hissettiğiniz duygulara anında ulaşmanızı sağlayan arama motoru. |
-| **Oto-Zaman Modları** 🌗 | Gece 21:00–06:00 aralığında **Gece Mavisi Premium Koyu Mod**, gündüz ise **Açık Krem** temaya saniyeler içinde otomatik geçiş. |
-| **Sesli Duygular (Voice Memos)** 🎙️ | Yazmak istemediğiniz anlarda, sadece fısıldayarak anılarınıza kendi sesinizi (ve ruh halinizi) ekleyin. |
-| **Anı Haritası (Memory Map)** 🗺️ | Anılarınızı dünya üzerindeki konumlarına göre keşfedin. Otomatik adres bulma ve manuel iğne bırakma desteğiyle anılarınız asla kaybolmaz. |
+| **Sarsılmaz Güvenlik** 🔒 | Tamamen yerel (offline) veritabanı altyapısına ek olarak; entegre edilen **Biyometrik Kilit** (Yüz Tanıma & Parmak İzi) ile anılarınızı herkesten koruyun. |
+| **Premium Zen Tasarımı** | Özel tasarlanmış logolar, Hero uçuş animasyonları, parlak Glow gölgeleri ve kesintisiz Yaşam Çizgisi (Timeline) arayüzü ile lüks hissiyat. |
+| **Dinamik Duygu Grafiği** 📊 | 10 farklı elit Renk-Kodlu duygu etiketi ve dış kütüphane kullanılmadan tasarlanmış özel Bar Grafiği eklentisi. |
+| **Sesli Duygular (Voice Memos)** 🎙️ | Yazmak istemediğiniz anlarda, sadece fısıldayarak anılarınıza kendi sesinizi ekleyin. |
+| **Anı Haritası (Memory Map)** 🗺️ | Anılarınızı dünya üzerindeki konumlarına göre keşfedin. Otomatik adres bulma ve manuel iğne bırakma desteği mevcuttur. |
 
 <br>
 
 ## 🚀 Hızlı Kurulum
-
-Kendi cihazınızda test edebilmeniz veya geliştirmeye katkı sağlayabilmeniz için:
 
 1. **Projeyi indirin:**
 ```bash
 git clone https://github.com/mehmeteminyilmaz/gunce.git
 cd gunce
 ```
-
-2. **Gerekli alt yapıları çekin:**
+2. **Gerekli paketleri çekin:**
 ```bash
 flutter pub get
 ```
-
-3. **Uygulamayı dilediğiniz platformda başlatın:**
+3. **Uygulamayı başlatın:**
 ```bash
 flutter run
 ```
@@ -57,27 +50,35 @@ flutter run
 <br>
 
 ## 🛠️ Teknolojik Altyapı
-Bu uygulamanın ardında, kullanıcı deneyimini maksimuma çıkaran ve stabiliteyi sağlayan modern paketler kullanıldı:
 
-> 🟩 **Görsel Deneyim:** Özel tipografiler için **`google_fonts`**, estetik görseller için cihaz donanımını kontrol eden **`image_picker`**.  
-> 🟧 **Gelişmiş Güvenlik:** Sektör standartlarında parmak izi/FaceID denetimleri için **`local_auth`**.  
-> 🟨 **Hızlı Veritabanı:** Mobil cihazlarda şimşek hızında çalışan lokal saklama çözümü: **`hive`** ve **`hive_flutter`**.  
-> 🟦 **Lokasyon ve Zaman:** Küresel dil ve takvim senkronizasyonu için gelişmiş **`intl`** kütüphanesi.
+> 🌌 **Görsel Deneyim:** `google_fonts`, `image_picker`.  
+> 🔒 **Güvenlik:** `local_auth`.  
+> 💿 **Veritabanı:** `hive`, `hive_flutter`.  
+> 🗺️ **Lokasyon:** `geolocator`, `flutter_map`, `http` (Reverse Geocoding).
 
 <br>
 
 ## 🌱 Gelişim Yolculuğu (Devam Ediyor...)
 
-Günce, tıpkı hayatın kendisi gibi sürekli gelişen, büyüyen ve güzelleşen bir proje. Bu depo **henüz tamamlanmış nihai bir ürün değil; aksine her gün üzerine yeni fikirlerin, duyguların ve kod satırlarının eklendiği yaşayan bir atölyedir.** 
+Günce, her gün üzerine yeni fikirlerin eklendiği yaşayan bir projedir. Planlanan yenilikler:
 
-Önümüzdeki güncellemelerde Günce'nin dünyasına eklenecek bazı büyüleyici yenilikler:
-- 📊 **Duygu Takvimi & Grafiksel Analiz:** Haftalık ve aylık ruh hali dalgalanmalarınızı estetik grafiklerle takip edin.
-- 📖 **Anı Kitabı (Memoir Export):** Tüm anılarınızı veya seçtiklerinizi şık tasarımlı bir PDF kitabına veya dijital albüme saniyeler içinde dönüştürün.
-- ☁️ **Bulut Senkronizasyonu (Firebase):** Cihazınız değişse bile anılarınızın güvenli bir şekilde sizinle gelmesi.
-- 🧠 **AI Destekli Akıllı Hatırlatıcılar:** Sadece boş bir bildirim değil, bulunduğunuz ruh haline uygun motivasyonel içerikler sunan asistan.
-- 🎭 **Gelişmiş Karakteristik Analiz (AI):** Anılarınızdaki kelimeleri okuyarak genel yaşam kalitenizi artırmaya yönelik sanal bir terapist profillemesi.
+- 🧠 **Yapay Zeka & Akıllı Analiz (Google Gemini):**
+  - **Otomatik Ruh Hali:** Yazılan metinden duygu durumunu otomatik analiz eden sistem.
+  - **Günlük İçgörü:** Anılarınıza dayalı kişiselleştirilmiş motivasyonel geri bildirimler.
+  - **Akıllı Hatırlatıcılar:** Geçmiş anılarınıza dayanarak size özel sorular soran günlük başlangıçları.
 
-*Siz de bu yolculuğun bir parçası olabilir, projeyi yıldızlayarak (⭐) veya katkı sağlayarak Günce'nin büyümesine destek olabilirsiniz!*
+- 📊 **Veri Görselleştirme & İstatistik:**
+  - **Duygu Isı Haritası:** Yıllık ruh hali değişimlerini gösteren estetik ısı haritaları.
+  - **Gelişmiş İstatistikler:** Haftalık ve aylık grafiklerle duygusal gelişim takibi.
+
+- ☁️ **Güvenlik & Bulut Sistemleri:**
+  - **Bulut Senkronizasyonu:** Firebase altyapısı ile anıların tüm cihazlarda eşzamanlı yedeklenmesi.
+  - **Hafıza Kasası:** Şifreli yerel depolama ve biyometrik koruma.
+
+- 📖 **Dijital Arşivleme & Paylaşım:**
+  - **Anı Kitabı Oluşturucu:** Anılarınızın PDF formatında şık bir albüme dönüştürülmesi.
+
+*Siz de bu yolculuğun bir parçası olabilir, projeyi yıldızlayarak (⭐) destek olabilirsiniz!*
 
 <br>
 
