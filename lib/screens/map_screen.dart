@@ -5,6 +5,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import '../models/entry.dart';
 import '../utils/mood_colors.dart';
 import 'detail_screen.dart';
@@ -31,13 +32,16 @@ class _MapScreenState extends State<MapScreen> {
               final entriesWithLocation = box.values
                   .where((e) => e.latitude != null && e.longitude != null)
                   .toList();
+              
+              // Tarihe göre sıralayalım (En yeni en sonda kalsın ki markerlar üst üste ise en yeni üstte görünsün)
+              entriesWithLocation.sort((a, b) => a.date.compareTo(b.date));
 
               return FlutterMap(
                 mapController: _mapController,
                 options: MapOptions(
                   initialCenter: entriesWithLocation.isNotEmpty
-                      ? LatLng(entriesWithLocation.first.latitude!, entriesWithLocation.first.longitude!)
-                      : LatLng(39.9334, 32.8597), // Ankara fallback
+                      ? LatLng(entriesWithLocation.last.latitude!, entriesWithLocation.last.longitude!)
+                      : LatLng(39.1, 35.4), // Ankara fallback/Turkey center
                   initialZoom: 5.0,
                   onTap: (_, __) => setState(() => _selectedEntry = null),
                 ),
@@ -149,6 +153,8 @@ class _MapScreenState extends State<MapScreen> {
                             children: [
                               Text(_selectedEntry!.locationName ?? 'Bilinmeyen Konum',
                                 style: GoogleFonts.outfit(fontSize: 12, color: const Color(0xFF5A67D8), fontWeight: FontWeight.bold)),
+                              Text(DateFormat('dd MMMM yyyy', 'tr').format(_selectedEntry!.date),
+                                style: GoogleFonts.outfit(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
                               const SizedBox(height: 4),
                               Text(_selectedEntry!.text,
                                 maxLines: 2, overflow: TextOverflow.ellipsis,

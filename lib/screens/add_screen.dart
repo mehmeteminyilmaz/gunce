@@ -11,6 +11,8 @@ import 'package:path/path.dart' as p;
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../models/entry.dart';
 import '../utils/mood_colors.dart';
 
@@ -126,6 +128,27 @@ class _AddScreenState extends State<AddScreen> {
     }
   }
 
+  Future<String?> _getAddressFromLatLng(double lat, double lng) async {
+    try {
+      final url = Uri.parse('https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lng&addressdetails=1');
+      // Nominatim User-Agent kuralına uymak gerek: 'gunce-app'
+      final response = await http.get(url, headers: {'User-Agent': 'gunce-diary-app'});
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final address = data['address'];
+        String name = '';
+        if (address['suburb'] != null) name += address['suburb'] + ", ";
+        if (address['city'] != null) name += address['city'];
+        else if (address['province'] != null) name += address['province'];
+        else if (address['country'] != null) name += address['country'];
+        return name.isEmpty ? "Seçilen Konum" : name;
+      }
+    } catch (e) {
+      debugPrint("Adres bulma hatası: $e");
+    }
+    return null;
+  }
+
   Future<void> _showLocationPicker() async {
     LatLng? pickedLocation = await showDialog<LatLng>(
       context: context,
@@ -139,6 +162,13 @@ class _AddScreenState extends State<AddScreen> {
         _latitude = pickedLocation.latitude;
         _longitude = pickedLocation.longitude;
       });
+      // Otomatik adres bulma
+      final address = await _getAddressFromLatLng(pickedLocation.latitude, pickedLocation.longitude);
+      if (address != null && mounted) {
+        setState(() {
+          _locationController.text = address;
+        });
+      }
     }
   }
 
@@ -548,7 +578,7 @@ class _LocationPickerDialogState extends State<_LocationPickerDialog> {
   @override
   void initState() {
     super.initState();
-    _currentLocation = widget.initialLocation ?? LatLng(38.6748, 39.2225); // Elazığ fallback
+    _currentLocation = widget.initialLocation ?? LatLng(39.1, 35.4); // Türkiye merkezi fallback
     _pinSelected = widget.initialLocation != null;
   }
 
