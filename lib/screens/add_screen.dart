@@ -117,6 +117,14 @@ class _AddScreenState extends State<AddScreen> {
         _gettingLocation = false;
       });
       debugPrint("Konum alındı: $_latitude, $_longitude");
+
+      // Otomatik adres yakalama
+      final address = await _getAddressFromLatLng(position.latitude, position.longitude);
+      if (address != null && mounted) {
+        setState(() {
+          _locationController.text = address;
+        });
+      }
     } catch (e) {
       debugPrint("Konum hatası: $e");
       setState(() => _gettingLocation = false);
