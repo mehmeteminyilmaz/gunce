@@ -29,6 +29,7 @@
 | **Zaman Farkındalığı** ⏳ | Uygulamanızın ana ekranı, günün saatine duyarlı olarak ("Keyifli Günler", "Huzurlu Geceler") sizi dinamik başlıklarla karşılar. |
 | **Gelişmiş Anı Keşfi (Arama)** 🔍 | Yıllar önceki anılarınıza, mekan isimlerine veya hissettiğiniz duygulara anında ulaşmanızı sağlayan arama motoru. |
 | **Oto-Zaman Modları** 🌗 | Gece 21:00–06:00 aralığında **Gece Mavisi Premium Koyu Mod**, gündüz ise **Açık Krem** temaya saniyeler içinde otomatik geçiş. |
+| **Sesli Duygular (Voice Memos)** 🎙️ | Yazmak istemediğiniz anlarda, sadece fısıldayarak anılarınıza kendi sesinizi (ve ruh halinizi) ekleyin. |
 
 <br>
 
