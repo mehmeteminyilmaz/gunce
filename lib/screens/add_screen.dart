@@ -597,7 +597,7 @@ class _LocationPickerDialogState extends State<_LocationPickerDialog> {
               FlutterMap(
                 options: MapOptions(
                   initialCenter: _currentLocation,
-                  initialZoom: 13.0,
+                  initialZoom: 5.5,
                   onTap: (tapPosition, point) {
                     setState(() {
                       _currentLocation = point;
