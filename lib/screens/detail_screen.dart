@@ -51,7 +51,11 @@ class _DetailScreenState extends State<DetailScreen> {
       await _audioPlayer.pause();
     } else {
       if (widget.entry.audioPath != null) {
-        await _audioPlayer.play(DeviceFileSource(widget.entry.audioPath!));
+        // Web'de veya blob URL geliyorsa UrlSource kullanılır
+        final source = (kIsWeb || widget.entry.audioPath!.startsWith('blob:'))
+            ? UrlSource(widget.entry.audioPath!)
+            : DeviceFileSource(widget.entry.audioPath!);
+        await _audioPlayer.play(source);
       }
     }
   }

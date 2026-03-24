@@ -43,10 +43,14 @@ class _AddScreenState extends State<AddScreen> {
   Future<void> _startRecording() async {
     try {
       if (await _audioRecorder.hasPermission()) {
-        final directory = await getApplicationDocumentsDirectory();
-        final path = p.join(directory.path, 'recording_${DateTime.now().millisecondsSinceEpoch}.m4a');
+        String? path;
         
-        await _audioRecorder.start(const RecordConfig(), path: path);
+        if (!kIsWeb) {
+          final directory = await getApplicationDocumentsDirectory();
+          path = p.join(directory.path, 'recording_${DateTime.now().millisecondsSinceEpoch}.m4a');
+        }
+        
+        await _audioRecorder.start(const RecordConfig(), path: path ?? '');
         setState(() => _isRecording = true);
       }
     } catch (e) {
