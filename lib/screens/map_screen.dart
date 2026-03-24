@@ -37,7 +37,7 @@ class _MapScreenState extends State<MapScreen> {
                 options: MapOptions(
                   initialCenter: entriesWithLocation.isNotEmpty
                       ? LatLng(entriesWithLocation.first.latitude!, entriesWithLocation.first.longitude!)
-                      : const LatLng(39.9334, 32.8597), // Ankara fallback
+                      : LatLng(39.9334, 32.8597), // Ankara fallback
                   initialZoom: 5.0,
                   onTap: (_, __) => setState(() => _selectedEntry = null),
                 ),
