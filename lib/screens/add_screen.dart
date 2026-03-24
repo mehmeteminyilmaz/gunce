@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -45,12 +45,18 @@ class _AddScreenState extends State<AddScreen> {
       if (await _audioRecorder.hasPermission()) {
         String? path;
         
+        // kIsWeb kontrolü (foundation importu kullanılarak)
         if (!kIsWeb) {
-          final directory = await getApplicationDocumentsDirectory();
-          path = p.join(directory.path, 'recording_${DateTime.now().millisecondsSinceEpoch}.m4a');
+          try {
+            final directory = await getApplicationDocumentsDirectory();
+            path = p.join(directory.path, 'recording_${DateTime.now().millisecondsSinceEpoch}.m4a');
+          } catch (e) {
+            debugPrint("Dizin alınamadı (Web tahmini): $e");
+          }
         }
         
-        await _audioRecorder.start(const RecordConfig(), path: path ?? '');
+        // Web'de path boş bırakılırsa record paketi doğru çalışır
+        await _audioRecorder.start(const RecordConfig(encoder: AudioEncoder.opus), path: path ?? '');
         setState(() => _isRecording = true);
       }
     } catch (e) {
@@ -60,13 +66,23 @@ class _AddScreenState extends State<AddScreen> {
 
   Future<void> _stopRecording() async {
     try {
+      debugPrint("Kayıt durduruluyor...");
       final path = await _audioRecorder.stop();
+      debugPrint("Kayıt durduruldu. Alınan Path: $path");
+      
       setState(() {
         _isRecording = false;
-        _audioPath = path;
+        if (path != null) {
+          _audioPath = path;
+        }
       });
+      
+      if (path == null) {
+        debugPrint("UYARI: Kayıt dosyası oluşturulamadı (Çok kısa süreli mi bastınız?).");
+      }
     } catch (e) {
-      debugPrint("Kayıt durdurulamadı: $e");
+      debugPrint("Kayıt durdurulamadı Hatası: $e");
+      setState(() => _isRecording = false);
     }
   }
 
@@ -303,6 +319,7 @@ class _AddScreenState extends State<AddScreen> {
             GestureDetector(
               onLongPressStart: (_) => _startRecording(),
               onLongPressEnd: (_) => _stopRecording(),
+              onLongPressCancel: () => _stopRecording(),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 padding: const EdgeInsets.all(20),
