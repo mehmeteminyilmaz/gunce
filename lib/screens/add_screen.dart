@@ -9,6 +9,8 @@ import 'package:record/record.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import '../models/entry.dart';
 import '../utils/mood_colors.dart';
 
@@ -121,6 +123,22 @@ class _AddScreenState extends State<AddScreen> {
           SnackBar(content: Text('Konum alınamadı: $e'), backgroundColor: Colors.redAccent)
         );
       }
+    }
+  }
+
+  Future<void> _showLocationPicker() async {
+    LatLng? pickedLocation = await showDialog<LatLng>(
+      context: context,
+      builder: (context) => _LocationPickerDialog(
+        initialLocation: _latitude != null ? LatLng(_latitude!, _longitude!) : null,
+      ),
+    );
+
+    if (pickedLocation != null) {
+      setState(() {
+        _latitude = pickedLocation.latitude;
+        _longitude = pickedLocation.longitude;
+      });
     }
   }
 
@@ -295,6 +313,11 @@ class _AddScreenState extends State<AddScreen> {
                              color: _latitude != null ? const Color(0xFF5A67D8) : const Color(0xFF9F7AEA)),
                     onPressed: _getCurrentLocation,
                     tooltip: 'O anki konumu otomatik al',
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.map_rounded, color: _latitude != null ? const Color(0xFF5A67D8) : const Color(0xFF9F7AEA)),
+                    onPressed: _showLocationPicker,
+                    tooltip: 'Haritadan seç',
                   )
                 ],
               ),
@@ -509,3 +532,104 @@ class _AddScreenState extends State<AddScreen> {
     );
   }
 }
+
+class _LocationPickerDialog extends StatefulWidget {
+  final LatLng? initialLocation;
+  const _LocationPickerDialog({this.initialLocation});
+
+  @override
+  State<_LocationPickerDialog> createState() => _LocationPickerDialogState();
+}
+
+class _LocationPickerDialogState extends State<_LocationPickerDialog> {
+  late LatLng _currentLocation;
+  bool _pinSelected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentLocation = widget.initialLocation ?? LatLng(38.6748, 39.2225); // Elazığ fallback
+    _pinSelected = widget.initialLocation != null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: const EdgeInsets.all(20),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.7,
+          width: double.infinity,
+          child: Stack(
+            children: [
+              FlutterMap(
+                options: MapOptions(
+                  initialCenter: _currentLocation,
+                  initialZoom: 13.0,
+                  onTap: (tapPosition, point) {
+                    setState(() {
+                      _currentLocation = point;
+                      _pinSelected = true;
+                    });
+                  },
+                ),
+                children: [
+                  TileLayer(
+                    urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    subdomains: const ['a', 'b', 'c'],
+                  ),
+                  if (_pinSelected)
+                    MarkerLayer(
+                      markers: [
+                        Marker(
+                          point: _currentLocation,
+                          width: 40,
+                          height: 40,
+                          child: const Icon(Icons.location_on_rounded, color: Colors.red, size: 40),
+                        )
+                      ],
+                    ),
+                ],
+              ),
+              Positioned(
+                top: 16, right: 16,
+                child: FloatingActionButton.small(
+                  backgroundColor: Colors.white,
+                  child: const Icon(Icons.close, color: Colors.black),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+              Positioned(
+                bottom: 24, left: 24, right: 24,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF5A67D8),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  ),
+                  onPressed: () => Navigator.pop(context, _currentLocation),
+                  child: Text('Konumu Mühürle', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
+                ),
+              ),
+              Positioned(
+                top: 16, left: 16,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)]
+                  ),
+                  child: Text('Haritada istediğin yere dokun.', style: GoogleFonts.outfit(fontSize: 12, color: Colors.black87)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
