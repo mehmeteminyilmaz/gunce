@@ -1,8 +1,8 @@
-import 'dart:convert';
+import 'package:gunce/config/api_keys.dart';
 import 'package:http/http.dart' as http;
 
 class GeminiService {
-  static const String _apiKey = 'AIzaSyChaq9qAEbpVawoL2ZLjKdk_75j028El6U';
+  static const String _apiKey = ApiKeys.geminiApiKey;
 
   static const List<String> _validMoods = [
     'Harika', 'Mutlu', 'Huzurlu', 'Sakin',
