@@ -22,13 +22,13 @@
 | ✨ Özellik | 📝 Açıklama |
 | :--- | :--- |
 | **Yapay Zeka (Gemini AI)** 🧠 | Anı metninizden ruh halinizi otomatik analiz eden akıllı asistan. |
-| **Görsel Hafıza** | Anılarınıza sadece kelimelerle değil, cihaza entegre **Kamera** veya **Galeri** çekimleriyle görsellik katın. |
-| **Dinamik Tema** 🎨 | Kullanıcı isteğine bağlı **Açık** veya **Koyu** (Zen Mavisi/Lavanta) tema seçimi seçeneği. |
-| **Ateşleyici Seriler** 🔥 | Ana ekrandaki rozetle motivasyonunuzu yüksek tutun! Günlüğünüze art arda yazarak kendi kırılmaz "Streak" serinizi oluşturun. |
-| **Sarsılmaz Güvenlik** 🔒 | Tamamen yerel (offline) veritabanı altyapısına ek olarak; entegre edilen **Biyometrik Kilit** (Yüz Tanıma & Parmak İzi) ile anılarınızı herkesten koruyun. |
-| **Dinamik Duygu Grafiği** 📊 | 10 farklı elit Renk-Kodlu duygu etiketi ve özel Bar Grafiği eklentisi. |
-| **Sesli Duygular** 🎙️ | Yazmak istemediğiniz anlarda, sadece fısıldayarak anılarınıza kendi sesinizi ekleyin. |
-| **Anı Haritası** 🗺️ | Anılarınızı dünya üzerindeki konumlarına göre keşfedin. Otomatik adres bulma desteği mevcuttur. |
+| **Görsel Hafıza** 📸 | Anılarınıza sadece kelimelerle değil, cihaza entegre **Kamera** veya **Galeri** çekimleriyle görsellik katın. |
+| **Dinamik Tema Seçimi** 🎨 | Kullanıcı tercihine bağlı **Açık/Koyu Mod** desteği. |
+| **Ateşleyici Seriler** 🔥 | Her gün yazarak kendi "Streak" serinizi oluşturun ve motivasyonunuzu koruyun. |
+| **Sarsılmaz Güvenlik** 🔒 | Yerel veritabanı altyapısına ek olarak **Biyometrik Kilit** (Yüz/Parmak İzi) koruması. |
+| **Dinamik Duygu Grafiği** 📊 | Renk kodlu duygu etiketleri ve özel Bar Grafiği ile duygusal takip. |
+| **Sesli Duygular** 🎙️ | Yazamadığınız anlarda sesinizi anılarınıza ekleyin. |
+| **Anı Haritası** 🗺️ | Konum tabanlı anı takibi ve otomatik adres çözümleme. |
 
 <br>
 
@@ -52,31 +52,20 @@ flutter run
 
 ## 🛠️ Teknolojik Altyapı
 
-> 🧠 **Yapay Zeka:** `Google Gemini API` (REST API via `http`).
-> 🌌 **Görsel Deneyim:** `google_fonts`, `image_picker`.  
+> 🧠 **Yapay Zeka:** `Google Gemini 1.5/2.5 API` (REST API).  
+> 🌌 **Görsel:** `google_fonts`, `image_picker`.  
 > 🔒 **Güvenlik:** `local_auth`.  
 > 💿 **Veritabanı:** `hive`, `hive_flutter`.  
 > 🗺️ **Lokasyon:** `geolocator`, `flutter_map`, `http` (Reverse Geocoding).
 
 <br>
 
-## 🌱 Gelişim Yolculuğu (Devam Ediyor...)
+## 🌱 Gelişim Yolculuğu (Planlananlar)
 
-Günce, her gün üzerine yeni fikirlerin eklendiği yaşayan bir projedir. Planlanan yenilikler:
-
-- 🧠 **Google Gemini Geliştirmeleri:**
-  - **Günlük İçgörü:** Anılarınıza dayalı kişiselleştirilmiş motivasyonel geri bildirimler.
-  - **Akıllı Hatırlatıcılar:** Geçmiş anılarınıza dayanarak size özel sorular soran günlük başlangıçları.
-
-- 📊 **Veri Görselleştirme & İstatistik:**
-  - **Duygu Isı Haritası:** Yıllık ruh hali değişimlerini gösteren estetik ısı haritaları.
-  - **Gelişmiş İstatistikler:** Haftalık ve aylık grafiklerle duygusal gelişim takibi.
-
-- ☁️ **Bulut Senkronizasyonu:**
-  - **Firebase Entegrasyonu:** Anıların tüm cihazlarda eşzamanlı yedeklenmesi.
-
-- 📖 **Dijital Arşivleme:**
-  - **Anı Kitabı Oluşturucu:** Anılarınızın PDF formatında şık bir albüme dönüştürülmesi.
+- 🧠 **AI Geliştirmeleri:** Kişiselleştirilmiş günlük motivasyon geri bildirimleri.
+- 📊 **Duygu Isı Haritası:** Yıllık ruh hali değişimleri için estetik heatmap grafiği.
+- ☁️ **Bulut Senkronizasyonu:** Firebase altyapısı ile çoklu cihaz desteği.
+- 📖 **PDF Dışa Aktar:** Şık bir anı albümü oluşturma özelliği.
 
 *Siz de bu yolculuğun bir parçası olabilir, projeyi yıldızlayarak (⭐) destek olabilirsiniz!*
 
