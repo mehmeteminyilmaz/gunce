@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -28,36 +27,34 @@ class GunceApp extends StatefulWidget {
 }
 
 class _GunceAppState extends State<GunceApp> {
-  late Timer _themeTimer;
-  late bool _isNight;
+  bool _isDarkMode = false;
+  late Box _profileBox;
 
   @override
   void initState() {
     super.initState();
-    _isNight = AppTheme.isNightNow;
-
-    // Her dakika saati kontrol edip gerekirse temayı değiştir
-    _themeTimer = Timer.periodic(const Duration(minutes: 1), (_) {
-      final nowNight = AppTheme.isNightNow;
-      if (nowNight != _isNight) {
-        setState(() => _isNight = nowNight);
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _themeTimer.cancel();
-    super.dispose();
+    _profileBox = Hive.box('profile');
+    // Başlangıçta kullanıcı tercihini al, yoksa sistem saati yerine varsayılan açık tema kullan
+    _isDarkMode = _profileBox.get('isDarkMode', defaultValue: false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Günce',
-      debugShowCheckedModeBanner: false,
-      theme: _isNight ? AppTheme.dark : AppTheme.light,
-      home: const SplashScreen(),
+    return ValueListenableBuilder(
+      valueListenable: _profileBox.listenable(keys: ['isDarkMode']),
+      builder: (context, Box box, child) {
+        final currentDarkMode = box.get('isDarkMode', defaultValue: false);
+        
+        return MaterialApp(
+          title: 'Günce',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          // Tema modunu doğrudan kullanıcı seçimine göre ayarla
+          themeMode: currentDarkMode ? ThemeMode.dark : ThemeMode.light,
+          home: const SplashScreen(),
+        );
+      },
     );
   }
 }

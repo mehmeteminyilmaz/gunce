@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/entry.dart';
 import '../utils/mood_colors.dart';
+import '../utils/gemini_service.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
@@ -34,6 +35,7 @@ class _AddScreenState extends State<AddScreen> {
   bool _saving = false;
   bool _isRecording = false;
   bool _gettingLocation = false;
+  bool _isAnalyzingMood = false;
   late AudioRecorder _audioRecorder;
 
   @override
@@ -370,8 +372,101 @@ class _AddScreenState extends State<AddScreen> {
             const SizedBox(height: 32),
 
             // Ruh Hali Seçimi
-            Text('Nasıl hissediyorsun?',
-              style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Nasıl hissediyorsun?',
+                  style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                // AI Analiz Butonu
+                GestureDetector(
+                  onTap: _isAnalyzingMood ? null : () async {
+                    final text = _textController.text;
+                    if (text.trim().length < 10) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Analiz için en az 10 karakter yazmalısın.',
+                            style: GoogleFonts.outfit(color: Colors.white)),
+                          backgroundColor: const Color(0xFF5A67D8),
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                      );
+                      return;
+                    }
+                    setState(() => _isAnalyzingMood = true);
+                    try {
+                      final mood = await GeminiService.analyzeMood(text);
+                      setState(() {
+                        _isAnalyzingMood = false;
+                        if (mood != null) _selectedMood = mood;
+                      });
+                      if (!mounted) return;
+                      if (mood != null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('AI ruh halinizi "$mood" olarak belirledi.',
+                              style: GoogleFonts.outfit(color: Colors.white)),
+                            backgroundColor: const Color(0xFF9F7AEA),
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Metin anlaşılamadı, lütfen daha fazla yazın.',
+                              style: GoogleFonts.outfit(color: Colors.white)),
+                            backgroundColor: Colors.orange.shade600,
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      setState(() => _isAnalyzingMood = false);
+                      if (!mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Hata: $e',
+                            style: GoogleFonts.outfit(color: Colors.white)),
+                          backgroundColor: Colors.red.shade400,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                      );
+                    }
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: _isAnalyzingMood
+                          ? const Color(0xFF9F7AEA).withOpacity(0.1)
+                          : const Color(0xFF9F7AEA).withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: const Color(0xFF9F7AEA).withOpacity(0.4)),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (_isAnalyzingMood)
+                          const SizedBox(
+                            width: 12, height: 12,
+                            child: CircularProgressIndicator(strokeWidth: 1.5, color: Color(0xFF9F7AEA)),
+                          )
+                        else
+                          const Icon(Icons.auto_awesome_rounded, size: 14, color: Color(0xFF9F7AEA)),
+                        const SizedBox(width: 6),
+                        Text(
+                          _isAnalyzingMood ? 'Analiz ediliyor...' : 'AI ile Analiz Et',
+                          style: GoogleFonts.outfit(fontSize: 12, color: const Color(0xFF9F7AEA), fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 16),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,

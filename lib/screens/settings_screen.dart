@@ -16,6 +16,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final LocalAuthentication auth = LocalAuthentication();
   bool _isBiometricEnabled = false;
   bool _isReminderEnabled = false;
+  bool _isDarkMode = false;
   TimeOfDay _reminderTime = const TimeOfDay(hour: 20, minute: 0);
 
   @override
@@ -23,6 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     _isBiometricEnabled = _profileBox.get('biometricEnabled', defaultValue: false);
     _isReminderEnabled = _profileBox.get('reminderEnabled', defaultValue: false);
+    _isDarkMode = _profileBox.get('isDarkMode', defaultValue: false);
     int rHour = _profileBox.get('reminderHour', defaultValue: 20);
     int rMinute = _profileBox.get('reminderMinute', defaultValue: 0);
     _reminderTime = TimeOfDay(hour: rHour, minute: rMinute);
@@ -108,6 +110,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               child: Column(
                 children: [
+                  // --- Karanlık Tema ---
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            _isDarkMode ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
+                            color: Theme.of(context).colorScheme.onSurface,
+                            size: 24,
+                          ),
+                          const SizedBox(width: 12),
+                          Text('Karanlık Tema', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                      Switch(
+                        value: _isDarkMode,
+                        onChanged: (value) async {
+                          await _profileBox.put('isDarkMode', value);
+                          setState(() => _isDarkMode = value);
+                        },
+                        activeColor: const Color(0xFF5A67D8),
+                      ),
+                    ],
+                  ),
+                  Divider(height: 32, color: Theme.of(context).dividerColor),
+                  // --- Biyometrik Kilit ---
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
