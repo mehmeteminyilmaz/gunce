@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:gunce/config/api_keys.dart';
 import 'package:http/http.dart' as http;
 
@@ -83,6 +84,50 @@ Metin:
       } catch (_) {}
       throw GeminiException(errorMsg);
     }
+  }
+
+  /// Kullanıcıyı derin düşünmeye sevk edecek tek bir soru üretir.
+  static Future<String?> getReflectiveQuestion([String? currentText]) async {
+    if (_apiKey.isEmpty) return null;
+
+    const url =
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+
+    String prompt =
+        "Sen derinlikli, felsefi ve empatik bir günlük asistanısın. ";
+    if (currentText != null && currentText.trim().isNotEmpty) {
+      prompt +=
+          "Kullanıcı şu an günlüğüne şunu yazıyor: '$currentText'. Bu metinden yola çıkarak onu derin bir içsel yolculuğa çıkaracak, ucu açık ve 15 kelimeyi geçmeyen bir soru sor.";
+    } else {
+      prompt +=
+          "Kullanıcıya bugünle ilgili derin bir farkındalık kazandıracak, 15 kelimeyi geçmeyen tek bir soru sor.";
+    }
+
+    try {
+      final response = await http.post(
+        Uri.parse('$url?key=$_apiKey'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'contents': [
+            {
+              'parts': [
+                {'text': prompt}
+              ]
+            }
+          ],
+          'generationConfig': {'temperature': 0.8, 'maxOutputTokens': 100}
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        String text = data['candidates'][0]['content']['parts'][0]['text'];
+        return text.trim().replaceAll('"', '');
+      }
+    } catch (e) {
+      print('Soru sorma hatası: $e');
+    }
+    return null;
   }
 }
 

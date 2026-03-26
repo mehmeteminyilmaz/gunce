@@ -36,12 +36,26 @@ class _AddScreenState extends State<AddScreen> {
   bool _isRecording = false;
   bool _gettingLocation = false;
   bool _isAnalyzingMood = false;
+  bool _isLoadingQuestion = false;
+  String? _aiQuestion;
   late AudioRecorder _audioRecorder;
 
   @override
   void initState() {
     super.initState();
     _audioRecorder = AudioRecorder();
+    _loadQuestion();
+  }
+
+  Future<void> _loadQuestion() async {
+    setState(() => _isLoadingQuestion = true);
+    final question = await GeminiService.getReflectiveQuestion();
+    if (mounted) {
+      setState(() {
+        _aiQuestion = question;
+        _isLoadingQuestion = false;
+      });
+    }
   }
 
   @override
@@ -313,7 +327,12 @@ class _AddScreenState extends State<AddScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // AI Soru Kartı (Yeni)
+            if (_aiQuestion != null || _isLoadingQuestion)
+              _buildAIQuestionCard(),
             
+            const SizedBox(height: 32),
+
             // Konum Alanı (Yeni Özellik)
             Text('Neredesin?',
               style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
@@ -660,6 +679,53 @@ class _AddScreenState extends State<AddScreen> {
             
             const SizedBox(height: 48), // Padding alt
           ]),
+      ),
+    );
+  }
+
+  Widget _buildAIQuestionCard() {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [const Color(0xFF5A67D8).withOpacity(0.08), const Color(0xFF9F7AEA).withOpacity(0.05)],
+          begin: Alignment.topLeft, end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: const Color(0xFF5A67D8).withOpacity(0.15)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.psychology_alt_rounded, color: Color(0xFF5A67D8), size: 18),
+                  const SizedBox(width: 8),
+                  Text('GÜNÜN SORUSU', 
+                    style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1.5, fontWeight: FontWeight.bold, color: const Color(0xFF5A67D8))),
+                ],
+              ),
+              if (!_isLoadingQuestion)
+                IconButton(
+                  icon: const Icon(Icons.refresh_rounded, size: 16, color: Color(0xFF5A67D8)),
+                  onPressed: _loadQuestion,
+                  visualDensity: VisualDensity.compact,
+                ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          if (_isLoadingQuestion)
+            const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 1.5, color: Color(0xFF5A67D8)))
+          else
+            Text(
+              _aiQuestion ?? 'Bugün üzerine düşünmek istediğin bir şey var mı?',
+              style: GoogleFonts.playfairDisplay(
+                fontSize: 18, fontStyle: FontStyle.italic, fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface, height: 1.4),
+            ),
+        ],
       ),
     );
   }
