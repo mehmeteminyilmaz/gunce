@@ -647,7 +647,6 @@ class _AddScreenState extends State<AddScreen> {
               child: TextField(
                 controller: _textController,
                 maxLines: 5,
-                maxLength: 250,
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 18, color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w500, height: 1.6),
                 decoration: InputDecoration(
