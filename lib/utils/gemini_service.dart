@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:gunce/config/api_keys.dart';
 import 'package:http/http.dart' as http;
 import '../models/entry.dart';
-import '../models/chat_message.dart';
 
 class GeminiService {
   static const String _apiKey = ApiKeys.geminiApiKey;
@@ -14,20 +14,29 @@ class GeminiService {
   ];
 
   /// Verilen Türkçe metin için en uygun duygu durumunu döndürür.
-  /// Hata durumunda [GeminiException] fırlatır.
+  /// Metin anlamsız/yetersizse null döndürür.
   static Future<String?> analyzeMood(String text) async {
-    if (text.trim().isEmpty) return null;
+    final cleaned = text.trim();
+    // Minimum 20 karakter ve en az 3 kelime olmalı
+    if (cleaned.isEmpty) return null;
+    final wordCount = cleaned.split(RegExp(r'\s+')).where((w) => w.length > 1).length;
+    if (cleaned.length < 20 || wordCount < 3) return null;
 
     const url =
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
     final prompt = '''
-Aşağıdaki Türkçe günlük/anı metnini analiz et ve yazarın genel ruh halini belirle.
-Sadece aşağıdaki listeden TAM OLARAK bir kelime döndür, başka hiçbir şey yazma:
-${_validMoods.join(', ')}
+Sen bir duygu analisti olarak aşağıdaki Türkçe metni değerlendireceksin.
+
+KURALLAR:
+1. Metin, bir günlük/anı yazısı gibi anlamlı ve kişisel bir içerik taşımalı.
+2. Eğer metin anlamsız, rastgele kelimeler, sadece test amaçlı şeyler veya kişisel bir duyguyu yansıtmıyorsa SADECE "YOK" yaz.
+3. Eğer metin anlamlıysa, yazarın genel ruh halini aşağıdaki listeden TAM OLARAK bir kelimeyle belirle:
+   ${_validMoods.join(', ')}
+4. Başka hiçbir açıklama veya kelime yazma. Sadece listeden bir kelime veya "YOK".
 
 Metin:
-"$text"
+"$cleaned"
 ''';
 
     final response = await http.post(
@@ -43,7 +52,7 @@ Metin:
         ],
         'generationConfig': {
           'temperature': 0.1,
-          'maxOutputTokens': 50,
+          'maxOutputTokens': 20,
           'thinkingConfig': {
             'thinkingBudget': 0,
           },
@@ -55,7 +64,6 @@ Metin:
       final data = jsonDecode(response.body);
       final parts = data['candidates']?[0]?['content']?['parts'] as List?;
 
-      // Thinking modellerinde thought:true olan partları atla
       String result = '';
       if (parts != null) {
         for (final part in parts) {
@@ -66,19 +74,19 @@ Metin:
         }
       }
 
+      // "YOK" döndürdüyse ruh hali atama
+      if (result.toUpperCase().contains('YOK')) return null;
+
       final matched = _validMoods.firstWhere(
         (m) => result.toLowerCase().contains(m.toLowerCase()),
         orElse: () => '',
       );
 
-      if (matched.isEmpty) {
-        // Debug: hangi yanıt geldi göster
-        throw GeminiException('Eşleşme yok. Model yanıtı: "${result.length > 80 ? result.substring(0, 80) : result}"');
-      }
+      // Eşleşme yoksa da null dön (zorla atama yapma)
+      if (matched.isEmpty) return null;
 
       return matched;
     } else {
-      // Hata detayını fırlat
       String errorMsg = 'HTTP ${response.statusCode}';
       try {
         final errData = jsonDecode(response.body);
@@ -148,7 +156,7 @@ Metin:
         return result;
       }
     } catch (e) {
-      print('Soru sorma hatası: $e');
+      debugPrint('Soru sorma hatası: $e');
     }
     return "Bugün kendi dünyana dair ne keşfettin?";
   }
@@ -206,7 +214,7 @@ Metin:
         return result;
       }
     } catch (e) {
-      print('Chat hatası: $e');
+      debugPrint('Chat hatası: $e');
     }
     return "Şu an bağlantı kuramıyorum, ama anılarını korumaya devam ediyorum.";
   }

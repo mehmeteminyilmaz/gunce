@@ -400,10 +400,10 @@ class _AddScreenState extends State<AddScreen> {
                 GestureDetector(
                   onTap: _isAnalyzingMood ? null : () async {
                     final text = _textController.text;
-                    if (text.trim().length < 10) {
+                    if (text.trim().length < 20) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Analiz için en az 10 karakter yazmalısın.',
+                          content: Text('Analiz için anlamlı en az birkaç cümle yazmalısın.',
                             style: GoogleFonts.outfit(color: Colors.white)),
                           backgroundColor: Theme.of(context).colorScheme.primary,
                           behavior: SnackBarBehavior.floating,

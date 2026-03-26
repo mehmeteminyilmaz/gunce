@@ -131,7 +131,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           await _profileBox.put('isDarkMode', value);
                           setState(() => _isDarkMode = value);
                         },
-                        activeColor: const Color(0xFF5A67D8),
+                        activeThumbColor: Theme.of(context).colorScheme.primary,
                       ),
                     ],
                   ),
@@ -150,7 +150,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Switch(
                         value: _isBiometricEnabled,
                         onChanged: _toggleBiometric,
-                        activeColor: const Color(0xFF5A67D8),
+                        activeThumbColor: Theme.of(context).colorScheme.primary,
                       ),
                     ],
                   ),
@@ -187,7 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Switch(
                         value: _isReminderEnabled,
                         onChanged: _toggleReminder,
-                        activeColor: const Color(0xFF5A67D8),
+                        activeThumbColor: Theme.of(context).colorScheme.primary,
                       ),
                     ],
                   ),
@@ -195,8 +195,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Veri Yedekleme', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
-                      Text('Sadece Cihazda', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: const Color(0xFF5A67D8))),
+                      Text('Veri Yedekleme', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
+                      Text('Sadece Cihazda', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.primary)),
                     ],
                   ),
                   Divider(height: 32, color: Theme.of(context).dividerColor),

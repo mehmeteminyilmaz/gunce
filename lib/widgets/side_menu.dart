@@ -9,6 +9,7 @@ import '../screens/settings_screen.dart';
 import '../screens/map_screen.dart';
 import '../screens/themes_screen.dart';
 import '../screens/chat_screen.dart';
+import '../screens/zen_garden_screen.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
@@ -20,12 +21,13 @@ class SideMenu extends StatelessWidget {
       child: SafeArea(
         child: ValueListenableBuilder(
           valueListenable: Hive.box('profile').listenable(),
-          builder: (context, Box box, _) {
+          builder: (context, Box box, child) {
             final name = box.get('name', defaultValue: 'Gezgin');
             
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Profil Başlığı (sabit kalır)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(32, 48, 32, 32),
                   child: Column(
@@ -35,8 +37,8 @@ class SideMenu extends StatelessWidget {
                         onTap: () {
                           Navigator.pop(context);
                           Navigator.push(context, PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => const ProfileScreen(),
-                            transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
+                            pageBuilder: (context, anim, anim2) => const ProfileScreen(),
+                            transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
                           ));
                         },
                         child: Container(
@@ -47,7 +49,7 @@ class SideMenu extends StatelessWidget {
                             border: Border.all(color: Theme.of(context).colorScheme.primary, width: 1.5),
                             boxShadow: [
                               BoxShadow(
-                                color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
+                                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
                                 blurRadius: 15, offset: const Offset(0, 5),
                               )
                             ]
@@ -62,13 +64,12 @@ class SideMenu extends StatelessWidget {
                       Text('Merhaba,',
                         style: GoogleFonts.outfit(
                           fontSize: 14,
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
                         )),
                       
-                      // İsim ve Streak Rozeti
                       ValueListenableBuilder(
                         valueListenable: Hive.box<Entry>('entries').listenable(),
-                        builder: (context, Box<Entry> entriesBox, _) {
+                        builder: (context, Box<Entry> entriesBox, child) {
                           final streak = StreakCalculator.calculate(entriesBox.values.toList());
                           return Row(
                             children: [
@@ -84,7 +85,7 @@ class SideMenu extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.secondary.withOpacity(0.05), // Dinamik
+                                    color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.05),
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(color: Theme.of(context).colorScheme.secondary)
                                   ),
@@ -106,94 +107,118 @@ class SideMenu extends StatelessWidget {
                 ),
                 
                 Divider(color: Theme.of(context).dividerColor, height: 1, indent: 32, endIndent: 32),
-                const SizedBox(height: 24),
+                const SizedBox(height: 8),
                 
-                _buildMenuItem(
-                  context: context,
-                  icon: Icons.person_rounded,
-                  title: 'Profilim',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const ProfileScreen(),
-                      transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
-                    ));
-                  },
-                ),
-                
-                _buildMenuItem(
-                  context: context,
-                  icon: Icons.auto_awesome_rounded,
-                  title: 'Günce ile Sohbet',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const ChatScreen(),
-                      transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
-                    ));
-                  },
-                ),
+                // Menü Öğeleri — Scroll edilebilir (overflow'u önler)
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildMenuItem(
+                          context: context,
+                          icon: Icons.person_rounded,
+                          title: 'Profilim',
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (context, anim, anim2) => const ProfileScreen(),
+                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
+                            ));
+                          },
+                        ),
+                        
+                        _buildMenuItem(
+                          context: context,
+                          icon: Icons.auto_awesome_rounded,
+                          title: 'Günce ile Sohbet',
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (context, anim, anim2) => const ChatScreen(),
+                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
+                            ));
+                          },
+                        ),
 
-                _buildMenuItem(
-                  context: context,
-                  icon: Icons.map_outlined,
-                  title: 'Anı Haritası',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const MapScreen(),
-                      transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
-                    ));
-                  },
+                        _buildMenuItem(
+                          context: context,
+                          icon: Icons.map_outlined,
+                          title: 'Anı Haritası',
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (context, anim, anim2) => const MapScreen(),
+                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
+                            ));
+                          },
+                        ),
+                        
+                        _buildMenuItem(
+                          context: context,
+                          icon: Icons.park_rounded,
+                          title: 'Zen Bahçem',
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (context, anim, anim2) => const ZenGardenScreen(),
+                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
+                            ));
+                          },
+                        ),
+
+                        _buildMenuItem(
+                          context: context,
+                          icon: Icons.bar_chart_rounded,
+                          title: 'İstatistikler & Analiz',
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (context, anim, anim2) => const StatsScreen(),
+                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
+                            ));
+                          },
+                        ),
+                        
+                        _buildMenuItem(
+                          context: context,
+                          icon: Icons.palette_outlined,
+                          title: 'Zen Temaları',
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (context, anim, anim2) => const ThemesScreen(),
+                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
+                            ));
+                          },
+                        ),
+                        
+                        _buildMenuItem(
+                          context: context,
+                          icon: Icons.settings_outlined,
+                          title: 'Ayarlar',
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (context, anim, anim2) => const SettingsScreen(),
+                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
+                            ));
+                          },
+                        ),
+
+                        const SizedBox(height: 16),
+                      ],
+                    ),
+                  ),
                 ),
                 
-                _buildMenuItem(
-                  context: context,
-                  icon: Icons.auto_awesome_rounded,
-                  title: 'İstatistikler & Analiz',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const StatsScreen(),
-                      transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
-                    ));
-                  },
-                ),
-                
-                _buildMenuItem(
-                  context: context,
-                  icon: Icons.palette_outlined,
-                  title: 'Zen Temaları',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const ThemesScreen(),
-                      transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
-                    ));
-                  },
-                ),
-                
-                _buildMenuItem(
-                  context: context,
-                  icon: Icons.settings_outlined,
-                  title: 'Ayarlar',
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const SettingsScreen(),
-                      transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
-                    ));
-                  },
-                ),
-                
-                const Spacer(),
-                
+                // Sürüm numarası — altta sabit
                 Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Text('Günce v3.0 Soft',
+                  padding: const EdgeInsets.fromLTRB(32, 8, 32, 16),
+                  child: Text('Günce v3.5',
                     style: GoogleFonts.outfit(
                       fontSize: 12,
-                      color: const Color(0xFFB0B0B0),
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
                     )),
                 )
               ],
@@ -207,10 +232,10 @@ class SideMenu extends StatelessWidget {
   Widget _buildMenuItem({required BuildContext context, required IconData icon, required String title, required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
-      splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+      splashColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
       highlightColor: Colors.transparent,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
         child: Row(
           children: [
             Icon(icon, color: Theme.of(context).colorScheme.primary, size: 22),
