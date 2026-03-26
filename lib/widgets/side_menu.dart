@@ -157,7 +157,7 @@ class SideMenu extends StatelessWidget {
                         _buildMenuItem(
                           context: context,
                           icon: Icons.park_rounded,
-                          title: 'Zen Bahçem',
+                          title: 'Hafıza Bahçem',
                           onTap: () {
                             Navigator.pop(context);
                             Navigator.push(context, PageRouteBuilder(
@@ -183,7 +183,7 @@ class SideMenu extends StatelessWidget {
                         _buildMenuItem(
                           context: context,
                           icon: Icons.palette_outlined,
-                          title: 'Zen Temaları',
+                          title: 'Huzur Temaları',
                           onTap: () {
                             Navigator.pop(context);
                             Navigator.push(context, PageRouteBuilder(

@@ -37,7 +37,7 @@ class _ZenGardenScreenState extends State<ZenGardenScreen> with SingleTickerProv
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('Zen Bahçem', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
+        title: Text('Hafıza Bahçem', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
         elevation: 0,
       ),
       body: ValueListenableBuilder(
@@ -98,7 +98,7 @@ class _ZenGardenScreenState extends State<ZenGardenScreen> with SingleTickerProv
                 Padding(
                   padding: const EdgeInsets.all(40.0),
                   child: Text(
-                    _getZenMessage(growth, streak),
+                    _getGardenMessage(growth, streak),
                     textAlign: TextAlign.center,
                     style: GoogleFonts.outfit(
                       fontSize: 16,
@@ -126,7 +126,7 @@ class _ZenGardenScreenState extends State<ZenGardenScreen> with SingleTickerProv
     return counts.entries.reduce((a, b) => a.value > b.value ? a : b).key;
   }
 
-  String _getZenMessage(double growth, int streak) {
+  String _getGardenMessage(double growth, int streak) {
     if (growth < 0.2) return "Her büyük ağaç küçük bir tohumla başlar. İlk anını ekmek için harika bir gün.";
     if (streak > 7) return "Harikasın! Devamlılığın sayesinde fidanın kökleri çok derinlere iniyor.";
     return "Anılarınla suladığın bu ağaç, seninle beraber büyüyor. Yazmaya devam et.";

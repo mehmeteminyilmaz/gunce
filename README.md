@@ -13,7 +13,7 @@
 
 <br>
 
-**Günce**, anılarınızı koruyan, ruh halinizi analiz eden ve geçmişinizi hatırlayan zeki bir dijital günlük asistanıdır. **Zen Temaları**, **Hafıza Sohbeti** ve **Zen Bahçesi** ile sıradan bir not uygulamasının çok ötesine geçer.
+**Günce**, anılarınızı koruyan, ruh halinizi analiz eden ve geçmişinizi hatırlayan zeki bir dijital günlük asistanıdır. **Huzur Temaları**, **Hafıza Sohbeti** ve **Anı Bahçesi** ile sıradan bir not uygulamasının çok ötesine geçer.
 
 ---
 
@@ -21,10 +21,10 @@
 
 | ✨ Özellik | 📝 Açıklama |
 | :--- | :--- |
-| **Zen Aura Header** 🌅 | Ana sayfada sizi karşılayan, günün saatine göre değişen "Zen Aura" kartı. Glassmorphism tasarım ve motivasyon sözleri. |
+| **Huzurlu Karşılama** 🌅 | Ana sayfada sizi karşılayan, günün saatine göre değişen parlayan bir aura kartı. Glassmorphism tasarım ve motivasyon sözleri. |
 | **Hafıza Sohbeti (AI Chat)** 🧠 | Geçmiş anılarınızı gerçekten hatırlayan Gemini ile sohbet edin. "Geçen ay neden mutluydum?" diye sorabilirsiniz. |
-| **Zen Bahçesi** 🌳 | Yazdığınız her anı dijital ağacınızı büyütür. Yapraklar baskın ruh halinizin rengini alır. |
-| **Zen Temaları (5 Mod)** 🎨 | Lavanta, Doğa, Gece, Gül ve Çöl — tema değiştirince butonlar, ikonlar ve gölgeler anında uyum sağlar. |
+| **Anı Bahçesi** 🌳 | Yazdığınız her anı dijital ağacınızı büyütür. Yapraklar baskın ruh halinizin rengini alır. |
+| **Huzur Temaları (5 Mod)** 🎨 | Lavanta, Doğa, Gece, Gül ve Çöl — tema değiştirince butonlar, ikonlar ve gölgeler anında uyum sağlar. |
 | **AI Duygu Analizi** 🔬 | Günlük metninizden ruh halini tespit eder. Anlamsız/rastgele içerikleri reddeder, yalnızca gerçek duyguları analiz eder. |
 | **Hafıza Isı Haritası** 📊 | GitHub stili 90 günlük interaktif ruh hali takvimi. |
 | **Geçen Yıl Bugün** 🕰️ | Geçmişteki kendinizi hatırlamanız için her gün özel bir flashback kartı. |
@@ -46,7 +46,7 @@ flutter run
 ## 🛠️ Teknolojik Altyapı
 
 > 🧠 **Zeka:** `Gemini 2.5 Flash` — Hafıza bilinci, duygu analizi, yaratıcı yönlendirme  
-> 🎨 **UI:** `Dynamic Theme Injection`, `CustomPainter (Zen Bahçesi)`, `Glassmorphism`, `Lottie Animations`  
+> 🎨 **UI:** `Dynamic Theme Injection`, `CustomPainter (Anı Bahçesi)`, `Glassmorphism`, `Lottie Animations`  
 > 💿 **Veritabanı:** `Hive` — Hızlı, güvenli, tamamen çevrimdışı  
 > 🗺️ **Konum:** `Geolocator` + Reverse Geocoding
 

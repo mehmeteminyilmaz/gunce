@@ -12,7 +12,7 @@ class ThemesScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Zen Temaları', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
+        title: Text('Huzur Temaları', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
       ),
       body: ValueListenableBuilder(
         valueListenable: profileBox.listenable(keys: ['zenThemeIndex']),
