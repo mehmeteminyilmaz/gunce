@@ -21,12 +21,12 @@
 
 | ✨ Özellik | 📝 Açıklama |
 | :--- | :--- |
-| **Yapay Zeka (Gemini AI)** 🧠 | Anı metninizden ruh halinizi otomatik analiz eden akıllı asistan. |
-| **Görsel Hafıza** 📸 | Anılarınıza sadece kelimelerle değil, cihaza entegre **Kamera** veya **Galeri** çekimleriyle görsellik katın. |
-| **Dinamik Tema Seçimi** 🎨 | Kullanıcı tercihine bağlı **Açık/Koyu Mod** desteği. |
+| **Duygu Zinciri (Heatmap)** 📊 | GitHub stili 90 günlük interaktif ruh hali takvimi. Görselleştirilmiş duygusal yolculuk. |
+| **Yapay Zeka (Gemini AI)** 🧠 | Anı metninden otomatik ruh hali analizi ve kişiselleştirilmiş **Duygu Özetleri**. |
+| **Görsel Hafıza** 📸 | Anılarınıza cihaza entegre **Kamera** veya **Galeri** çekimleriyle görsellik katın. |
+| **Dinamik Tema Seçimi** 🎨 | Kullanıcı tercihine bağlı **Açık/Koyu Mod** (Zen Tasarımı) desteği. |
 | **Ateşleyici Seriler** 🔥 | Her gün yazarak kendi "Streak" serinizi oluşturun ve motivasyonunuzu koruyun. |
-| **Sarsılmaz Güvenlik** 🔒 | Yerel veritabanı altyapısına ek olarak **Biyometrik Kilit** (Yüz/Parmak İzi) koruması. |
-| **Dinamik Duygu Grafiği** 📊 | Renk kodlu duygu etiketleri ve özel Bar Grafiği ile duygusal takip. |
+| **Sarsılmaz Güvenlik** 🔒 | Yerel veritabanı altyapısına ek olarak **Biyometrik Kilit** koruması. |
 | **Sesli Duygular** 🎙️ | Yazamadığınız anlarda sesinizi anılarınıza ekleyin. |
 | **Anı Haritası** 🗺️ | Konum tabanlı anı takibi ve otomatik adres çözümleme. |
 
@@ -53,8 +53,7 @@ flutter run
 ## 🛠️ Teknolojik Altyapı
 
 > 🧠 **Yapay Zeka:** `Google Gemini 1.5/2.5 API` (REST API).  
-> 🌌 **Görsel:** `google_fonts`, `image_picker`.  
-> 🔒 **Güvenlik:** `local_auth`.  
+> ✨ **UI:** `Glassmorphism Design`, `Animation Builders`.  
 > 💿 **Veritabanı:** `hive`, `hive_flutter`.  
 > 🗺️ **Lokasyon:** `geolocator`, `flutter_map`, `http` (Reverse Geocoding).
 
@@ -62,10 +61,10 @@ flutter run
 
 ## 🌱 Gelişim Yolculuğu (Planlananlar)
 
-- 🧠 **AI Geliştirmeleri:** Kişiselleştirilmiş günlük motivasyon geri bildirimleri.
-- 📊 **Duygu Isı Haritası:** Yıllık ruh hali değişimleri için estetik heatmap grafiği.
-- ☁️ **Bulut Senkronizasyonu:** Firebase altyapısı ile çoklu cihaz desteği.
-- 📖 **PDF Dışa Aktar:** Şık bir anı albümü oluşturma özelliği.
+- 🧠 **AI Derinlik:** Geçmiş anılara dayalı akıllı hatırlatıcılar ve sorular.
+- ☁️ **Bulut Senkronizasyonu:** Firebase altyapısı ile çoklu cihaz ve yedekleme desteği.
+- 📖 **PDF Dışa Aktar:** Tüm anılarınızı şık bir dijital kitaba (PDF) dönüştürme.
+- 🔒 **Kasa Özelliği:** Özel anılar için ekstra şifreli gizli klasör desteği.
 
 *Siz de bu yolculuğun bir parçası olabilir, projeyi yıldızlayarak (⭐) destek olabilirsiniz!*
 
