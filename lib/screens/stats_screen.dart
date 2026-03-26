@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import '../models/entry.dart';
 import '../utils/mood_colors.dart';
 import '../utils/streak_calculator.dart';
@@ -53,11 +54,21 @@ class StatsScreen extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onSurface,
                   )),
                 const SizedBox(height: 8),
-                Text('Bugüne dek tuttuğun tüm kayıtlar.',
+                Text('Burası senin duygusal yolculuğun.',
                   style: GoogleFonts.outfit(
                     fontSize: 14,
                     color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
                   )),
+                const SizedBox(height: 32),
+
+                // AI Duygu Özeti & Motivasyon (Yeni)
+                _buildAISummary(context, entries, topMood),
+                
+                const SizedBox(height: 32),
+                
+                // Duygu Isı Haritası (Heatmap)
+                _buildMoodHeatmap(context, entries),
+                
                 const SizedBox(height: 32),
                 
                 // Streak (Alev) Kartı
@@ -207,6 +218,161 @@ class StatsScreen extends StatelessWidget {
             )),
         ],
       ),
+    );
+  }
+
+  Widget _buildAISummary(BuildContext context, List<Entry> entries, String topMood) {
+    if (entries.isEmpty) return const SizedBox.shrink();
+    
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [const Color(0xFF5A67D8), const Color(0xFF9F7AEA).withOpacity(0.8)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(color: const Color(0xFF5A67D8).withOpacity(0.3), blurRadius: 20, offset: const Offset(0, 10))
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 20),
+              const SizedBox(width: 12),
+              Text('Duygu Özeti', style: GoogleFonts.outfit(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600)),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Son zamanlarda genellikle "$topMood" hissediyorsun. Bu enerjini korumak için günlüğüne yazmaya devam etmelisin! ✨',
+            style: GoogleFonts.outfit(fontSize: 16, color: Colors.white.withOpacity(0.9), height: 1.5),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMoodHeatmap(BuildContext context, List<Entry> entries) {
+    final now = DateTime.now();
+    // 13 hafta (3 ay) x 7 gün = 91 gün
+    final last91Days = List.generate(91, (index) => 
+      DateTime(now.year, now.month, now.day).subtract(Duration(days: 90 - index)));
+
+    final Map<String, String> dayMoods = {};
+    for (var e in entries) {
+      final key = DateFormat('yyyy-MM-dd').format(e.date);
+      dayMoods[key] = e.mood ?? 'Belirsiz';
+    }
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Theme.of(context).dividerColor.withOpacity(0.1)),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 20, offset: const Offset(0, 10))
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF5A67D8).withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.calendar_view_month_rounded, color: Color(0xFF5A67D8), size: 20)
+                  ),
+                  const SizedBox(width: 12),
+                  Text('Duygu Zinciri',
+                    style: GoogleFonts.outfit(fontSize: 17, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(color: const Color(0xFFF7FAFC), borderRadius: BorderRadius.circular(12)),
+                child: Text('90 GÜN', style: GoogleFonts.outfit(fontSize: 10, color: const Color(0xFF5A67D8), fontWeight: FontWeight.bold)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 28),
+          SizedBox(
+            height: 130,
+            child: GridView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 7,
+                mainAxisSpacing: 6,
+                crossAxisSpacing: 6,
+                childAspectRatio: 1,
+              ),
+              itemCount: last91Days.length,
+              itemBuilder: (context, index) {
+                final date = last91Days[index];
+                final key = DateFormat('yyyy-MM-dd').format(date);
+                final mood = dayMoods[key];
+                final color = mood != null ? MoodColors.getColor(mood) : Colors.grey.withOpacity(0.1);
+                
+                return TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0.0, end: 1.0),
+                  duration: Duration(milliseconds: 300 + (index * 10)),
+                  builder: (context, value, _) {
+                    return Opacity(
+                      opacity: value,
+                      child: Tooltip(
+                        message: '${DateFormat('d MMMM', 'tr').format(date)}: ${mood ?? "İz Yok"}',
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: color,
+                            borderRadius: BorderRadius.circular(4),
+                            boxShadow: mood != null ? [
+                              BoxShadow(color: color.withOpacity(0.3), blurRadius: 4, spreadRadius: 1)
+                            ] : null,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 16),
+          _buildHeatmapLegend(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeatmapLegend() {
+    final scale = ['Hüzünlü', 'Sakin', 'Huzurlu', 'Mutlu', 'Harika'];
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text('Az', style: GoogleFonts.outfit(fontSize: 10, color: Colors.grey.shade500)),
+        const SizedBox(width: 8),
+        ...scale.map((m) => Container(
+          margin: const EdgeInsets.only(right: 4),
+          width: 10, height: 10,
+          decoration: BoxDecoration(color: MoodColors.getColor(m), borderRadius: BorderRadius.circular(2)),
+        )),
+        const SizedBox(width: 8),
+        Text('Çok', style: GoogleFonts.outfit(fontSize: 10, color: Colors.grey.shade500)),
+      ],
     );
   }
 
