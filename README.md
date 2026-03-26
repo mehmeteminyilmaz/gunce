@@ -62,9 +62,11 @@ flutter run
 
 ## 🌱 Gelişim Yolculuğu (Planlananlar)
 
-- ☁️ **Bulut Senkronizasyonu:** Firebase altyapısı ile çoklu cihaz ve yedekleme desteği.
+- 🎙️ **Sesli Metin (STT):** Ses kayıtlarınızın otomatik olarak yazıya dökülmesi ve AI ile özetlenmesi.
+- 🎨 **Zen Temaları:** Uygulama arayüzünü ruh halinize göre kişiselleştirebileceğiniz gelişmiş tema editörü.
 - 📖 **PDF Dışa Aktar:** Tüm anılarınızı şık bir dijital kitaba (PDF) dönüştürme.
-- 🔐 **Biyometrik Kilit:** Uygulama girişi için Parmak İzi/Yüz tanıma güvenliği.
+- ☁️ **Bulut Senkronizasyonu:** Firebase altyapısı ile çoklu cihaz ve yedekleme desteği.
+- 📊 **Duygusal Karşılaştırmalar:** Ay bazlı ruh hali değişim grafiklerinin karşılaştırmalı analizi.
 - 🔒 **Kasa Özelliği:** Özel anılar için ekstra şifreli gizli klasör desteği.
 
 *Siz de bu yolculuğun bir parçası olabilir, projeyi yıldızlayarak (⭐) destek olabilirsiniz!*
