@@ -13,7 +13,7 @@
 
 <br>
 
-**Günce**, hayattaki sıradan veya özel tüm anılarınızı not alabileceğiniz, şık tasarımıyla ruhunuzu yormayan, güvenilir ve modern bir mobil uygulamadır. Dinlendirici **"Gece Mavisi ve Lavanta (Indigo & Lavender)"** renk konsepti ve Glassmorphism tasarımı sayesinde, yazarken tüm dış dünyadan soyutlanabilir ve yalnızca kendinize odaklanabilirsiniz. 🌌✨
+**Günce**, hayattaki sıradan veya özel tüm anılarınızı not alabileceğiniz, şık tasarımıyla ruhunuzu yormayan, güvenilir ve modern bir mobil uygulamadır. **Zen Temaları** sayesinde, uygulamanın tüm görsel dilini o anki ruh halinize göre değiştirebilirsiniz. 🌌✨
 
 ---
 
@@ -21,11 +21,11 @@
 
 | ✨ Özellik | 📝 Açıklama |
 | :--- | :--- |
+| **Zen Temaları** 🎨 | 5 farklı mod (Lavanta, Doğa, Gece, Gül, Çöl) ile tüm buton, ikon ve gölgelerin değiştiği yaşayan arayüz. |
 | **Duygu Zinciri (Heatmap)** 📊 | GitHub stili 90 günlük interaktif ruh hali takvimi. Görselleştirilmiş duygusal yolculuk. |
 | **AI Yazma Yönergeleri** ✍️ | Gemini AI ile her gün size özel yaratıcı yazma teknikleri ve hikaye ipuçları. |
 | **AI Duygu Analizi** 🧠 | Anı metninden otomatik ruh hali analizi ve kişiselleştirilmiş **Duygu Özetleri**. |
 | **Görsel Hafıza** 📸 | Anılarınıza cihaza entegre **Kamera** veya **Galeri** çekimleriyle görsellik katın. |
-| **Zen Tasarımı (Koyu Mod)** 🎨 | Dinlendirici lavanta tonları ve Glassmorphism ile hazırlanan modern arayüz. |
 | **Ateşleyici Seriler** 🔥 | Her gün yazarak kendi "Streak" serinizi oluşturun ve motivasyonunuzu koruyun. |
 | **Sesli Duygular** 🎙️ | Yazamadığınız anlarda sesinizi anılarınıza ekleyerek ruhunuzu yansıtın. |
 | **Sınırsız Anılar** ⛓️‍💥 | Karakter sınırı olmadan dilediğinizce uzun anılar kaleme alın. |
@@ -54,7 +54,7 @@ flutter run
 ## 🛠️ Teknolojik Altyapı
 
 > 🧠 **Yapay Zeka:** `Google Gemini 1.5/2.5 API` (REST API).  
-> ✨ **UI:** `Glassmorphism Design`, `Animation Builders`.  
+> ✨ **UI:** `Dynamic Theme Injection`, `Glassmorphism Design`, `Animation Builders`.  
 > 💿 **Veritabanı:** `hive`, `hive_flutter`.  
 > 🗺️ **Lokasyon:** `geolocator`, `flutter_map`, `http` (Reverse Geocoding).
 
@@ -63,7 +63,6 @@ flutter run
 ## 🌱 Gelişim Yolculuğu (Planlananlar)
 
 - 🎙️ **Sesli Metin (STT):** Ses kayıtlarınızın otomatik olarak yazıya dökülmesi ve AI ile özetlenmesi.
-- 🎨 **Zen Temaları:** Uygulama arayüzünü ruh halinize göre kişiselleştirebileceğiniz gelişmiş tema editörü.
 - 📖 **PDF Dışa Aktar:** Tüm anılarınızı şık bir dijital kitaba (PDF) dönüştürme.
 - ☁️ **Bulut Senkronizasyonu:** Firebase altyapısı ile çoklu cihaz ve yedekleme desteği.
 - 📊 **Duygusal Karşılaştırmalar:** Ay bazlı ruh hali değişim grafiklerinin karşılaştırmalı analizi.
