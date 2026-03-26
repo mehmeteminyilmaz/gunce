@@ -27,31 +27,29 @@ class GunceApp extends StatefulWidget {
 }
 
 class _GunceAppState extends State<GunceApp> {
-  bool _isDarkMode = false;
   late Box _profileBox;
 
   @override
   void initState() {
     super.initState();
     _profileBox = Hive.box('profile');
-    // Başlangıçta kullanıcı tercihini al, yoksa sistem saati yerine varsayılan açık tema kullan
-    _isDarkMode = _profileBox.get('isDarkMode', defaultValue: false);
   }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: _profileBox.listenable(keys: ['isDarkMode']),
+      valueListenable: _profileBox.listenable(keys: ['isDarkMode', 'zenThemeIndex']),
       builder: (context, Box box, child) {
-        final currentDarkMode = box.get('isDarkMode', defaultValue: false);
+        final isDarkMode = box.get('isDarkMode', defaultValue: false);
+        final themeIndex = box.get('zenThemeIndex', defaultValue: 0);
+        final zenTheme = ZenThemeType.values[themeIndex % ZenThemeType.values.length];
         
         return MaterialApp(
           title: 'Günce',
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.light,
-          darkTheme: AppTheme.dark,
-          // Tema modunu doğrudan kullanıcı seçimine göre ayarla
-          themeMode: currentDarkMode ? ThemeMode.dark : ThemeMode.light,
+          theme: AppTheme.getTheme(zenTheme, false),
+          darkTheme: AppTheme.getTheme(zenTheme, true),
+          themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
           home: const SplashScreen(),
         );
       },

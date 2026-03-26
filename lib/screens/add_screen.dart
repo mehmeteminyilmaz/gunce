@@ -367,14 +367,14 @@ class _AddScreenState extends State<AddScreen> {
                   ),
                   IconButton(
                     icon: _gettingLocation 
-                      ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF9F7AEA)))
+                      ? SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Theme.of(context).colorScheme.secondary))
                       : Icon(_latitude != null ? Icons.gps_fixed_rounded : Icons.my_location_rounded, 
-                             color: _latitude != null ? const Color(0xFF5A67D8) : const Color(0xFF9F7AEA)),
+                             color: _latitude != null ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
                     onPressed: _getCurrentLocation,
                     tooltip: 'O anki konumu otomatik al',
                   ),
                   IconButton(
-                    icon: Icon(Icons.map_rounded, color: _latitude != null ? const Color(0xFF5A67D8) : const Color(0xFF9F7AEA)),
+                    icon: Icon(Icons.map_rounded, color: _latitude != null ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
                     onPressed: _showLocationPicker,
                     tooltip: 'Haritadan seç',
                   )
@@ -405,7 +405,7 @@ class _AddScreenState extends State<AddScreen> {
                         SnackBar(
                           content: Text('Analiz için en az 10 karakter yazmalısın.',
                             style: GoogleFonts.outfit(color: Colors.white)),
-                          backgroundColor: const Color(0xFF5A67D8),
+                          backgroundColor: Theme.of(context).colorScheme.primary,
                           behavior: SnackBarBehavior.floating,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
@@ -425,7 +425,7 @@ class _AddScreenState extends State<AddScreen> {
                           SnackBar(
                             content: Text('AI ruh halinizi "$mood" olarak belirledi.',
                               style: GoogleFonts.outfit(color: Colors.white)),
-                            backgroundColor: const Color(0xFF9F7AEA),
+                            backgroundColor: Theme.of(context).colorScheme.secondary,
                             behavior: SnackBarBehavior.floating,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           ),
@@ -460,25 +460,25 @@ class _AddScreenState extends State<AddScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: _isAnalyzingMood
-                          ? const Color(0xFF9F7AEA).withOpacity(0.1)
-                          : const Color(0xFF9F7AEA).withOpacity(0.15),
+                          ? Theme.of(context).colorScheme.secondary.withOpacity(0.1)
+                          : Theme.of(context).colorScheme.secondary.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: const Color(0xFF9F7AEA).withOpacity(0.4)),
+                      border: Border.all(color: Theme.of(context).colorScheme.secondary.withOpacity(0.4)),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if (_isAnalyzingMood)
-                          const SizedBox(
+                          SizedBox(
                             width: 12, height: 12,
-                            child: CircularProgressIndicator(strokeWidth: 1.5, color: Color(0xFF9F7AEA)),
+                            child: CircularProgressIndicator(strokeWidth: 1.5, color: Theme.of(context).colorScheme.secondary),
                           )
                         else
-                          const Icon(Icons.auto_awesome_rounded, size: 14, color: Color(0xFF9F7AEA)),
+                          Icon(Icons.auto_awesome_rounded, size: 14, color: Theme.of(context).colorScheme.secondary),
                         const SizedBox(width: 6),
                         Text(
                           _isAnalyzingMood ? 'Analiz ediliyor...' : 'AI ile Analiz Et',
-                          style: GoogleFonts.outfit(fontSize: 12, color: const Color(0xFF9F7AEA), fontWeight: FontWeight.w600),
+                          style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.secondary, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -556,7 +556,7 @@ class _AddScreenState extends State<AddScreen> {
                   color: _isRecording ? Colors.red.withOpacity(0.1) : Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(
-                    color: _isRecording ? Colors.red : (_audioPath != null ? const Color(0xFF5A67D8) : Theme.of(context).dividerColor),
+                    color: _isRecording ? Colors.red : (_audioPath != null ? Theme.of(context).colorScheme.primary : Theme.of(context).dividerColor),
                     width: 2,
                   ),
                 ),
@@ -565,7 +565,7 @@ class _AddScreenState extends State<AddScreen> {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: _isRecording ? Colors.red : const Color(0xFF5A67D8),
+                        color: _isRecording ? Colors.red : Theme.of(context).colorScheme.primary,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -635,11 +635,11 @@ class _AddScreenState extends State<AddScreen> {
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF7FAFC),
+                            color: Theme.of(context).colorScheme.surface,
                             shape: BoxShape.circle,
                             border: Border.all(color: Theme.of(context).dividerColor),
                           ),
-                          child: const Icon(Icons.add_photo_alternate_rounded, color: Color(0xFF5A67D8), size: 32),
+                          child: Icon(Icons.add_photo_alternate_rounded, color: Theme.of(context).colorScheme.primary, size: 32),
                         ),
                         const SizedBox(height: 16),
                         Text('Fotoğraf Ekle',
@@ -688,11 +688,11 @@ class _AddScreenState extends State<AddScreen> {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [const Color(0xFF5A67D8).withOpacity(0.08), const Color(0xFF9F7AEA).withOpacity(0.05)],
+          colors: [Theme.of(context).colorScheme.primary.withOpacity(0.08), Theme.of(context).colorScheme.secondary.withOpacity(0.05)],
           begin: Alignment.topLeft, end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFF5A67D8).withOpacity(0.15)),
+        border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.15)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -702,15 +702,15 @@ class _AddScreenState extends State<AddScreen> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.psychology_alt_rounded, color: Color(0xFF5A67D8), size: 18),
+                  Icon(Icons.psychology_alt_rounded, color: Theme.of(context).colorScheme.primary, size: 18),
                   const SizedBox(width: 8),
                   Text('GÜNÜN SORUSU', 
-                    style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1.5, fontWeight: FontWeight.bold, color: const Color(0xFF5A67D8))),
+                    style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1.5, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
                 ],
               ),
               if (!_isLoadingQuestion)
                 IconButton(
-                  icon: const Icon(Icons.refresh_rounded, size: 16, color: Color(0xFF5A67D8)),
+                  icon: Icon(Icons.refresh_rounded, size: 16, color: Theme.of(context).colorScheme.primary),
                   onPressed: _loadQuestion,
                   visualDensity: VisualDensity.compact,
                 ),

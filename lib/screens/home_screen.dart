@@ -118,8 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         ShaderMask(
-                          shaderCallback: (bounds) => const LinearGradient(
-                            colors: [Color(0xFF9F7AEA), Color(0xFF7F9CF5)],
+                          shaderCallback: (bounds) => LinearGradient(
+                            colors: [Theme.of(context).colorScheme.secondary, Theme.of(context).colorScheme.primary],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ).createShader(bounds),
@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(24),
                             boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFF5A67D8).withOpacity(0.15),
+                                  color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
                                   blurRadius: 20, offset: const Offset(0, 10),
                                 )
                             ]
@@ -217,11 +217,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF5A67D8), // Ana Renk
+                            color: Theme.of(context).colorScheme.primary,
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF5A67D8).withOpacity(0.3),
+                                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                                 blurRadius: 15, offset: const Offset(0, 8),
                               )
                             ]
@@ -261,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: InputDecoration(
                           hintText: 'Anılarda ara... (Örn: kahve, istanbul)',
                           hintStyle: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 14),
-                          prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFF7F9CF5), size: 22),
+                          prefixIcon: Icon(Icons.search_rounded, color: Theme.of(context).colorScheme.primary, size: 22),
                           suffixIcon: _searchQuery.isNotEmpty ? IconButton(
                             icon: Icon(Icons.close_rounded, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), size: 18),
                             onPressed: () {
@@ -327,13 +327,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF9F7AEA), Color(0xFF805AD5)],
+        gradient: LinearGradient(
+          colors: [Theme.of(context).colorScheme.secondary, Theme.of(context).colorScheme.primary],
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF9F7AEA).withOpacity(0.4),
+            color: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
             blurRadius: 10, offset: const Offset(0, 4)
           )
         ]
@@ -343,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           const Text('🔥', style: TextStyle(fontSize: 14)),
           const SizedBox(width: 4),
-          Text('$currentStreak', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 14)),
+          Text('$currentStreak', style: GoogleFonts.outfit(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
         ],
       ),
     );
@@ -366,16 +366,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text('${entry.date.day}',
                       style: GoogleFonts.playfairDisplay(fontSize: 28, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface)),
                     Text(DateFormat('MMM', 'tr').format(entry.date).toUpperCase(),
-                      style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, fontWeight: FontWeight.w600, color: const Color(0xFF5A67D8))),
+                      style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.primary)),
                     const SizedBox(height: 12),
                     Container(
                       width: 12, height: 12,
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surface,
                         shape: BoxShape.circle,
-                        border: Border.all(color: const Color(0xFF9F7AEA), width: 3),
+                        border: Border.all(color: Theme.of(context).colorScheme.secondary, width: 3),
                         boxShadow: [
-                          BoxShadow(color: const Color(0xFF9F7AEA).withOpacity(0.4), blurRadius: 6)
+                          BoxShadow(color: Theme.of(context).colorScheme.secondary.withOpacity(0.4), blurRadius: 6)
                         ]
                       ),
                     ),
@@ -403,7 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF5A67D8).withOpacity(0.12),
+                        color: Theme.of(context).colorScheme.primary.withOpacity(0.12),
                         blurRadius: 20, offset: const Offset(0, 10),
                       )
                     ]
@@ -464,7 +464,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const SizedBox(width: 8),
                                   ],
                                     if (entry.locationName != null && entry.locationName!.isNotEmpty) ...[
-                                      const Icon(Icons.location_on_rounded, size: 12, color: Color(0xFF9F7AEA)),
+                                      Icon(Icons.location_on_rounded, size: 12, color: Theme.of(context).colorScheme.secondary),
                                       const SizedBox(width: 4),
                                       Expanded(
                                         child: Text(entry.locationName!,
@@ -473,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ],
                                     if (entry.audioPath != null) ...[
-                                      const Icon(Icons.mic_rounded, size: 12, color: Color(0xFF5A67D8)),
+                                      Icon(Icons.mic_rounded, size: 12, color: Theme.of(context).colorScheme.primary),
                                       const SizedBox(width: 4),
                                     ]
                                   ],

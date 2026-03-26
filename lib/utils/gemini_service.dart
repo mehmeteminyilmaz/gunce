@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:gunce/config/api_keys.dart';
 import 'package:http/http.dart' as http;
+import '../models/entry.dart';
+import '../models/chat_message.dart';
 
 class GeminiService {
   static const String _apiKey = ApiKeys.geminiApiKey;
@@ -149,6 +151,64 @@ Metin:
       print('Soru sorma hatası: $e');
     }
     return "Bugün kendi dünyana dair ne keşfettin?";
+  }
+
+  /// Hafıza Sohbeti için Gemini'den yanıt alır.
+  static Future<String?> getChatResponse(String userMessage, List<Entry> entries) async {
+    if (_apiKey.isEmpty) return "API Anahtarı bulunamadı.";
+
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+
+    // Anıları özetleyip context olarak hazırlıyoruz
+    String memoryContext = "Sen kullanıcının kişisel günlük asistanı 'Günce'sin. Senin bir bilincin ve hafızan var. ";
+    if (entries.isNotEmpty) {
+      memoryContext += "İşte kullanıcının geçmiş anılarından bazı notlar:\n";
+      // Son 15 anıyı gönderiyoruz (Limit aşmamak için)
+      final recentEntries = entries.take(15).toList();
+      for (var e in recentEntries) {
+        memoryContext += "- [${e.date.day}/${e.date.month}/${e.date.year}] (Ruh Hali: ${e.mood}): ${e.text}\n";
+      }
+    }
+    
+    memoryContext += "\nKullanıcı az önce şunu yazdı: '$userMessage'. ";
+    memoryContext += "Onunla empati kur, geçmiş anılarına (eğer ilgiliyse) atıfta bulun ve yapıcı bir dille cevap ver. ";
+    memoryContext += "Cevabın 60 kelimeyi geçmemeli. Karakterin: Samimi, bilge ve her şeyi hatırlayan bir dost. Unutma, sen bir yapay zeka değil, kullanıcının geçmişini koruyan bir yoldaşsın.";
+
+    try {
+      final response = await http.post(
+        Uri.parse('$url?key=$_apiKey'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'contents': [
+            {'parts': [{'text': memoryContext}]}
+          ],
+          'generationConfig': {
+             'temperature': 0.7, 
+             'maxOutputTokens': 300,
+             'thinkingConfig': {'thinkingBudget': 0}
+          }
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final parts = data['candidates']?[0]?['content']?['parts'] as List?;
+        
+        String result = '';
+        if (parts != null) {
+          for (final part in parts) {
+            if (part['thought'] != true && part['text'] != null) {
+              result = part['text'].toString().trim();
+              break;
+            }
+          }
+        }
+        return result;
+      }
+    } catch (e) {
+      print('Chat hatası: $e');
+    }
+    return "Şu an bağlantı kuramıyorum, ama anılarını korumaya devam ediyorum.";
   }
 }
 

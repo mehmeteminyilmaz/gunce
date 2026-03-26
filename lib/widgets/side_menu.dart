@@ -7,6 +7,8 @@ import '../screens/stats_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/settings_screen.dart';
 import '../screens/map_screen.dart';
+import '../screens/themes_screen.dart';
+import '../screens/chat_screen.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({super.key});
@@ -42,17 +44,17 @@ class SideMenu extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Theme.of(context).colorScheme.surface,
-                            border: Border.all(color: const Color(0xFF5A67D8), width: 1.5),
+                            border: Border.all(color: Theme.of(context).colorScheme.primary, width: 1.5),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF5A67D8).withOpacity(0.15),
+                                color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
                                 blurRadius: 15, offset: const Offset(0, 5),
                               )
                             ]
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Icon(Icons.person_outline_rounded,
-                              color: Color(0xFF5A67D8), size: 32),
+                              color: Theme.of(context).colorScheme.primary, size: 32),
                           ),
                         ),
                       ),
@@ -82,9 +84,9 @@ class SideMenu extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFFFFEFE9), // Uçuk turuncu
+                                    color: Theme.of(context).colorScheme.secondary.withOpacity(0.05), // Dinamik
                                     borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: const Color(0xFF9F7AEA))
+                                    border: Border.all(color: Theme.of(context).colorScheme.secondary)
                                   ),
                                   child: Row(
                                     children: [
@@ -121,6 +123,19 @@ class SideMenu extends StatelessWidget {
                 
                 _buildMenuItem(
                   context: context,
+                  icon: Icons.auto_awesome_rounded,
+                  title: 'Günce ile Sohbet',
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => const ChatScreen(),
+                      transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
+                    ));
+                  },
+                ),
+
+                _buildMenuItem(
+                  context: context,
                   icon: Icons.map_outlined,
                   title: 'Anı Haritası',
                   onTap: () {
@@ -140,6 +155,19 @@ class SideMenu extends StatelessWidget {
                     Navigator.pop(context);
                     Navigator.push(context, PageRouteBuilder(
                       pageBuilder: (_, __, ___) => const StatsScreen(),
+                      transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
+                    ));
+                  },
+                ),
+                
+                _buildMenuItem(
+                  context: context,
+                  icon: Icons.palette_outlined,
+                  title: 'Zen Temaları',
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => const ThemesScreen(),
                       transitionsBuilder: (_, anim, __, child) => FadeTransition(opacity: anim, child: child),
                     ));
                   },
@@ -179,13 +207,13 @@ class SideMenu extends StatelessWidget {
   Widget _buildMenuItem({required BuildContext context, required IconData icon, required String title, required VoidCallback onTap}) {
     return InkWell(
       onTap: onTap,
-      splashColor: const Color(0xFF5A67D8).withOpacity(0.1),
+      splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
       highlightColor: Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         child: Row(
           children: [
-            Icon(icon, color: const Color(0xFF5A67D8), size: 22),
+            Icon(icon, color: Theme.of(context).colorScheme.primary, size: 22),
             const SizedBox(width: 20),
             Text(title,
               style: GoogleFonts.outfit(
