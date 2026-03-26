@@ -22,12 +22,13 @@
 | ✨ Özellik | 📝 Açıklama |
 | :--- | :--- |
 | **Duygu Zinciri (Heatmap)** 📊 | GitHub stili 90 günlük interaktif ruh hali takvimi. Görselleştirilmiş duygusal yolculuk. |
-| **Yapay Zeka (Gemini AI)** 🧠 | Anı metninden otomatik ruh hali analizi ve kişiselleştirilmiş **Duygu Özetleri**. |
+| **AI Yazma Yönergeleri** ✍️ | Gemini AI ile her gün size özel yaratıcı yazma teknikleri ve hikaye ipuçları. |
+| **AI Duygu Analizi** 🧠 | Anı metninden otomatik ruh hali analizi ve kişiselleştirilmiş **Duygu Özetleri**. |
 | **Görsel Hafıza** 📸 | Anılarınıza cihaza entegre **Kamera** veya **Galeri** çekimleriyle görsellik katın. |
-| **Dinamik Tema Seçimi** 🎨 | Kullanıcı tercihine bağlı **Açık/Koyu Mod** (Zen Tasarımı) desteği. |
+| **Zen Tasarımı (Koyu Mod)** 🎨 | Dinlendirici lavanta tonları ve Glassmorphism ile hazırlanan modern arayüz. |
 | **Ateşleyici Seriler** 🔥 | Her gün yazarak kendi "Streak" serinizi oluşturun ve motivasyonunuzu koruyun. |
-| **Sarsılmaz Güvenlik** 🔒 | Yerel veritabanı altyapısına ek olarak **Biyometrik Kilit** koruması. |
-| **Sesli Duygular** 🎙️ | Yazamadığınız anlarda sesinizi anılarınıza ekleyin. |
+| **Sesli Duygular** 🎙️ | Yazamadığınız anlarda sesinizi anılarınıza ekleyerek ruhunuzu yansıtın. |
+| **Sınırsız Anılar** ⛓️‍💥 | Karakter sınırı olmadan dilediğinizce uzun anılar kaleme alın. |
 | **Anı Haritası** 🗺️ | Konum tabanlı anı takibi ve otomatik adres çözümleme. |
 
 <br>
@@ -61,9 +62,9 @@ flutter run
 
 ## 🌱 Gelişim Yolculuğu (Planlananlar)
 
-- 🧠 **AI Derinlik:** Geçmiş anılara dayalı akıllı hatırlatıcılar ve sorular.
 - ☁️ **Bulut Senkronizasyonu:** Firebase altyapısı ile çoklu cihaz ve yedekleme desteği.
 - 📖 **PDF Dışa Aktar:** Tüm anılarınızı şık bir dijital kitaba (PDF) dönüştürme.
+- 🔐 **Biyometrik Kilit:** Uygulama girişi için Parmak İzi/Yüz tanıma güvenliği.
 - 🔒 **Kasa Özelliği:** Özel anılar için ekstra şifreli gizli klasör desteği.
 
 *Siz de bu yolculuğun bir parçası olabilir, projeyi yıldızlayarak (⭐) destek olabilirsiniz!*

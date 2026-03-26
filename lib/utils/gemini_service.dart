@@ -94,13 +94,13 @@ Metin:
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
     String prompt =
-        "Sen derinlikli, felsefi ve empatik bir günlük asistanısın. ";
+        "Sen yaratıcı bir yazarlık atölyesi lideri ve günlük koçusun. ";
     if (currentText != null && currentText.trim().isNotEmpty) {
       prompt +=
-          "Kullanıcı şu an günlüğüne şunu yazıyor: '$currentText'. Bu metinden yola çıkarak onu derin bir içsel yolculuğa çıkaracak, ucu açık ve 15 kelimeyi geçmeyen bir soru sor.";
+          "Kullanıcı şunu yazdı: '$currentText'. Bu metni daha da derinleştirmesi için ona yaratıcı bir yazma yönergesi ver. Onu betimleme yapmaya, duygusunu detaylandırmaya veya o andaki bir kokuya/sese odaklanmaya teşvik et. 15 kelime sınırı.";
     } else {
       prompt +=
-          "Kullanıcıya bugünle ilgili derin bir farkındalık kazandıracak, 15 kelimeyi geçmeyen tek bir soru sor.";
+          "Kullanıcıya bugünkü anısını yazması için yaratıcı ve somut bir yazma yönergesi ver. (Örn: 'Günün en parlak anını bir tablo gibi anlat', 'Bugün duyduğun en garip sesi betimle' gibi). 15 kelime sınırı.";
     }
 
     try {
@@ -115,19 +115,40 @@ Metin:
               ]
             }
           ],
-          'generationConfig': {'temperature': 0.8, 'maxOutputTokens': 100}
+          'generationConfig': {
+             'temperature': 0.9, 
+             'maxOutputTokens': 150,
+             'thinkingConfig': {'thinkingBudget': 0}
+          }
         }),
       );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        String text = data['candidates'][0]['content']['parts'][0]['text'];
-        return text.trim().replaceAll('"', '');
+        final parts = data['candidates']?[0]?['content']?['parts'] as List?;
+        
+        String result = '';
+        if (parts != null) {
+          for (final part in parts) {
+            // Düşünce (thought) olmayan ve metin içeren ilk parçayı al
+            if (part['thought'] != true && part['text'] != null) {
+              result = part['text'].toString().trim();
+              break;
+            }
+          }
+        }
+
+        result = result.replaceAll('"', '');
+        
+        // Yarım kalmış cümleleri (noktalama işareti yoksa) kontrol et ve temizle
+        if (result.length < 8) return "Bugün seni en çok gülümseten an neydi?";
+        
+        return result;
       }
     } catch (e) {
       print('Soru sorma hatası: $e');
     }
-    return null;
+    return "Bugün kendi dünyana dair ne keşfettin?";
   }
 }
 
