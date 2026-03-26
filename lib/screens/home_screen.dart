@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               border: Border.all(color: Theme.of(context).dividerColor),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.03),
+                                  color: Colors.black.withValues(alpha: 0.03),
                                   blurRadius: 10, offset: const Offset(0, 4),
                                 )
                               ]
@@ -117,39 +117,171 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Icon(Icons.sort_rounded, color: Theme.of(context).colorScheme.onSurface, size: 20),
                           ),
                         ),
-                        ShaderMask(
-                          shaderCallback: (bounds) => LinearGradient(
-                            colors: [Theme.of(context).colorScheme.secondary, Theme.of(context).colorScheme.primary],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ).createShader(bounds),
-                          child: Text(_getGreeting().toUpperCase(),
-                            style: GoogleFonts.outfit(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 2,
-                              color: Colors.white,
-                            )),
-                        ),
+                        const Spacer(),
                         _buildStreakBadge(currentStreak),
                       ],
                     ),
                   ),
                 ),
 
-                // Günlük Motivasyon Sözü
+
+                // --- ZEN AURA KARŞILAMA --- 
                 SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 0, 40, 32),
-                    child: Text('"$_currentQuote"',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.outfit(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.italic,
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-                        height: 1.5,
-                      )),
+                  child: Stack(
+                    children: [
+                      // Arka Plan Aura Efekti
+                      Positioned(
+                        top: -50,
+                        right: -30,
+                        child: Container(
+                          width: 200, 
+                          height: 200,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: RadialGradient(
+                              colors: [
+                                Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.7),
+                            borderRadius: BorderRadius.circular(32),
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
+                              width: 1,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.04),
+                                blurRadius: 40,
+                                offset: const Offset(0, 20),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Selamlama & İkon
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _getGreeting(),
+                                        style: GoogleFonts.outfit(
+                                          fontSize: 24, 
+                                          fontWeight: FontWeight.w600, 
+                                          color: Theme.of(context).colorScheme.onSurface,
+                                        ),
+                                      ),
+                                      Text(
+                                        DateFormat('d MMMM EEEE', 'tr').format(DateTime.now()),
+                                        style: GoogleFonts.outfit(
+                                          fontSize: 13, 
+                                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
+                                          letterSpacing: 0.5,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              
+                              const SizedBox(height: 24),
+                              
+                              // Günün Sözü
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.04),
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.05)),
+                                ),
+                                child: Text(
+                                  '\"$_currentQuote\"',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.playfairDisplay(
+                                    fontSize: 15,
+                                    fontStyle: FontStyle.italic,
+                                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ),
+                              
+                              // Bugünün Durumu / Kaydet Butonu
+                              if (todayEntry == null) ...[
+                                const SizedBox(height: 24),
+                                InkWell(
+                                  onTap: () => Navigator.push(context, _createRoute(const AddScreen())),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 14), 
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Theme.of(context).colorScheme.primary,
+                                          Theme.of(context).colorScheme.secondary,
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(16),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+                                          blurRadius: 15,
+                                          offset: const Offset(0, 5),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Bugünü Kaydet',
+                                        style: GoogleFonts.outfit(
+                                          fontSize: 15, 
+                                          fontWeight: FontWeight.w600, 
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ] else ...[
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.check_circle_outline_rounded, 
+                                      color: Theme.of(context).colorScheme.primary, size: 16),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Bugünün hafızası mühürlendi.',
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 13, 
+                                        color: Theme.of(context).colorScheme.primary, 
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
@@ -206,37 +338,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
 
-                // Bugün Butonu
-                if (todayEntry == null)
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
-                      child: InkWell(
-                        onTap: () => Navigator.push(context, _createRoute(const AddScreen())),
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                                blurRadius: 15, offset: const Offset(0, 8),
-                              )
-                            ]
-                          ),
-                          child: Center(
-                            child: Text('Bugünü Kaydet',
-                              style: GoogleFonts.outfit(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white)),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
 
                 // Gelişmiş Arama Çubuğu
                 SliverToBoxAdapter(

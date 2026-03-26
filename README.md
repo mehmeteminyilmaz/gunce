@@ -21,16 +21,14 @@
 
 | ✨ Özellik | 📝 Açıklama |
 | :--- | :--- |
+| **Zen Aura Header** 🌅 | Ana sayfada sizi karşılayan, günün saatine göre değişen "Zen Aura" kartı. Glassmorphism tasarım ve motivasyon sözleri. |
 | **Hafıza Sohbeti (AI Chat)** 🧠 | Geçmiş anılarınızı gerçekten hatırlayan Gemini ile sohbet edin. "Geçen ay neden mutluydum?" diye sorabilirsiniz. |
 | **Zen Bahçesi** 🌳 | Yazdığınız her anı dijital ağacınızı büyütür. Yapraklar baskın ruh halinizin rengini alır. |
 | **Zen Temaları (5 Mod)** 🎨 | Lavanta, Doğa, Gece, Gül ve Çöl — tema değiştirince butonlar, ikonlar ve gölgeler anında uyum sağlar. |
 | **AI Duygu Analizi** 🔬 | Günlük metninizden ruh halini tespit eder. Anlamsız/rastgele içerikleri reddeder, yalnızca gerçek duyguları analiz eder. |
-| **AI Yazma Yönergeleri** ✍️ | Her gün size özel yaratıcı yazma teknikleri ve hikaye ipuçları. |
-| **Duygu Zinciri (Heatmap)** 📊 | GitHub stili 90 günlük interaktif ruh hali takvimi. |
+| **Hafıza Isı Haritası** 📊 | GitHub stili 90 günlük interaktif ruh hali takvimi. |
+| **Geçen Yıl Bugün** 🕰️ | Geçmişteki kendinizi hatırlamanız için her gün özel bir flashback kartı. |
 | **Görsel Hafıza** 📸 | Kamera veya galeriden fotoğraf ekleyerek anılarınızı görselleştirin. |
-| **Sesli Duygular** 🎙️ | Yazamadığınız anlarda ses kaydı bırakın. |
-| **Anı Haritası** 🗺️ | Konum bazlı anı takibi ve otomatik adres çözümleme. |
-| **Ateşleyici Seriler** 🔥 | Her gün yazarak streak serinizi koruyun. |
 
 <br>
 
@@ -48,7 +46,7 @@ flutter run
 ## 🛠️ Teknolojik Altyapı
 
 > 🧠 **Zeka:** `Gemini 2.5 Flash` — Hafıza bilinci, duygu analizi, yaratıcı yönlendirme  
-> 🎨 **UI:** `Dynamic Theme Injection`, `CustomPainter (Zen Bahçesi)`, `Glassmorphism`  
+> 🎨 **UI:** `Dynamic Theme Injection`, `CustomPainter (Zen Bahçesi)`, `Glassmorphism`, `Lottie Animations`  
 > 💿 **Veritabanı:** `Hive` — Hızlı, güvenli, tamamen çevrimdışı  
 > 🗺️ **Konum:** `Geolocator` + Reverse Geocoding
 
