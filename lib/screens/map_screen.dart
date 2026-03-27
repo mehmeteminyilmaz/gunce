@@ -50,21 +50,25 @@ class _MapScreenState extends State<MapScreen> {
                     urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     subdomains: const ['a', 'b', 'c'],
                     tileBuilder: (context, tileWidget, tile) {
-                      // Koyu mod için haritayı biraz karartalım (Premium hissi)
                       final isDark = Theme.of(context).brightness == Brightness.dark;
+                      if (!isDark) return tileWidget;
+                      
+                      // v4.3 Asil Gece (Deep Night) Matrisi
                       return ColorFiltered(
-                        colorFilter: ColorFilter.matrix(isDark ? [
-                          -0.21, -0.72, -0.07, 0, 255,
-                          -0.21, -0.72, -0.07, 0, 255,
-                          -0.21, -0.72, -0.07, 0, 255,
-                          0, 0, 0, 1, 0,
-                        ] : [
-                          1, 0, 0, 0, 0,
-                          0, 1, 0, 0, 0,
-                          0, 0, 1, 0, 0,
+                        colorFilter: const ColorFilter.matrix([
+                          -0.1, -0.6, -0.1, 0, 255, // Kanalları daha asil tonlarla dengeler
+                          -0.1, -0.6, -0.1, 0, 255,
+                          -0.1, -0.4, -0.1, 0, 255,
                           0, 0, 0, 1, 0,
                         ]),
-                        child: tileWidget,
+                        child: ColorFiltered(
+                          // Derin Gece Mavisi Katmanı
+                          colorFilter: ColorFilter.mode(
+                            const Color(0xFF0F172A).withOpacity(0.6), 
+                            BlendMode.screen
+                          ),
+                          child: tileWidget,
+                        ),
                       );
                     },
                   ),
@@ -72,8 +76,8 @@ class _MapScreenState extends State<MapScreen> {
                     markers: entriesWithLocation.map((entry) {
                       return Marker(
                         point: LatLng(entry.latitude!, entry.longitude!),
-                        width: 60,
-                        height: 60,
+                        width: 70, // Biraz genişletildi
+                        height: 70,
                         child: GestureDetector(
                           onTap: () => setState(() => _selectedEntry = entry),
                           child: _buildMarker(entry),
@@ -86,7 +90,7 @@ class _MapScreenState extends State<MapScreen> {
             },
           ),
 
-          // Üst Panel (Geri Butonu ve Başlık)
+          // Üst Panel (v4.3 Karanlık Mod İyileştirmesi)
           Positioned(
             top: 64, left: 24,
             child: Row(
@@ -99,20 +103,21 @@ class _MapScreenState extends State<MapScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
+                    color: Theme.of(context).colorScheme.surface.withOpacity(0.9),
                     borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.1)),
                     boxShadow: [
-                      BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10)
+                      BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 15, offset: const Offset(0, 5))
                     ]
                   ),
                   child: Text('Anı Haritası',
-                    style: GoogleFonts.outfit(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
+                    style: GoogleFonts.outfit(fontWeight: FontWeight.w700, letterSpacing: 0.5, color: Theme.of(context).colorScheme.onSurface)),
                 ),
               ],
             ),
           ),
 
-          // Seçili Anı Kartı (Preview)
+          // Seçili Anı Kartı (v4.3 Karanlık Mod İyileştirmesi)
           if (_selectedEntry != null)
             Positioned(
               bottom: 40, left: 20, right: 20,
@@ -125,10 +130,11 @@ class _MapScreenState extends State<MapScreen> {
                 child: Container(
                   height: 120,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
+                    color: Theme.of(context).colorScheme.surface.withOpacity(0.95),
                     borderRadius: BorderRadius.circular(24),
+                    border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.1)),
                     boxShadow: [
-                      BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 20, offset: const Offset(0, 10))
+                      BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 25, offset: const Offset(0, 10))
                     ]
                   ),
                   child: Row(
@@ -152,18 +158,18 @@ class _MapScreenState extends State<MapScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(_selectedEntry!.locationName ?? 'Bilinmeyen Konum',
-                                style: GoogleFonts.outfit(fontSize: 12, color: const Color(0xFF5A67D8), fontWeight: FontWeight.bold)),
+                                style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold)),
                               Text(DateFormat('dd MMMM yyyy', 'tr').format(_selectedEntry!.date),
                                 style: GoogleFonts.outfit(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
                               const SizedBox(height: 4),
                               Text(_selectedEntry!.text,
                                 maxLines: 2, overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.outfit(fontSize: 14, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8))),
+                                style: GoogleFonts.outfit(fontSize: 14, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.9))),
                             ],
                           ),
                         ),
                       ),
-                      const Icon(Icons.chevron_right_rounded, color: Color(0xFF5A67D8)),
+                      Icon(Icons.chevron_right_rounded, color: Theme.of(context).colorScheme.primary),
                       const SizedBox(width: 16),
                     ],
                   ),
@@ -176,32 +182,45 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Widget _buildMarker(Entry entry) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final moodColor = MoodColors.getColor(entry.mood);
+
     return Stack(
       alignment: Alignment.center,
       children: [
-        // Glow etkisi
+        // v4.3 Güçlendirilmiş Glow Etkisi
         Container(
-          width: 40, height: 40,
+          width: 50, height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: MoodColors.getColor(entry.mood).withOpacity(0.3),
+            gradient: RadialGradient(
+              colors: [
+                moodColor.withOpacity(isDark ? 0.6 : 0.4),
+                moodColor.withOpacity(0.0),
+              ],
+            ),
           ),
         ),
-        // Ana Pin
+        // Ana Pin (v4.3 Contrast Fix)
         Container(
-          width: 24, height: 24,
+          width: 28, height: 28,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: MoodColors.getColor(entry.mood),
-            border: Border.all(color: Colors.white, width: 2),
+            color: moodColor,
+            border: Border.all(color: isDark ? Colors.white.withOpacity(0.9) : Colors.white, width: 2.5),
             boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 5)
+              BoxShadow(
+                color: Colors.black.withOpacity(isDark ? 0.4 : 0.2), 
+                blurRadius: 8, 
+                offset: const Offset(0, 2)
+              )
             ]
           ),
           child: Center(
             child: Icon(
               entry.audioPath != null ? Icons.mic_rounded : Icons.camera_alt_rounded,
-              size: 10, color: Colors.white,
+              size: 12, color: Colors.white,
             ),
           ),
         ),
@@ -210,18 +229,26 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Widget _buildRoundButton({required IconData icon, required VoidCallback onTap}) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: theme.colorScheme.surface.withOpacity(0.9),
           shape: BoxShape.circle,
+          border: Border.all(color: theme.colorScheme.primary.withOpacity(0.1)),
           boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10)
+            BoxShadow(
+              color: Colors.black.withOpacity(isDark ? 0.3 : 0.1), 
+              blurRadius: 15, 
+              offset: const Offset(0, 5)
+            )
           ]
         ),
-        child: Icon(icon, color: Theme.of(context).colorScheme.onSurface, size: 20),
+        child: Icon(icon, color: theme.colorScheme.onSurface, size: 20),
       ),
     );
   }
