@@ -47,8 +47,8 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 children: [
                   TileLayer(
-                    urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    subdomains: const ['a', 'b', 'c'],
+                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName: 'com.gunce.app',
                     tileBuilder: (context, tileWidget, tile) {
                       final isDark = Theme.of(context).brightness == Brightness.dark;
                       if (!isDark) return tileWidget;
