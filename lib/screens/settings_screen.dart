@@ -83,6 +83,56 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  void _showApiKeyDialog() {
+    final currentKey = _profileBox.get('gemini_api_key', defaultValue: '') as String;
+    final controller = TextEditingController(text: currentKey);
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: Text('Gemini API Anahtarı', style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 16)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Google AI Studio\'dan aldığınız ücretsiz API anahtarınızı yapıştırabilirsiniz.',
+              style: GoogleFonts.outfit(fontSize: 13, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: controller,
+              style: GoogleFonts.outfit(fontSize: 13),
+              decoration: InputDecoration(
+                hintText: 'AIzaSy...',
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text('Vazgeç', style: GoogleFonts.outfit()),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              await _profileBox.put('gemini_api_key', controller.text.trim());
+              if (mounted) {
+                setState(() {});
+                Navigator.pop(ctx);
+              }
+            },
+            child: Text('Kaydet', style: GoogleFonts.outfit()),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,6 +245,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Gemini API Anahtarı', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w500)),
+                          Text(
+                            (_profileBox.get('gemini_api_key', defaultValue: '') as String).isNotEmpty
+                                ? 'Özel anahtar tanımlı'
+                                : 'Varsayılan anahtar',
+                            style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5)),
+                          ),
+                        ],
+                      ),
+                      TextButton(
+                        onPressed: _showApiKeyDialog,
+                        child: Text('Düzenle', style: GoogleFonts.outfit(fontWeight: FontWeight.w600)),
+                      ),
+                    ],
+                  ),
+                  Divider(height: 32, color: Theme.of(context).dividerColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Text('Veri Yedekleme', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
                       Text('Sadece Cihazda', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.primary)),
                     ],
@@ -204,7 +276,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Versiyon', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
-                      Text('v3.0.0 (Zen)', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
+                      Text('v4.0.0', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
                     ],
                   ),
                 ],

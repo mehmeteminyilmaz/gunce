@@ -1,11 +1,18 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 import 'package:gunce/config/api_keys.dart';
 import 'package:http/http.dart' as http;
 import '../models/entry.dart';
 
 class GeminiService {
-  static const String _apiKey = ApiKeys.geminiApiKey;
+  static String get _apiKey {
+    try {
+      final customKey = Hive.box('profile').get('gemini_api_key', defaultValue: '') as String;
+      if (customKey.trim().isNotEmpty) return customKey.trim();
+    } catch (_) {}
+    return ApiKeys.geminiApiKey;
+  }
 
   static const List<String> _validMoods = [
     'Harika', 'Mutlu', 'Huzurlu', 'Sakin',
