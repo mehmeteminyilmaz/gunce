@@ -133,6 +133,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  Future<void> _clearAllData() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: Text('Tüm Verileri Sıfırla', style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 16)),
+        content: Text(
+          'Tüm anılarınız cihazınızdan kalıcı olarak silinecektir. Bu işlem geri alınamaz.',
+          style: GoogleFonts.outfit(fontSize: 14),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text('Vazgeç', style: GoogleFonts.outfit()),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text('Tümünü Sil', style: GoogleFonts.outfit(color: Colors.red.shade700, fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      final entriesBox = Hive.box<Entry>('entries');
+      await entriesBox.clear();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Tüm anılar temizlendi. Uygulama tertemiz!', style: GoogleFonts.outfit(color: Colors.white)),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+        setState(() {});
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -269,6 +309,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: [
                       Text('Veri Yedekleme', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
                       Text('Sadece Cihazda', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.primary)),
+                    ],
+                  ),
+                  Divider(height: 32, color: Theme.of(context).dividerColor),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Tüm Anıları Sıfırla', style: GoogleFonts.outfit(color: Colors.red.shade400, fontWeight: FontWeight.w500)),
+                      TextButton(
+                        onPressed: _clearAllData,
+                        child: Text('Temizle', style: GoogleFonts.outfit(color: Colors.red.shade600, fontWeight: FontWeight.bold)),
+                      ),
                     ],
                   ),
                   Divider(height: 32, color: Theme.of(context).dividerColor),
