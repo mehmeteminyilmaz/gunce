@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:gunce/config/api_keys.dart';
@@ -18,6 +19,19 @@ class GeminiService {
     'Harika', 'Mutlu', 'Huzurlu', 'Sakin',
     'Odaklanmış', 'Düşünceli', 'Heyecanlı',
     'Stresli', 'Yorgun', 'Hüzünlü',
+  ];
+
+  static const List<String> _fallbackQuestions = [
+    "Bugün seni en çok gülümseten küçük an neydi?",
+    "Bugün zihnini en çok meşgul eden düşünce neydi?",
+    "Bugün kendine verdiğin hangi sözü tuttun?",
+    "Bugün duyduğun ve seni etkileyen bir ses veya kelime var mıydı?",
+    "Bugün yaşadıklarının içinden süzülen, seni en çok sen yapan öz neydi?",
+    "Bugün minnettar hissettiğin tek bir ayrıntı söyleyecek olsan ne olurdu?",
+    "Bugün farkında olmadan üstlendiğin bir duygu var mıydı?",
+    "Bugün seni şaşırtan ya da beklenmedik bir an yaşadın mı?",
+    "Bugünü tek bir renk veya koku ile tanımlasan hangisi olurdu?",
+    "Bugün içinden geçen ama dışarıya söyleyemediğin bir cümle neydi?",
   ];
 
   /// Verilen Türkçe metin için en uygun duygu durumunu döndürür.
@@ -54,7 +68,7 @@ KURALLAR:
           ],
           'generationConfig': {
             'temperature': 0.1,
-            'maxOutputTokens': 50,
+            'maxOutputTokens': 300,
           },
         }),
       );
@@ -85,15 +99,23 @@ KURALLAR:
 
   /// Kullanıcıya günün ilham verici sorusunu üretir.
   static Future<String?> getReflectiveQuestion([String? currentText]) async {
-    if (_apiKey.isEmpty) return null;
+    final randomFallback = _fallbackQuestions[Random().nextInt(_fallbackQuestions.length)];
+    if (_apiKey.isEmpty) return randomFallback;
 
     const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
-    const systemInstruction = 'Sen yaratıcı bir günlük koçusun. Kullanıcıya bugünkü anısını daha derin anlatabilmesi için kısa, merak uyandıran ve tam bir Türkçe soru sor. Cümleni asla yarım bırakma.';
+    const systemInstruction = '''
+Sen bilge bir günlük koçu ve edebiyatçısın. Görevin kullanıcıya günün anısını yazması için İLHAM VERİCİ, ZARİF ve MÜKEMMEL TÜRKÇE ile tek bir soru sormaktır.
+KURALLAR:
+1. Sadece TEK BİR soru cümlesi yaz.
+2. Tırnak işareti, başlık, yıldız ya da açıklama metni EKLEME.
+3. Soru cümlesi mutlaka soru işareti (?) ile bitmeli.
+4. İmla, noktalama ve dilbilgisi kusursuz olmalıdır.
+''';
 
     String prompt = currentText != null && currentText.trim().isNotEmpty
         ? "Kullanıcı şunu yazdı: '$currentText'. Bu metni derinleştirmesi için ona kısa ve ilham verici tek bir soru sor."
-        : "Bugün üzerine düşünebileceği yaratıcı ve kısa tek bir soru sor.";
+        : "Bugün üzerine düşünebileceği yaratıcı, derin ve tek bir soru sor.";
 
     try {
       final response = await http.post(
@@ -110,8 +132,8 @@ KURALLAR:
             }
           ],
           'generationConfig': {
-            'temperature': 0.8,
-            'maxOutputTokens': 200,
+            'temperature': 0.6,
+            'maxOutputTokens': 1200,
           }
         }),
       );
@@ -120,14 +142,24 @@ KURALLAR:
         final data = jsonDecode(response.body);
         final parts = data['candidates']?[0]?['content']?['parts'] as List?;
         if (parts != null && parts.isNotEmpty) {
-          String result = parts[0]['text'].toString().trim().replaceAll('"', '');
-          if (result.length > 5) return result;
+          String result = parts[0]['text'].toString().trim()
+              .replaceAll('"', '')
+              .replaceAll("'", '')
+              .replaceAll('*', '')
+              .replaceAll('_', '')
+              .trim();
+          
+          if (result.length > 10 && result.endsWith('?')) {
+            return result;
+          } else if (result.length > 10) {
+            return '$result?';
+          }
         }
       }
     } catch (e) {
       debugPrint('Soru sorma hatası: $e');
     }
-    return "Bugün kendi dünyana dair ne keşfettin?";
+    return randomFallback;
   }
 
   /// Hafıza Sohbeti için eksiksiz ve akıcı yanıt üretir.
@@ -173,7 +205,7 @@ GÖREVLERİN:
           ],
           'generationConfig': {
             'temperature': 0.7,
-            'maxOutputTokens': 800,
+            'maxOutputTokens': 1500,
           }
         }),
       );
