@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:local_auth/local_auth.dart';
+import '../models/entry.dart';
 import '../utils/notification_service.dart';
 
 class SettingsScreen extends StatefulWidget {
