@@ -30,7 +30,7 @@ class GeminiService {
     if (cleaned.length < 20 || wordCount < 3) return null;
 
     const url =
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
     final prompt = '''
 Sen bir duygu analisti olarak aşağıdaki Türkçe metni değerlendireceksin.
@@ -105,7 +105,7 @@ Metin:
     if (_apiKey.isEmpty) return null;
 
     const url =
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
     String prompt =
         "Sen yaratıcı bir yazarlık atölyesi lideri ve günlük koçusun. ";
@@ -167,7 +167,7 @@ Metin:
   static Future<String?> getChatResponse(String userMessage, List<Entry> entries) async {
     if (_apiKey.isEmpty) return "API Anahtarı bulunamadı.";
 
-    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
     // Anıları özetleyip context olarak hazırlıyoruz
     String memoryContext = "Sen kullanıcının kişisel günlük asistanı 'Günce'sin. Senin bir bilincin ve hafızan var. ";
