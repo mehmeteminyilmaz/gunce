@@ -44,5 +44,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# API Keys
+# API Keys and Build Artifacts
 lib/config/api_keys.dart
+*.apk
+app-release.apk
