@@ -13,42 +13,29 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _ctrl;
-  late AnimationController _pulseCtrl;
   late Animation<double> _fade;
-  late Animation<double> _scale;
   late Animation<double> _slideUp;
-  late Animation<double> _pulse;
   final LocalAuthentication auth = LocalAuthentication();
   bool _needsAuth = false;
 
   @override
   void initState() {
     super.initState();
-
-    // Ana animasyon
     _ctrl = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1600));
+        vsync: this, duration: const Duration(milliseconds: 1200));
     _fade = CurvedAnimation(parent: _ctrl, curve: Curves.easeOut);
-    _scale = Tween<double>(begin: 0.85, end: 1.0)
+    _slideUp = Tween<double>(begin: 20, end: 0)
         .animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutCubic));
-    _slideUp = Tween<double>(begin: 30, end: 0)
-        .animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutCubic));
-
-    // İkon nefes çekme animasyonu
-    _pulseCtrl = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 2200))
-      ..repeat(reverse: true);
-    _pulse = Tween<double>(begin: 1.0, end: 1.08)
-        .animate(CurvedAnimation(parent: _pulseCtrl, curve: Curves.easeInOut));
 
     _ctrl.forward();
     _checkAndNavigate();
   }
 
   Future<void> _checkAndNavigate() async {
-    await Future.delayed(const Duration(milliseconds: 2400));
+    await Future.delayed(const Duration(milliseconds: 2000));
     final profileBox = Hive.box('profile');
-    bool isLockEnabled = profileBox.get('biometricEnabled', defaultValue: false);
+    bool isLockEnabled =
+        profileBox.get('biometricEnabled', defaultValue: false);
     if (isLockEnabled) {
       setState(() => _needsAuth = true);
       _authenticateUser();
@@ -74,172 +61,129 @@ class _SplashScreenState extends State<SplashScreen>
         pageBuilder: (context, anim, anim2) => const HomeScreen(),
         transitionsBuilder: (context, anim, anim2, child) =>
             FadeTransition(opacity: anim, child: child),
-        transitionDuration: const Duration(milliseconds: 900),
+        transitionDuration: const Duration(milliseconds: 700),
       ));
   }
 
   @override
   void dispose() {
     _ctrl.dispose();
-    _pulseCtrl.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Tema rengini Hive'dan oku
-    final profileBox = Hive.box('profile');
-    final isDark = profileBox.get('isDarkMode', defaultValue: false) as bool;
-
-    final bgColor = isDark ? const Color(0xFF10101F) : const Color(0xFF5A67D8); // Klasik Lavanta Indigo
-    final textColor = Colors.white; 
-    final subColor = Colors.white70;
-    final accentColor = const Color(0xFF9F7AEA); // Lavanta Parıltısı
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg   = isDark ? const Color(0xFF151210) : const Color(0xFFF5F0E8);
+    final fg   = isDark ? const Color(0xFFF0E6D3) : const Color(0xFF1C1C1E);
+    final sub  = isDark ? const Color(0xFF8C7A62) : const Color(0xFF8C7A62);
 
     return Scaffold(
-      backgroundColor: bgColor,
-      body: Stack(
-        children: [
-          // Arka plan gradient leke efekti — Lavanta tonları
-          Positioned(
-            top: -100,
-            left: -80,
-            child: Container(
-              width: 350,
-              height: 350,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    accentColor.withValues(alpha: isDark ? 0.15 : 0.2),
-                    Colors.transparent,
-                  ],
-                ),
-              ),
+      backgroundColor: bg,
+      body: AnimatedBuilder(
+        animation: _ctrl,
+        builder: (context, child) {
+          return Opacity(
+            opacity: _fade.value,
+            child: Transform.translate(
+              offset: Offset(0, _slideUp.value),
+              child: child,
             ),
-          ),
-          Positioned(
-            bottom: -120,
-            right: -80,
-            child: Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    accentColor.withValues(alpha: isDark ? 0.08 : 0.05),
-                    Colors.transparent,
-                  ],
-                ),
-              ),
+          );
+        },
+        child: Stack(
+          children: [
+            // Sol üst ince yatay çizgi — defter hissi
+            Positioned(
+              top: 60,
+              left: 32,
+              right: 32,
+              child: Divider(color: sub.withAlpha(60), thickness: 1),
             ),
-          ),
 
-          // Ana İçerik
-          Center(
-            child: AnimatedBuilder(
-              animation: _ctrl,
-              builder: (context, child) {
-                return FadeTransition(
-                  opacity: _fade,
-                  child: Transform.translate(
-                    offset: Offset(0, _slideUp.value),
-                    child: child,
-                  ),
-                );
-              },
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // İkon Alanı
-                  GestureDetector(
-                    onTap: _needsAuth ? _authenticateUser : null,
-                    child: ScaleTransition(
-                      scale: _pulse,
+            // Ana içerik
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Logo ikonu — sade kutu
+                    GestureDetector(
+                      onTap: _needsAuth ? _authenticateUser : null,
                       child: Container(
-                        width: 100,
-                        height: 100,
+                        width: 56,
+                        height: 56,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(22),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.06),
-                              blurRadius: 40,
-                              offset: const Offset(0, 15),
-                            ),
-                          ],
-                          border: Border.all(
-                            color: Colors.black.withValues(alpha: 0.04),
-                            width: 0.5,
-                          ),
+                          color: fg,
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: Center(
                           child: _needsAuth
-                              ? const Icon(Icons.fingerprint_rounded,
-                                  color: Color(0xFF2D3748), size: 40)
+                              ? Icon(Icons.fingerprint_rounded,
+                                  color: bg, size: 28)
                               : ClipRRect(
-                                  borderRadius: BorderRadius.circular(22),
+                                  borderRadius: BorderRadius.circular(8),
                                   child: Image.asset(
                                     'assets/images/app_logo.png',
-                                    width: 100,
-                                    height: 100,
+                                    width: 56,
+                                    height: 56,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
                         ),
                       ),
                     ),
-                  ),
 
-                  const SizedBox(height: 40),
+                    const SizedBox(height: 28),
 
-                  // Uygulama Adı
-                  Text(
-                    'günce',
-                    style: GoogleFonts.playfairDisplay(
-                      fontSize: 48,
-                      fontWeight: FontWeight.w600,
-                      color: textColor,
-                      letterSpacing: -2,
-                    ),
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  // Alt Başlık
-                  Text(
-                    _needsAuth
-                        ? 'devam etmek için dokunun'
-                        : 'yazdıkça büyürsün.',
-                    style: GoogleFonts.outfit(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w300,
-                      color: subColor,
-                      letterSpacing: 2.5,
-                    ),
-                  ),
-
-                  const SizedBox(height: 60),
-
-                  // Yükleniyor indikatörü (ince çizgi)
-                  if (!_needsAuth)
-                    SizedBox(
-                      width: 40,
-                      child: LinearProgressIndicator(
-                        backgroundColor: Colors.transparent,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          accentColor.withValues(alpha: 0.4),
-                        ),
-                        minHeight: 1,
+                    // Uygulama adı
+                    Text(
+                      'günce.',
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 52,
+                        fontWeight: FontWeight.w700,
+                        color: fg,
+                        letterSpacing: -2,
+                        height: 1,
                       ),
                     ),
-                ],
+
+                    const SizedBox(height: 14),
+
+                    // Alt başlık
+                    Text(
+                      _needsAuth
+                          ? 'devam etmek için dokunun'
+                          : 'yazdıkça büyürsün.',
+                      style: GoogleFonts.outfit(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: sub,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+
+            // Alt çizgi
+            Positioned(
+              bottom: 48,
+              left: 32,
+              child: Text(
+                'Günce',
+                style: GoogleFonts.outfit(
+                  fontSize: 11,
+                  color: sub.withAlpha(100),
+                  letterSpacing: 2,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

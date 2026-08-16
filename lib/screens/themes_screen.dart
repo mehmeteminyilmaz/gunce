@@ -8,11 +8,14 @@ class ThemesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final sub = theme.textTheme.bodySmall?.color ?? Colors.grey;
     final profileBox = Hive.box('profile');
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Huzur Temaları', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
+        title: Text('Temalar',
+          style: theme.appBarTheme.titleTextStyle),
       ),
       body: ValueListenableBuilder(
         valueListenable: profileBox.listenable(keys: ['zenThemeIndex']),
@@ -20,87 +23,81 @@ class ThemesScreen extends StatelessWidget {
           final currentIndex = box.get('zenThemeIndex', defaultValue: 0);
 
           return ListView.builder(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 40),
             itemCount: ZenThemeType.values.length,
             itemBuilder: (context, index) {
               final type = ZenThemeType.values[index];
               final colors = AppTheme.themes[type]!;
               final isSelected = currentIndex == index;
+              final primary = colors['primary'] as Color;
+              final secondary = colors['secondary'] as Color;
+              final name = colors['name'] as String;
 
-              return _buildThemeCard(
-                context,
-                title: colors['name'],
-                primary: colors['primary'],
-                secondary: colors['secondary'],
-                surface: colors['surface'],
-                isSelected: isSelected,
-                onTap: () {
-                  box.put('zenThemeIndex', index);
-                },
+              return GestureDetector(
+                onTap: () => box.put('zenThemeIndex', index),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  margin: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.surface,
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(
+                      color: isSelected ? primary : theme.dividerColor,
+                      width: isSelected ? 2 : 1,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      // Renk önizleme
+                      Row(
+                        children: [
+                          Container(
+                            width: 28, height: 28,
+                            decoration: BoxDecoration(
+                              color: primary,
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          Container(
+                            width: 20, height: 20,
+                            decoration: BoxDecoration(
+                              color: secondary,
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(name,
+                              style: GoogleFonts.outfit(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: theme.colorScheme.onSurface,
+                              )),
+                            Text(
+                              isSelected ? 'Şu an aktif' : 'Seçmek için dokun',
+                              style: GoogleFonts.outfit(
+                                fontSize: 11,
+                                color: sub,
+                              )),
+                          ],
+                        ),
+                      ),
+                      if (isSelected)
+                        Icon(Icons.check_rounded, color: primary, size: 18),
+                    ],
+                  ),
+                ),
               );
             },
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildThemeCard(
-    BuildContext context, {
-    required String title,
-    required Color primary,
-    required Color secondary,
-    required Color surface,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        margin: const EdgeInsets.only(bottom: 20),
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: isSelected ? primary.withOpacity(0.1) : Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(
-            color: isSelected ? primary : Theme.of(context).dividerColor.withOpacity(0.5),
-            width: isSelected ? 2 : 1,
-          ),
-          boxShadow: isSelected ? [
-            BoxShadow(color: primary.withOpacity(0.1), blurRadius: 15, offset: const Offset(0, 8))
-          ] : null,
-        ),
-        child: Row(
-          children: [
-            // Renk Önizleme Daireleri
-            Stack(
-              children: [
-                Container(width: 40, height: 40, decoration: BoxDecoration(color: primary, shape: BoxShape.circle)),
-                Positioned(
-                  right: -5,
-                  bottom: -5,
-                  child: Container(
-                    width: 25, height: 25, 
-                    decoration: BoxDecoration(color: secondary, shape: BoxShape.circle, border: Border.all(color: Colors.white, width: 2))),
-                ),
-              ],
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
-                  Text(isSelected ? 'Şu an aktif' : 'Seçmek için dokun', 
-                    style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
-                ],
-              ),
-            ),
-            if (isSelected)
-              Icon(Icons.check_circle_rounded, color: primary, size: 28),
-          ],
-        ),
       ),
     );
   }

@@ -34,7 +34,7 @@ class DayTile extends StatelessWidget {
             : null,
           boxShadow: isToday && entry == null ? [
             BoxShadow(
-              color: const Color(0xFF6C63FF).withOpacity(0.4),
+              color: const Color(0xFF6C63FF).withValues(alpha: 0.4),
               blurRadius: 8,
               offset: const Offset(0, 4),
             )

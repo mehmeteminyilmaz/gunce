@@ -18,7 +18,8 @@ import '../utils/mood_colors.dart';
 import '../utils/gemini_service.dart';
 
 class AddScreen extends StatefulWidget {
-  const AddScreen({super.key});
+  final Entry? entryToEdit;
+  const AddScreen({super.key, this.entryToEdit});
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -44,7 +45,17 @@ class _AddScreenState extends State<AddScreen> {
   void initState() {
     super.initState();
     _audioRecorder = AudioRecorder();
-    _loadQuestion();
+    if (widget.entryToEdit != null) {
+      _textController.text = widget.entryToEdit!.text;
+      _locationController.text = widget.entryToEdit!.locationName ?? '';
+      _imagePath = widget.entryToEdit!.imagePath;
+      _selectedMood = widget.entryToEdit!.mood;
+      _audioPath = widget.entryToEdit!.audioPath;
+      _latitude = widget.entryToEdit!.latitude;
+      _longitude = widget.entryToEdit!.longitude;
+    } else {
+      _loadQuestion();
+    }
   }
 
   Future<void> _loadQuestion() async {
@@ -202,28 +213,31 @@ class _AddScreenState extends State<AddScreen> {
   ];
 
   Future<void> _pickImageSource() async {
+    final theme = Theme.of(context);
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.fromLTRB(24, 20, 24, 40),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          color: theme.scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+          border: Border(
+            top: BorderSide(color: theme.dividerColor, width: 1),
+          ),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Fotoğraf Seç', style: GoogleFonts.outfit(fontSize: 18, fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface)),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildSourceOption(Icons.camera_alt_rounded, 'Kamera', ImageSource.camera),
-                _buildSourceOption(Icons.photo_library_rounded, 'Galeri', ImageSource.gallery),
-              ],
-            ),
-            const SizedBox(height: 16),
+            Text('Fotoğraf Seç',
+              style: GoogleFonts.playfairDisplay(
+                fontSize: 20, fontWeight: FontWeight.w600,
+                color: theme.colorScheme.onSurface)),
+            const SizedBox(height: 20),
+            _buildSourceOption(Icons.camera_alt_outlined, 'Kamera', ImageSource.camera),
+            const SizedBox(height: 12),
+            _buildSourceOption(Icons.photo_library_outlined, 'Galeri', ImageSource.gallery),
           ],
         ),
       ),
@@ -231,25 +245,29 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   Widget _buildSourceOption(IconData icon, String label, ImageSource source) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: () {
         Navigator.pop(context);
         _pickImage(source);
       },
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF7FAFC),
-              shape: BoxShape.circle,
-              border: Border.all(color: Theme.of(context).dividerColor)
-            ),
-            child: Icon(icon, color: const Color(0xFF5A67D8), size: 32),
-          ),
-          const SizedBox(height: 12),
-          Text(label, style: GoogleFonts.outfit(fontSize: 14, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
-        ],
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          border: Border.all(color: theme.dividerColor, width: 1),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: theme.colorScheme.primary, size: 20),
+            const SizedBox(width: 16),
+            Text(label,
+              style: GoogleFonts.outfit(
+                fontSize: 14,
+                color: theme.colorScheme.onSurface,
+              )),
+          ],
+        ),
       ),
     );
   }
@@ -276,138 +294,192 @@ class _AddScreenState extends State<AddScreen> {
       return;
     }
     setState(() => _saving = true);
-    final box = Hive.box<Entry>('entries');
-    final entry = Entry(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      date: DateTime.now(),
-      text: _textController.text.trim(),
-      imagePath: _imagePath,
-      mood: _selectedMood,
-      locationName: _locationController.text.trim().isEmpty ? null : _locationController.text.trim(),
-      audioPath: _audioPath,
-      latitude: _latitude,
-      longitude: _longitude,
-    );
-    await box.add(entry);
+    
+    if (widget.entryToEdit != null) {
+      final entry = widget.entryToEdit!;
+      entry.text = _textController.text.trim();
+      entry.imagePath = _imagePath;
+      entry.mood = _selectedMood;
+      entry.locationName = _locationController.text.trim().isEmpty ? null : _locationController.text.trim();
+      entry.audioPath = _audioPath;
+      entry.latitude = _latitude;
+      entry.longitude = _longitude;
+      await entry.save();
+    } else {
+      final box = Hive.box<Entry>('entries');
+      final entry = Entry(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        date: DateTime.now(),
+        text: _textController.text.trim(),
+        imagePath: _imagePath,
+        mood: _selectedMood,
+        locationName: _locationController.text.trim().isEmpty ? null : _locationController.text.trim(),
+        audioPath: _audioPath,
+        latitude: _latitude,
+        longitude: _longitude,
+      );
+      await box.add(entry);
+    }
+    
     if (mounted) Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    final today = DateFormat('d MMMM yyyy', 'tr').format(DateTime.now());
+    final theme = Theme.of(context);
+    final sub = theme.textTheme.bodySmall?.color ?? Colors.grey;
+    final titleText = widget.entryToEdit != null
+        ? 'Anıyı Düzenle'
+        : DateFormat('d MMMM yyyy', 'tr').format(DateTime.now());
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: IconButton(
-            icon: Icon(Icons.close_rounded, color: Theme.of(context).colorScheme.onSurface, size: 28),
-            onPressed: () => Navigator.pop(context),
+        leading: IconButton(
+          icon: Icon(Icons.close_rounded, color: theme.colorScheme.onSurface, size: 20),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(
+          titleText,
+          style: GoogleFonts.outfit(
+            fontSize: 13,
+            letterSpacing: 0.5,
+            color: sub,
+            fontWeight: FontWeight.w400,
           ),
         ),
-        title: Text(today,
-          style: GoogleFonts.outfit(
-            fontSize: 16, letterSpacing: 1, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontWeight: FontWeight.w400)),
         centerTitle: true,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: TextButton(
-              onPressed: _saving ? null : _save,
-              child: Text(_saving ? '...' : 'Kaydet',
-                style: GoogleFonts.outfit(color: const Color(0xFF5A67D8), fontWeight: FontWeight.w600, fontSize: 16)),
+            child: GestureDetector(
+              onTap: _saving ? null : _save,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  _saving ? '...' : (widget.entryToEdit != null ? 'Güncelle' : 'Kaydet'),
+                  style: GoogleFonts.outfit(
+                    color: theme.colorScheme.onPrimary,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.fromLTRB(24, 8, 24, 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // AI Soru Kartı (Yeni)
+            // Günün sorusu kartı
             if (_aiQuestion != null || _isLoadingQuestion)
               _buildAIQuestionCard(),
-            
-            const SizedBox(height: 32),
 
-            // Konum Alanı (Yeni Özellik)
-            Text('Neredesin?',
-              style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
-            const SizedBox(height: 12),
+            if (_aiQuestion != null || _isLoadingQuestion)
+              const SizedBox(height: 28),
+
+            // Divider
+            Divider(color: theme.dividerColor, thickness: 1),
+            const SizedBox(height: 20),
+
+            // Neredesin
+            Text('KONUM',
+              style: GoogleFonts.outfit(
+                fontSize: 10, letterSpacing: 2,
+                fontWeight: FontWeight.w700, color: sub)),
+            const SizedBox(height: 10),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Theme.of(context).dividerColor),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.02),
-                    blurRadius: 10, offset: const Offset(0, 4),
-                  )
-                ]
+                border: Border.all(color: theme.dividerColor, width: 1),
+                borderRadius: BorderRadius.circular(4),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.location_on_outlined, color: Color(0xFF9F7AEA), size: 20),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 16),
+                  Icon(Icons.location_on_outlined, color: sub, size: 16),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: TextField(
                       controller: _locationController,
-                      style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface),
+                      style: GoogleFonts.outfit(
+                          color: theme.colorScheme.onSurface, fontSize: 14),
                       decoration: InputDecoration(
-                        hintText: 'Konum ekle (örn: Moda Sahil)',
-                        hintStyle: GoogleFonts.outfit(color: const Color(0xFFB0B0B0), fontSize: 14),
+                        hintText: 'Konum ekle...',
+                        hintStyle:
+                            GoogleFonts.outfit(color: sub, fontSize: 14),
                         border: InputBorder.none,
+                        contentPadding:
+                            const EdgeInsets.symmetric(vertical: 14),
                       ),
                     ),
                   ),
                   IconButton(
-                    icon: _gettingLocation 
-                      ? SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Theme.of(context).colorScheme.secondary))
-                      : Icon(_latitude != null ? Icons.gps_fixed_rounded : Icons.my_location_rounded, 
-                             color: _latitude != null ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
+                    icon: _gettingLocation
+                        ? SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(
+                                strokeWidth: 1.5,
+                                color: theme.colorScheme.primary))
+                        : Icon(
+                            _latitude != null
+                                ? Icons.gps_fixed_rounded
+                                : Icons.my_location_rounded,
+                            color: _latitude != null
+                                ? theme.colorScheme.primary
+                                : sub,
+                            size: 18),
                     onPressed: _getCurrentLocation,
-                    tooltip: 'O anki konumu otomatik al',
                   ),
                   IconButton(
-                    icon: Icon(Icons.map_rounded, color: _latitude != null ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.secondary),
+                    icon: Icon(Icons.map_outlined,
+                        color:
+                            _latitude != null ? theme.colorScheme.primary : sub,
+                        size: 18),
                     onPressed: _showLocationPicker,
-                    tooltip: 'Haritadan seç',
-                  )
+                  ),
                 ],
               ),
             ),
             if (_latitude != null)
               Padding(
-                padding: const EdgeInsets.only(top: 8, left: 20),
-                child: Text('Koordinatlar: ${_latitude!.toStringAsFixed(4)}, ${_longitude!.toStringAsFixed(4)}', 
-                  style: GoogleFonts.outfit(fontSize: 10, color: const Color(0xFF5A67D8).withOpacity(0.7))),
+                padding: const EdgeInsets.only(top: 6, left: 4),
+                child: Text(
+                  '${_latitude!.toStringAsFixed(4)}, ${_longitude!.toStringAsFixed(4)}',
+                  style: GoogleFonts.outfit(fontSize: 10, color: sub),
+                ),
               ),
-            
-            const SizedBox(height: 32),
 
-            // Ruh Hali Seçimi
+            const SizedBox(height: 24),
+            Divider(color: theme.dividerColor, thickness: 1),
+            const SizedBox(height: 20),
+
+            // Ruh hali
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Nasıl hissediyorsun?',
-                  style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
-                // AI Analiz Butonu
+                Text('RUH HALİ',
+                  style: GoogleFonts.outfit(
+                    fontSize: 10, letterSpacing: 2,
+                    fontWeight: FontWeight.w700, color: sub)),
                 GestureDetector(
                   onTap: _isAnalyzingMood ? null : () async {
                     final text = _textController.text;
                     if (text.trim().length < 20) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Analiz için anlamlı en az birkaç cümle yazmalısın.',
+                          content: Text(
+                            'Analiz için birkaç cümle yazmalısın.',
                             style: GoogleFonts.outfit(color: Colors.white)),
-                          backgroundColor: Theme.of(context).colorScheme.primary,
+                          backgroundColor: theme.colorScheme.primary,
                           behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
                       );
                       return;
@@ -419,280 +491,238 @@ class _AddScreenState extends State<AddScreen> {
                         _isAnalyzingMood = false;
                         if (mood != null) _selectedMood = mood;
                       });
-                      if (!mounted) return;
-                      if (mood != null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('AI ruh halinizi "$mood" olarak belirledi.',
-                              style: GoogleFonts.outfit(color: Colors.white)),
-                            backgroundColor: Theme.of(context).colorScheme.secondary,
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Metin anlaşılamadı, lütfen daha fazla yazın.',
-                              style: GoogleFonts.outfit(color: Colors.white)),
-                            backgroundColor: Colors.orange.shade600,
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          ),
-                        );
-                      }
                     } catch (e) {
                       setState(() => _isAnalyzingMood = false);
-                      if (!mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Hata: $e',
-                            style: GoogleFonts.outfit(color: Colors.white)),
-                          backgroundColor: Colors.red.shade400,
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        ),
-                      );
                     }
                   },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: _isAnalyzingMood
-                          ? Theme.of(context).colorScheme.secondary.withOpacity(0.1)
-                          : Theme.of(context).colorScheme.secondary.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Theme.of(context).colorScheme.secondary.withOpacity(0.4)),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (_isAnalyzingMood)
-                          SizedBox(
-                            width: 12, height: 12,
-                            child: CircularProgressIndicator(strokeWidth: 1.5, color: Theme.of(context).colorScheme.secondary),
-                          )
-                        else
-                          Icon(Icons.auto_awesome_rounded, size: 14, color: Theme.of(context).colorScheme.secondary),
-                        const SizedBox(width: 6),
-                        Text(
-                          _isAnalyzingMood ? 'Analiz ediliyor...' : 'AI ile Analiz Et',
-                          style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.secondary, fontWeight: FontWeight.w600),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (_isAnalyzingMood)
+                        SizedBox(
+                          width: 12, height: 12,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1.5,
+                            color: theme.colorScheme.primary),
+                        )
+                      else
+                        Icon(Icons.auto_fix_high_rounded,
+                            size: 14, color: theme.colorScheme.primary),
+                      const SizedBox(width: 6),
+                      Text(
+                        _isAnalyzingMood ? 'Analiz ediliyor...' : 'AI Analiz',
+                        style: GoogleFonts.outfit(
+                          fontSize: 11,
+                          color: theme.colorScheme.primary,
+                          fontWeight: FontWeight.w600,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               clipBehavior: Clip.none,
               child: Row(
                 children: _moods.map((mood) {
                   final isSelected = _selectedMood == mood;
+                  final moodColor = MoodColors.getColor(mood);
                   return GestureDetector(
                     onTap: () => setState(() => _selectedMood = mood),
                     child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      margin: const EdgeInsets.only(right: 12),
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      duration: const Duration(milliseconds: 160),
+                      margin: const EdgeInsets.only(right: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 8),
                       decoration: BoxDecoration(
-                        color: isSelected ? MoodColors.getColor(mood) : Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(20),
+                        color: isSelected ? moodColor : Colors.transparent,
+                        borderRadius: BorderRadius.circular(3),
                         border: Border.all(
-                          color: isSelected ? MoodColors.getColor(mood) : Theme.of(context).dividerColor,
-                          width: 1.5,
+                          color: isSelected ? moodColor : theme.dividerColor,
+                          width: 1,
                         ),
-                        boxShadow: [
-                          if (isSelected)
-                            BoxShadow(
-                              color: MoodColors.getColor(mood).withOpacity(0.3),
-                              blurRadius: 10, offset: const Offset(0, 4)
-                            )
-                        ]
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (!isSelected) ...[
-                            Container(
-                              width: 10, height: 10,
-                              decoration: BoxDecoration(shape: BoxShape.circle, color: MoodColors.getColor(mood)),
-                            ),
-                            const SizedBox(width: 8),
-                          ],
-                          Text(mood,
-                            style: GoogleFonts.outfit(
-                              fontSize: 14,
-                              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                              color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
-                            )
-                          ),
-                        ],
-                      )
+                      child: Text(
+                        mood,
+                        style: GoogleFonts.outfit(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: isSelected
+                              ? Colors.white
+                              : theme.colorScheme.onSurface,
+                        ),
+                      ),
                     ),
                   );
                 }).toList(),
               ),
             ),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
+            Divider(color: theme.dividerColor, thickness: 1),
+            const SizedBox(height: 20),
 
-            // Sesli Anı Kaydı
-            Text('Sesli Anı',
-              style: GoogleFonts.outfit(fontSize: 12, letterSpacing: 1.5, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
-            const SizedBox(height: 16),
+            // Sesli anı
+            Text('SESLİ ANI',
+              style: GoogleFonts.outfit(
+                fontSize: 10, letterSpacing: 2,
+                fontWeight: FontWeight.w700, color: sub)),
+            const SizedBox(height: 12),
             GestureDetector(
               onLongPressStart: (_) => _startRecording(),
               onLongPressEnd: (_) => _stopRecording(),
               onLongPressCancel: () => _stopRecording(),
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                padding: const EdgeInsets.all(20),
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 decoration: BoxDecoration(
-                  color: _isRecording ? Colors.red.withOpacity(0.1) : Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(24),
+                  color: _isRecording
+                      ? Colors.red.withAlpha(20)
+                      : theme.colorScheme.surface,
+                  borderRadius: BorderRadius.circular(4),
                   border: Border.all(
-                    color: _isRecording ? Colors.red : (_audioPath != null ? Theme.of(context).colorScheme.primary : Theme.of(context).dividerColor),
-                    width: 2,
+                    color: _isRecording
+                        ? Colors.red
+                        : (_audioPath != null
+                            ? theme.colorScheme.primary
+                            : theme.dividerColor),
+                    width: 1,
                   ),
                 ),
                 child: Row(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: _isRecording ? Colors.red : Theme.of(context).colorScheme.primary,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        _isRecording ? Icons.mic_rounded : (_audioPath != null ? Icons.check_rounded : Icons.mic_none_rounded),
-                        color: Colors.white,
-                        size: 24,
-                      ),
+                    Icon(
+                      _isRecording
+                          ? Icons.mic_rounded
+                          : (_audioPath != null
+                              ? Icons.check_circle_outline_rounded
+                              : Icons.mic_none_rounded),
+                      color: _isRecording
+                          ? Colors.red
+                          : (_audioPath != null
+                              ? theme.colorScheme.primary
+                              : sub),
+                      size: 18,
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 12),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _isRecording ? 'Kayıt Yapılıyor...' : (_audioPath != null ? 'Sesli Anı Kaydedildi' : 'Kayıt için basılı tutun'),
-                            style: GoogleFonts.outfit(
-                              fontWeight: FontWeight.w600,
-                              color: _isRecording ? Colors.red : Theme.of(context).colorScheme.onSurface,
-                            ),
-                          ),
-                          if (_audioPath == null && !_isRecording)
-                            Text('Düşüncelerini fısılda...', 
-                              style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
-                          if (_audioPath != null)
-                            Text('Anına sesinle dokundun.', 
-                              style: GoogleFonts.outfit(fontSize: 12, color: const Color(0xFF5A67D8).withOpacity(0.7))),
-                        ],
+                      child: Text(
+                        _isRecording
+                            ? 'Kayıt yapılıyor...'
+                            : (_audioPath != null
+                                ? 'Sesli anı kaydedildi'
+                                : 'Basılı tut — kayıt yapar'),
+                        style: GoogleFonts.outfit(
+                          fontSize: 13,
+                          color: _isRecording ? Colors.red : sub,
+                        ),
                       ),
                     ),
                     if (_audioPath != null && !_isRecording)
-                      IconButton(
-                        icon: const Icon(Icons.delete_outline_rounded, color: Colors.redAccent),
-                        onPressed: () => setState(() => _audioPath = null),
+                      GestureDetector(
+                        onTap: () => setState(() => _audioPath = null),
+                        child: Icon(Icons.close_rounded,
+                            size: 16, color: Colors.red.shade400),
                       ),
                   ],
                 ),
               ),
             ),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
+            Divider(color: theme.dividerColor, thickness: 1),
+            const SizedBox(height: 20),
 
-            // Fotoğraf alanı
+            // Fotoğraf
+            Text('FOTOĞRAF',
+              style: GoogleFonts.outfit(
+                fontSize: 10, letterSpacing: 2,
+                fontWeight: FontWeight.w700, color: sub)),
+            const SizedBox(height: 12),
             GestureDetector(
               onTap: _pickImageSource,
               child: Container(
-                height: 300,
+                height: 220,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: Theme.of(context).dividerColor),
-                  boxShadow: [
-                    BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))
-                  ],
+                  color: theme.colorScheme.surface,
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(color: theme.dividerColor, width: 1),
                   image: _imagePath != null
-                    ? DecorationImage(
-                        image: kIsWeb 
-                            ? NetworkImage(_imagePath!) as ImageProvider 
-                            : FileImage(File(_imagePath!)),
-                        fit: BoxFit.cover)
-                    : null,
+                      ? DecorationImage(
+                          image: kIsWeb
+                              ? NetworkImage(_imagePath!) as ImageProvider
+                              : FileImage(File(_imagePath!)),
+                          fit: BoxFit.cover)
+                      : null,
                 ),
                 child: _imagePath == null
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surface,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Theme.of(context).dividerColor),
-                          ),
-                          child: Icon(Icons.add_photo_alternate_rounded, color: Theme.of(context).colorScheme.primary, size: 32),
+                    ? Center(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.add_photo_alternate_outlined,
+                                color: sub, size: 20),
+                            const SizedBox(width: 8),
+                            Text('Fotoğraf Ekle',
+                              style: GoogleFonts.outfit(
+                                fontSize: 13, color: sub)),
+                          ],
                         ),
-                        const SizedBox(height: 16),
-                        Text('Fotoğraf Ekle',
-                          style: GoogleFonts.outfit(
-                            fontSize: 14, letterSpacing: 1, fontWeight: FontWeight.w400, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
-                      ])
-                  : null,
+                      )
+                    : null,
               ),
             ),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
+            Divider(color: theme.dividerColor, thickness: 1),
+            const SizedBox(height: 20),
 
-            // Cümle alanı
-            Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: Theme.of(context).dividerColor),
-                boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))
-                ],
+            // Yazı alanı
+            Text('BUGÜN',
+              style: GoogleFonts.outfit(
+                fontSize: 10, letterSpacing: 2,
+                fontWeight: FontWeight.w700, color: sub)),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _textController,
+              maxLines: null,
+              style: GoogleFonts.playfairDisplay(
+                fontSize: 18,
+                color: theme.colorScheme.onSurface,
+                fontWeight: FontWeight.w400,
+                height: 1.8,
               ),
-              child: TextField(
-                controller: _textController,
-                maxLines: 5,
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 18, color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w500, height: 1.6),
-                decoration: InputDecoration(
-                  hintText: 'Bugünden aklında kalanlar...',
-                  hintStyle: GoogleFonts.playfairDisplay(color: const Color(0xFFB0B0B0), fontWeight: FontWeight.w400),
-                  border: InputBorder.none,
-                  counterStyle: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontSize: 12),
+              decoration: InputDecoration(
+                hintText: 'Bugünden aklında kalanlar...',
+                hintStyle: GoogleFonts.playfairDisplay(
+                  color: sub,
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.italic,
                 ),
+                border: InputBorder.none,
               ),
             ),
-            
-            const SizedBox(height: 48), // Padding alt
-          ]),
+
+            const SizedBox(height: 48),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildAIQuestionCard() {
+    final theme = Theme.of(context);
+    final sub = theme.textTheme.bodySmall?.color ?? Colors.grey;
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Theme.of(context).colorScheme.primary.withOpacity(0.08), Theme.of(context).colorScheme.secondary.withOpacity(0.05)],
-          begin: Alignment.topLeft, end: Alignment.bottomRight,
+        border: Border(
+          left: BorderSide(color: theme.colorScheme.primary, width: 2),
         ),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.15)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -700,30 +730,36 @@ class _AddScreenState extends State<AddScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Icon(Icons.psychology_alt_rounded, color: Theme.of(context).colorScheme.primary, size: 18),
-                  const SizedBox(width: 8),
-                  Text('GÜNÜN SORUSU', 
-                    style: GoogleFonts.outfit(fontSize: 10, letterSpacing: 1.5, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
-                ],
-              ),
+              Text('GÜNÜN SORUSU',
+                style: GoogleFonts.outfit(
+                  fontSize: 10,
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.w700,
+                  color: sub,
+                )),
               if (!_isLoadingQuestion)
-                IconButton(
-                  icon: Icon(Icons.refresh_rounded, size: 16, color: Theme.of(context).colorScheme.primary),
-                  onPressed: _loadQuestion,
-                  visualDensity: VisualDensity.compact,
+                GestureDetector(
+                  onTap: _loadQuestion,
+                  child: Icon(Icons.refresh_rounded, size: 14, color: sub),
                 ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
           if (_isLoadingQuestion)
-            const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 1.5, color: Color(0xFF5A67D8)))
+            SizedBox(
+              height: 16, width: 16,
+              child: CircularProgressIndicator(
+                strokeWidth: 1.5, color: theme.colorScheme.primary))
           else
             Text(
               _aiQuestion ?? 'Bugün üzerine düşünmek istediğin bir şey var mı?',
               style: GoogleFonts.playfairDisplay(
-                fontSize: 18, fontStyle: FontStyle.italic, fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface, height: 1.4),
+                fontSize: 17,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.w400,
+                color: theme.colorScheme.onSurface,
+                height: 1.5,
+              ),
             ),
         ],
       ),
@@ -817,7 +853,7 @@ class _LocationPickerDialogState extends State<_LocationPickerDialog> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)]
                   ),

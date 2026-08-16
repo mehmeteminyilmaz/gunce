@@ -104,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 20, offset: const Offset(0, 10))
+                  BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 20, offset: const Offset(0, 10))
                 ],
                 border: Border.all(color: Theme.of(context).dividerColor),
               ),
@@ -203,8 +203,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Versiyon', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7))),
-                      Text('v3.0.0 (Zen)', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                      Text('Versiyon', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7))),
+                      Text('v3.0.0 (Zen)', style: GoogleFonts.outfit(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
                     ],
                   ),
                 ],

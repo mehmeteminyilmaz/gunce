@@ -23,7 +23,7 @@ class GeminiService {
     if (cleaned.length < 20 || wordCount < 3) return null;
 
     const url =
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
     final prompt = '''
 Sen bir duygu analisti olarak aşağıdaki Türkçe metni değerlendireceksin.
@@ -53,9 +53,6 @@ Metin:
         'generationConfig': {
           'temperature': 0.1,
           'maxOutputTokens': 20,
-          'thinkingConfig': {
-            'thinkingBudget': 0,
-          },
         },
       }),
     );
@@ -67,7 +64,7 @@ Metin:
       String result = '';
       if (parts != null) {
         for (final part in parts) {
-          if (part['thought'] != true && part['text'] != null) {
+          if (part['text'] != null) {
             result = part['text'].toString().trim();
             break;
           }
@@ -101,7 +98,7 @@ Metin:
     if (_apiKey.isEmpty) return null;
 
     const url =
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
     String prompt =
         "Sen yaratıcı bir yazarlık atölyesi lideri ve günlük koçusun. ";
@@ -128,7 +125,6 @@ Metin:
           'generationConfig': {
              'temperature': 0.9, 
              'maxOutputTokens': 150,
-             'thinkingConfig': {'thinkingBudget': 0}
           }
         }),
       );
@@ -140,8 +136,7 @@ Metin:
         String result = '';
         if (parts != null) {
           for (final part in parts) {
-            // Düşünce (thought) olmayan ve metin içeren ilk parçayı al
-            if (part['thought'] != true && part['text'] != null) {
+            if (part['text'] != null) {
               result = part['text'].toString().trim();
               break;
             }
@@ -165,7 +160,7 @@ Metin:
   static Future<String?> getChatResponse(String userMessage, List<Entry> entries) async {
     if (_apiKey.isEmpty) return "API Anahtarı bulunamadı.";
 
-    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
     // Anıları özetleyip context olarak hazırlıyoruz
     String memoryContext = "Sen kullanıcının kişisel günlük asistanı 'Günce'sin. Senin bir bilincin ve hafızan var. ";
@@ -193,7 +188,6 @@ Metin:
           'generationConfig': {
              'temperature': 0.7, 
              'maxOutputTokens': 300,
-             'thinkingConfig': {'thinkingBudget': 0}
           }
         }),
       );
@@ -205,13 +199,15 @@ Metin:
         String result = '';
         if (parts != null) {
           for (final part in parts) {
-            if (part['thought'] != true && part['text'] != null) {
+            if (part['text'] != null) {
               result = part['text'].toString().trim();
               break;
             }
           }
         }
-        return result;
+        if (result.isNotEmpty) return result;
+      } else {
+        debugPrint('Gemini Chat API Error (${response.statusCode}): ${response.body}');
       }
     } catch (e) {
       debugPrint('Chat hatası: $e');

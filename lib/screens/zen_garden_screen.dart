@@ -65,7 +65,7 @@ class _ZenGardenScreenState extends State<ZenGardenScreen> with SingleTickerProv
                 end: Alignment.bottomCenter,
                 colors: [
                   theme.scaffoldBackgroundColor,
-                  theme.colorScheme.primary.withOpacity(0.05),
+                  theme.colorScheme.primary.withValues(alpha: 0.05),
                 ],
               ),
             ),
@@ -102,7 +102,7 @@ class _ZenGardenScreenState extends State<ZenGardenScreen> with SingleTickerProv
                     textAlign: TextAlign.center,
                     style: GoogleFonts.outfit(
                       fontSize: 16,
-                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       fontStyle: FontStyle.italic,
                     ),
                   ),
@@ -169,12 +169,12 @@ class TreePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = primaryColor.withOpacity(0.6)
+      ..color = primaryColor.withValues(alpha: 0.6)
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round;
 
     final leafPaint = Paint()
-      ..color = leafColor.withOpacity(0.8)
+      ..color = leafColor.withValues(alpha: 0.8)
       ..style = PaintingStyle.fill;
 
     // Kökleri çiziyoruz

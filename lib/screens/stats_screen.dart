@@ -57,7 +57,7 @@ class StatsScreen extends StatelessWidget {
                 Text('Burası senin duygusal yolculuğun.',
                   style: GoogleFonts.outfit(
                     fontSize: 14,
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
                   )),
                 const SizedBox(height: 32),
 
@@ -78,7 +78,7 @@ class StatsScreen extends StatelessWidget {
                     color: const Color(0xFF5A67D8),
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
-                      BoxShadow(color: const Color(0xFF5A67D8).withOpacity(0.4), blurRadius: 15, offset: const Offset(0, 8))
+                      BoxShadow(color: const Color(0xFF5A67D8).withValues(alpha: 0.4), blurRadius: 15, offset: const Offset(0, 8))
                     ]
                   ),
                   child: Row(
@@ -86,7 +86,7 @@ class StatsScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                         child: const Text('🔥', style: TextStyle(fontSize: 32)),
@@ -96,7 +96,7 @@ class StatsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Devam Serisi',
-                            style: GoogleFonts.outfit(fontSize: 14, color: Colors.white.withOpacity(0.8))),
+                            style: GoogleFonts.outfit(fontSize: 14, color: Colors.white.withValues(alpha: 0.8))),
                           const SizedBox(height: 4),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -105,7 +105,7 @@ class StatsScreen extends StatelessWidget {
                                 style: GoogleFonts.playfairDisplay(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white, height: 1)),
                               const SizedBox(width: 6),
                               Text('gün',
-                                style: GoogleFonts.outfit(fontSize: 16, color: Colors.white.withOpacity(0.8), fontWeight: FontWeight.w500)),
+                                style: GoogleFonts.outfit(fontSize: 16, color: Colors.white.withValues(alpha: 0.8), fontWeight: FontWeight.w500)),
                             ],
                           ),
                         ],
@@ -152,13 +152,13 @@ class StatsScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: Theme.of(context).dividerColor),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
+          BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10, offset: const Offset(0, 5))
         ]
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), size: 24),
+          Icon(icon, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5), size: 24),
           const SizedBox(height: 24),
           Text(value,
             style: GoogleFonts.outfit(
@@ -171,7 +171,7 @@ class StatsScreen extends StatelessWidget {
           Text(title,
             style: GoogleFonts.outfit(
               fontSize: 12,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
               height: 1.3,
             )),
         ],
@@ -187,7 +187,7 @@ class StatsScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: Theme.of(context).dividerColor),
         boxShadow: [
-            BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
+            BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10, offset: const Offset(0, 5))
         ]
       ),
       child: Row(
@@ -205,7 +205,7 @@ class StatsScreen extends StatelessWidget {
                 style: GoogleFonts.outfit(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
                   height: 1.2,
                 )),
             ],
@@ -228,13 +228,13 @@ class StatsScreen extends StatelessWidget {
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [const Color(0xFF5A67D8), const Color(0xFF9F7AEA).withOpacity(0.8)],
+          colors: [const Color(0xFF5A67D8), const Color(0xFF9F7AEA).withValues(alpha: 0.8)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
-          BoxShadow(color: const Color(0xFF5A67D8).withOpacity(0.3), blurRadius: 20, offset: const Offset(0, 10))
+          BoxShadow(color: const Color(0xFF5A67D8).withValues(alpha: 0.3), blurRadius: 20, offset: const Offset(0, 10))
         ],
       ),
       child: Column(
@@ -250,7 +250,7 @@ class StatsScreen extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             'Son zamanlarda genellikle "$topMood" hissediyorsun. Bu enerjini korumak için günlüğüne yazmaya devam etmelisin! ✨',
-            style: GoogleFonts.outfit(fontSize: 16, color: Colors.white.withOpacity(0.9), height: 1.5),
+            style: GoogleFonts.outfit(fontSize: 16, color: Colors.white.withValues(alpha: 0.9), height: 1.5),
           ),
         ],
       ),
@@ -273,11 +273,11 @@ class StatsScreen extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface.withOpacity(0.8),
+        color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Theme.of(context).dividerColor.withOpacity(0.1)),
+        border: Border.all(color: Theme.of(context).dividerColor.withValues(alpha: 0.1)),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 20, offset: const Offset(0, 10))
+          BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 20, offset: const Offset(0, 10))
         ],
       ),
       child: Column(
@@ -291,7 +291,7 @@ class StatsScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF5A67D8).withOpacity(0.1),
+                      color: const Color(0xFF5A67D8).withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(Icons.calendar_view_month_rounded, color: Color(0xFF5A67D8), size: 20)
@@ -325,7 +325,7 @@ class StatsScreen extends StatelessWidget {
                 final date = last91Days[index];
                 final key = DateFormat('yyyy-MM-dd').format(date);
                 final mood = dayMoods[key];
-                final color = mood != null ? MoodColors.getColor(mood) : Colors.grey.withOpacity(0.1);
+                final color = mood != null ? MoodColors.getColor(mood) : Colors.grey.withValues(alpha: 0.1);
                 
                 return TweenAnimationBuilder<double>(
                   tween: Tween(begin: 0.0, end: 1.0),
@@ -340,7 +340,7 @@ class StatsScreen extends StatelessWidget {
                             color: color,
                             borderRadius: BorderRadius.circular(4),
                             boxShadow: mood != null ? [
-                              BoxShadow(color: color.withOpacity(0.3), blurRadius: 4, spreadRadius: 1)
+                              BoxShadow(color: color.withValues(alpha: 0.3), blurRadius: 4, spreadRadius: 1)
                             ] : null,
                           ),
                         ),
@@ -390,7 +390,7 @@ class StatsScreen extends StatelessWidget {
           children: [
             Icon(Icons.auto_graph_rounded, color: Theme.of(context).dividerColor, size: 40),
             const SizedBox(height: 16),
-            Text('Henüz yeterli veri yok', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+            Text('Henüz yeterli veri yok', style: GoogleFonts.outfit(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
           ],
         ),
       );
@@ -407,7 +407,7 @@ class StatsScreen extends StatelessWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 5))
+          BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10, offset: const Offset(0, 5))
         ],
         border: Border.all(color: Theme.of(context).dividerColor),
       ),
@@ -448,7 +448,7 @@ class StatsScreen extends StatelessWidget {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('${e.value}', style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), fontWeight: FontWeight.w500)),
+                        Text('${e.value}', style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5), fontWeight: FontWeight.w500)),
                         const SizedBox(height: 8),
                         Container(
                           width: 32,
@@ -456,7 +456,7 @@ class StatsScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             gradient: LinearGradient(
-                              colors: [moodColor, moodColor.withOpacity(0.6)],
+                              colors: [moodColor, moodColor.withValues(alpha: 0.6)],
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter,
                             ),

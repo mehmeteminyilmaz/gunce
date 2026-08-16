@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:path_provider/path_provider.dart';
+// path_provider imported by add_screen
 import 'models/entry.dart';
 import 'screens/splash_screen.dart';
 import 'utils/notification_service.dart';

@@ -64,7 +64,7 @@ class _MapScreenState extends State<MapScreen> {
                         child: ColorFiltered(
                           // Derin Gece Mavisi Katmanı
                           colorFilter: ColorFilter.mode(
-                            const Color(0xFF0F172A).withOpacity(0.6), 
+                            const Color(0xFF0F172A).withValues(alpha: 0.6), 
                             BlendMode.screen
                           ),
                           child: tileWidget,
@@ -103,11 +103,11 @@ class _MapScreenState extends State<MapScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface.withOpacity(0.9),
+                    color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.1)),
+                    border: Border.all(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)),
                     boxShadow: [
-                      BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 15, offset: const Offset(0, 5))
+                      BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 15, offset: const Offset(0, 5))
                     ]
                   ),
                   child: Text('Anı Haritası',
@@ -130,11 +130,11 @@ class _MapScreenState extends State<MapScreen> {
                 child: Container(
                   height: 120,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface.withOpacity(0.95),
+                    color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.95),
                     borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.1)),
+                    border: Border.all(color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)),
                     boxShadow: [
-                      BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 25, offset: const Offset(0, 10))
+                      BoxShadow(color: Colors.black.withValues(alpha: 0.3), blurRadius: 25, offset: const Offset(0, 10))
                     ]
                   ),
                   child: Row(
@@ -160,11 +160,11 @@ class _MapScreenState extends State<MapScreen> {
                               Text(_selectedEntry!.locationName ?? 'Bilinmeyen Konum',
                                 style: GoogleFonts.outfit(fontSize: 12, color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold)),
                               Text(DateFormat('dd MMMM yyyy', 'tr').format(_selectedEntry!.date),
-                                style: GoogleFonts.outfit(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                                style: GoogleFonts.outfit(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
                               const SizedBox(height: 4),
                               Text(_selectedEntry!.text,
                                 maxLines: 2, overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.outfit(fontSize: 14, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.9))),
+                                style: GoogleFonts.outfit(fontSize: 14, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.9))),
                             ],
                           ),
                         ),
@@ -196,8 +196,8 @@ class _MapScreenState extends State<MapScreen> {
             shape: BoxShape.circle,
             gradient: RadialGradient(
               colors: [
-                moodColor.withOpacity(isDark ? 0.6 : 0.4),
-                moodColor.withOpacity(0.0),
+                moodColor.withValues(alpha: isDark ? 0.6 : 0.4),
+                moodColor.withValues(alpha: 0.0),
               ],
             ),
           ),
@@ -208,10 +208,10 @@ class _MapScreenState extends State<MapScreen> {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: moodColor,
-            border: Border.all(color: isDark ? Colors.white.withOpacity(0.9) : Colors.white, width: 2.5),
+            border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.9) : Colors.white, width: 2.5),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(isDark ? 0.4 : 0.2), 
+                color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.2), 
                 blurRadius: 8, 
                 offset: const Offset(0, 2)
               )
@@ -237,12 +237,12 @@ class _MapScreenState extends State<MapScreen> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surface.withOpacity(0.9),
+          color: theme.colorScheme.surface.withValues(alpha: 0.9),
           shape: BoxShape.circle,
-          border: Border.all(color: theme.colorScheme.primary.withOpacity(0.1)),
+          border: Border.all(color: theme.colorScheme.primary.withValues(alpha: 0.1)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(isDark ? 0.3 : 0.1), 
+              color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.1), 
               blurRadius: 15, 
               offset: const Offset(0, 5)
             )

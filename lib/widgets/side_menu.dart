@@ -16,235 +16,293 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final sub = theme.textTheme.bodySmall?.color ?? Colors.grey;
+
     return Drawer(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       child: SafeArea(
         child: ValueListenableBuilder(
           valueListenable: Hive.box('profile').listenable(),
           builder: (context, Box box, child) {
             final name = box.get('name', defaultValue: 'Gezgin');
-            
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Profil Başlığı (sabit kalır)
+                // Profil başlığı
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 48, 32, 32),
+                  padding: const EdgeInsets.fromLTRB(28, 40, 28, 24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
-                          Navigator.push(context, PageRouteBuilder(
-                            pageBuilder: (context, anim, anim2) => const ProfileScreen(),
-                            transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
-                          ));
+                          Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, anim, anim2) =>
+                                  const ProfileScreen(),
+                              transitionsBuilder: (context, anim, anim2, child) =>
+                                  FadeTransition(opacity: anim, child: child),
+                            ),
+                          );
                         },
                         child: Container(
-                          width: 64, height: 64,
+                          width: 48,
+                          height: 48,
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).colorScheme.surface,
-                            border: Border.all(color: Theme.of(context).colorScheme.primary, width: 1.5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
-                                blurRadius: 15, offset: const Offset(0, 5),
-                              )
-                            ]
+                            color: theme.colorScheme.primary,
+                            borderRadius: BorderRadius.circular(6),
                           ),
                           child: Center(
-                            child: Icon(Icons.person_outline_rounded,
-                              color: Theme.of(context).colorScheme.primary, size: 32),
+                            child: Text(
+                              name.isNotEmpty
+                                  ? name[0].toUpperCase()
+                                  : 'G',
+                              style: GoogleFonts.playfairDisplay(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: theme.colorScheme.onPrimary,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      Text('Merhaba,',
-                        style: GoogleFonts.outfit(
-                          fontSize: 14,
-                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
-                        )),
-                      
+                      const SizedBox(height: 20),
                       ValueListenableBuilder(
-                        valueListenable: Hive.box<Entry>('entries').listenable(),
+                        valueListenable:
+                            Hive.box<Entry>('entries').listenable(),
                         builder: (context, Box<Entry> entriesBox, child) {
-                          final streak = StreakCalculator.calculate(entriesBox.values.toList());
-                          return Row(
+                          final streak = StreakCalculator.calculate(
+                              entriesBox.values.toList());
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(name,
                                 style: GoogleFonts.playfairDisplay(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).colorScheme.onSurface,
-                                  letterSpacing: -0.5,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w700,
+                                  color: theme.colorScheme.onSurface,
+                                  letterSpacing: -0.3,
                                 )),
                               if (streak > 0) ...[
-                                const SizedBox(width: 12),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.secondary.withValues(alpha: 0.05),
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: Theme.of(context).colorScheme.secondary)
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const Text('🔥', style: TextStyle(fontSize: 12)),
-                                      const SizedBox(width: 4),
-                                      Text('$streak', style: GoogleFonts.outfit(fontSize: 12, fontWeight: FontWeight.bold, color: const Color(0xFFFF7B42))),
-                                    ],
-                                  ),
+                                const SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    const Text('🔥',
+                                        style: TextStyle(fontSize: 11)),
+                                    const SizedBox(width: 4),
+                                    Text('$streak günlük seri',
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 12,
+                                        color: sub,
+                                      )),
+                                  ],
                                 ),
-                              ]
+                              ],
                             ],
                           );
-                        }
+                        },
                       ),
                     ],
                   ),
                 ),
-                
-                Divider(color: Theme.of(context).dividerColor, height: 1, indent: 32, endIndent: 32),
-                const SizedBox(height: 8),
-                
-                // Menü Öğeleri — Scroll edilebilir (overflow'u önler)
+
+                Divider(color: theme.dividerColor, height: 1),
+
+                // Menü öğeleri
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SizedBox(height: 8),
                         _buildMenuItem(
                           context: context,
-                          icon: Icons.person_rounded,
+                          icon: Icons.person_outline_rounded,
                           title: 'Profilim',
                           onTap: () {
                             Navigator.pop(context);
-                            Navigator.push(context, PageRouteBuilder(
-                              pageBuilder: (context, anim, anim2) => const ProfileScreen(),
-                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
-                            ));
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, anim, anim2) =>
+                                    const ProfileScreen(),
+                                transitionsBuilder:
+                                    (context, anim, anim2, child) =>
+                                        FadeTransition(
+                                            opacity: anim, child: child),
+                              ),
+                            );
                           },
                         ),
-                        
                         _buildMenuItem(
                           context: context,
-                          icon: Icons.auto_awesome_rounded,
+                          icon: Icons.chat_bubble_outline_rounded,
                           title: 'Günce ile Sohbet',
                           onTap: () {
                             Navigator.pop(context);
-                            Navigator.push(context, PageRouteBuilder(
-                              pageBuilder: (context, anim, anim2) => const ChatScreen(),
-                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
-                            ));
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, anim, anim2) =>
+                                    const ChatScreen(),
+                                transitionsBuilder:
+                                    (context, anim, anim2, child) =>
+                                        FadeTransition(
+                                            opacity: anim, child: child),
+                              ),
+                            );
                           },
                         ),
-
                         _buildMenuItem(
                           context: context,
                           icon: Icons.map_outlined,
                           title: 'Anı Haritası',
                           onTap: () {
                             Navigator.pop(context);
-                            Navigator.push(context, PageRouteBuilder(
-                              pageBuilder: (context, anim, anim2) => const MapScreen(),
-                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
-                            ));
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, anim, anim2) =>
+                                    const MapScreen(),
+                                transitionsBuilder:
+                                    (context, anim, anim2, child) =>
+                                        FadeTransition(
+                                            opacity: anim, child: child),
+                              ),
+                            );
                           },
                         ),
-                        
                         _buildMenuItem(
                           context: context,
-                          icon: Icons.park_rounded,
+                          icon: Icons.park_outlined,
                           title: 'Hafıza Bahçem',
                           onTap: () {
                             Navigator.pop(context);
-                            Navigator.push(context, PageRouteBuilder(
-                              pageBuilder: (context, anim, anim2) => const ZenGardenScreen(),
-                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
-                            ));
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, anim, anim2) =>
+                                    const ZenGardenScreen(),
+                                transitionsBuilder:
+                                    (context, anim, anim2, child) =>
+                                        FadeTransition(
+                                            opacity: anim, child: child),
+                              ),
+                            );
                           },
                         ),
-
                         _buildMenuItem(
                           context: context,
-                          icon: Icons.bar_chart_rounded,
-                          title: 'İstatistikler & Analiz',
+                          icon: Icons.bar_chart_outlined,
+                          title: 'İstatistikler',
                           onTap: () {
                             Navigator.pop(context);
-                            Navigator.push(context, PageRouteBuilder(
-                              pageBuilder: (context, anim, anim2) => const StatsScreen(),
-                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
-                            ));
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, anim, anim2) =>
+                                    const StatsScreen(),
+                                transitionsBuilder:
+                                    (context, anim, anim2, child) =>
+                                        FadeTransition(
+                                            opacity: anim, child: child),
+                              ),
+                            );
                           },
                         ),
-                        
                         _buildMenuItem(
                           context: context,
                           icon: Icons.palette_outlined,
-                          title: 'Huzur Temaları',
+                          title: 'Temalar',
                           onTap: () {
                             Navigator.pop(context);
-                            Navigator.push(context, PageRouteBuilder(
-                              pageBuilder: (context, anim, anim2) => const ThemesScreen(),
-                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
-                            ));
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, anim, anim2) =>
+                                    const ThemesScreen(),
+                                transitionsBuilder:
+                                    (context, anim, anim2, child) =>
+                                        FadeTransition(
+                                            opacity: anim, child: child),
+                              ),
+                            );
                           },
                         ),
-                        
                         _buildMenuItem(
                           context: context,
                           icon: Icons.settings_outlined,
                           title: 'Ayarlar',
                           onTap: () {
                             Navigator.pop(context);
-                            Navigator.push(context, PageRouteBuilder(
-                              pageBuilder: (context, anim, anim2) => const SettingsScreen(),
-                              transitionsBuilder: (context, anim, anim2, child) => FadeTransition(opacity: anim, child: child),
-                            ));
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (context, anim, anim2) =>
+                                    const SettingsScreen(),
+                                transitionsBuilder:
+                                    (context, anim, anim2, child) =>
+                                        FadeTransition(
+                                            opacity: anim, child: child),
+                              ),
+                            );
                           },
                         ),
-
                         const SizedBox(height: 16),
                       ],
                     ),
                   ),
                 ),
-                
-                // Sürüm numarası — altta sabit
+
+                // Sürüm numarası
+                Divider(color: theme.dividerColor, height: 1),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 8, 32, 16),
-                  child: Text('Günce v3.5',
-                    style: GoogleFonts.outfit(
-                      fontSize: 12,
-                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
-                    )),
-                )
+                  padding: const EdgeInsets.fromLTRB(28, 12, 28, 16),
+                  child: Text(
+                    'günce.',
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 13,
+                      color: sub,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
               ],
             );
-          }
+          },
         ),
       ),
     );
   }
 
-  Widget _buildMenuItem({required BuildContext context, required IconData icon, required String title, required VoidCallback onTap}) {
+  Widget _buildMenuItem({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    final theme = Theme.of(context);
+    final sub = theme.textTheme.bodySmall?.color ?? Colors.grey;
+
     return InkWell(
       onTap: onTap,
-      splashColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
-      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      highlightColor: theme.colorScheme.primary.withAlpha(15),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
         child: Row(
           children: [
-            Icon(icon, color: Theme.of(context).colorScheme.primary, size: 22),
-            const SizedBox(width: 20),
+            Icon(icon, color: sub, size: 18),
+            const SizedBox(width: 18),
             Text(title,
               style: GoogleFonts.outfit(
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: FontWeight.w400,
-                color: Theme.of(context).colorScheme.onSurface,
+                color: theme.colorScheme.onSurface,
               )),
           ],
         ),
